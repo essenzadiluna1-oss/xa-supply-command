@@ -1,4019 +1,2789 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#601a2a">
-  <title>XA Supply Command V1.2</title>
-
-  <style>
-    :root{
-      --wine:#601a2a;
-      --wine-dark:#381019;
-      --wine-light:#8c2b43;
-      --cream:#f3ead9;
-      --ivory:#fffaf0;
-      --gold:#b28a47;
-      --gold-light:#dfc58f;
-      --ink:#291d1f;
-      --muted:#766b67;
-      --green:#317252;
-      --blue:#33677f;
-      --orange:#ad672d;
-      --red:#a63240;
-      --line:rgba(96,26,42,.13);
-      --shadow:0 12px 28px rgba(53,20,27,.10);
-    }
-
-    *{
-      box-sizing:border-box;
-      -webkit-tap-highlight-color:transparent
-    }
-
-    html{scroll-behavior:smooth}
-
-    body{
-      margin:0;
-      min-height:100vh;
-      padding-bottom:95px;
-      color:var(--ink);
-      font-family:Arial,Helvetica,sans-serif;
-      background:
-        radial-gradient(circle at 8% 0,rgba(178,138,71,.17),transparent 32%),
-        linear-gradient(180deg,#faf4e8,#eee2cf);
-    }
-
-    button,input,select,textarea{font:inherit}
-    button{cursor:pointer}
-    a{color:inherit}
-
-    .app{
-      width:min(100%,920px);
-      margin:auto;
-    }
-
-    .top{
-      position:sticky;
-      top:0;
-      z-index:40;
-      padding:10px 12px;
-      border-bottom:1px solid var(--line);
-      background:rgba(247,239,225,.95);
-      backdrop-filter:blur(17px);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-height:70px;
-      padding:11px 13px;
-      border-radius:23px;
-      color:white;
-      background:
-        radial-gradient(circle at 88% 12%,rgba(223,197,143,.25),transparent 30%),
-        linear-gradient(135deg,var(--wine-dark),var(--wine));
-      box-shadow:0 10px 24px rgba(56,16,25,.25);
-    }
-
-    .logo{
-      width:53px;
-      height:53px;
-      flex:0 0 auto;
-      display:grid;
-      place-items:center;
-      border:2px solid var(--gold-light);
-      border-radius:17px;
-      color:var(--gold-light);
-      font:900 25px Georgia,serif;
-      letter-spacing:-3px;
-    }
-
-    .brand-copy{
-      min-width:0;
-      flex:1;
-    }
-
-    .brand h1{
-      margin:0;
-      font:900 18px Georgia,serif;
-      letter-spacing:.8px;
-    }
-
-    .brand p{
-      margin:5px 0 0;
-      color:#eadabc;
-      font-size:8px;
-      font-weight:800;
-      letter-spacing:1.25px;
-      text-transform:uppercase;
-    }
-
-    .version{
-      padding:7px 9px;
-      border:1px solid rgba(223,197,143,.55);
-      border-radius:999px;
-      color:#f8e9c8;
-      font-size:8px;
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    main{padding:12px}
-
-    .page{
-      display:none;
-      animation:fade .18s ease;
-    }
-
-    .page.active{display:block}
-
-    @keyframes fade{
-      from{opacity:0;transform:translateY(4px)}
-      to{opacity:1;transform:none}
-    }
-
-    .hero{
-      position:relative;
-      overflow:hidden;
-      padding:22px 19px;
-      border-radius:28px;
-      color:white;
-      background:
-        radial-gradient(circle at 85% 10%,rgba(223,197,143,.29),transparent 30%),
-        linear-gradient(145deg,#341017,#6e2035 65%,#93394e);
-      box-shadow:var(--shadow);
-    }
-
-    .hero::after{
-      content:"XA";
-      position:absolute;
-      right:-18px;
-      bottom:-48px;
-      color:rgba(255,255,255,.055);
-      font:900 145px Georgia,serif;
-      letter-spacing:-17px;
-    }
-
-    .hero-tag{
-      position:relative;
-      z-index:1;
-      display:inline-block;
-      padding:6px 10px;
-      border:1px solid rgba(255,255,255,.23);
-      border-radius:999px;
-      color:#f3dfbb;
-      background:rgba(255,255,255,.07);
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:1px;
-    }
-
-    .hero h2{
-      position:relative;
-      z-index:1;
-      max-width:570px;
-      margin:15px 0 7px;
-      font:900 clamp(27px,7vw,42px)/1 Georgia,serif;
-    }
-
-    .hero p{
-      position:relative;
-      z-index:1;
-      max-width:560px;
-      margin:0;
-      color:#eadbca;
-      font-size:12px;
-      line-height:1.5;
-    }
-
-    .hero-actions{
-      position:relative;
-      z-index:2;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:18px;
-    }
-
-    .btn{
-      min-height:43px;
-      padding:10px 14px;
-      border:0;
-      border-radius:14px;
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .btn-primary{
-      color:white;
-      background:linear-gradient(135deg,var(--wine),var(--wine-light));
-    }
-
-    .btn-gold{
-      color:#352016;
-      background:linear-gradient(135deg,#ebd39d,var(--gold));
-    }
-
-    .btn-dark{
-      color:white;
-      background:#322326;
-    }
-
-    .btn-soft{
-      color:var(--wine);
-      border:1px solid #ddc9a7;
-      background:#f3e5cd;
-    }
-
-    .btn-danger{
-      color:white;
-      background:var(--red);
-    }
-
-    .btn-green{
-      color:white;
-      background:var(--green);
-    }
-
-    .btn-block{width:100%}
-
-    .title-row{
-      display:flex;
-      align-items:end;
-      justify-content:space-between;
-      gap:10px;
-      margin:6px 2px 13px;
-    }
-
-    .title-row h2{
-      margin:0;
-      color:var(--wine-dark);
-      font:900 25px Georgia,serif;
-    }
-
-    .title-row p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:11px;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:9px;
-      margin:11px 0;
-    }
-
-    .stat{
-      min-height:96px;
-      padding:14px;
-      border:1px solid var(--line);
-      border-radius:19px;
-      background:rgba(255,250,240,.9);
-      box-shadow:0 7px 18px rgba(50,21,26,.06);
-    }
-
-    .stat small{
-      color:var(--muted);
-      font-size:8px;
-      font-weight:900;
-      letter-spacing:.8px;
-      text-transform:uppercase;
-    }
-
-    .stat strong{
-      display:block;
-      margin-top:7px;
-      color:var(--wine-dark);
-      font:900 23px Georgia,serif;
-      overflow-wrap:anywhere;
-    }
-
-    .stat span{
-      display:block;
-      margin-top:4px;
-      color:var(--muted);
-      font-size:9px;
-    }
-
-    .card{
-      margin-top:11px;
-      padding:15px;
-      border:1px solid var(--line);
-      border-radius:21px;
-      background:rgba(255,250,240,.92);
-      box-shadow:0 8px 20px rgba(50,21,26,.07);
-    }
-
-    .card-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:11px;
-    }
-
-    .card-head h3{
-      margin:0;
-      color:var(--wine-dark);
-      font:900 17px Georgia,serif;
-    }
-
-    .card-head span{
-      color:var(--muted);
-      font-size:8px;
-      font-weight:900;
-      letter-spacing:.8px;
-    }
-
-    .quick{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:8px;
-    }
-
-    .quick button{
-      min-height:77px;
-      padding:12px;
-      border:1px solid #dfceb0;
-      border-radius:17px;
-      color:var(--ink);
-      text-align:left;
-      background:linear-gradient(145deg,#fffaf0,#eee0c8);
-    }
-
-    .quick strong{
-      display:block;
-      margin-bottom:5px;
-      color:var(--wine);
-      font-size:12px;
-    }
-
-    .quick small{
-      color:var(--muted);
-      font-size:9px;
-      line-height:1.35;
-    }
-
-    .alerts{
-      display:grid;
-      gap:8px;
-    }
-
-    .alert{
-      padding:11px 12px;
-      border-radius:14px;
-      font-size:10px;
-      font-weight:800;
-      line-height:1.4;
-    }
-
-    .alert-red{
-      color:#6e1c27;
-      background:#f0d7db;
-      border:1px solid #e3b9c0;
-    }
-
-    .alert-orange{
-      color:#70401d;
-      background:#f2dfc8;
-      border:1px solid #e6c59f;
-    }
-
-    .alert-green{
-      color:#20523b;
-      background:#dceddf;
-      border:1px solid #badbc8;
-    }
-
-    .toolbar{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:8px;
-      margin-bottom:10px;
-    }
-
-    .search,.field input,.field select,.field textarea{
-      width:100%;
-      border:1px solid #d8c6a7;
-      border-radius:13px;
-      color:var(--ink);
-      background:#fffdf8;
-      outline:none;
-    }
-
-    .search{
-      height:44px;
-      padding:0 13px;
-    }
-
-    .field input,.field select{
-      height:44px;
-      padding:0 11px;
-    }
-
-    .field textarea{
-      min-height:82px;
-      padding:11px;
-      resize:vertical;
-    }
-
-    .search:focus,.field input:focus,.field select:focus,.field textarea:focus{
-      border-color:var(--wine);
-      box-shadow:0 0 0 3px rgba(96,26,42,.08);
-    }
-
-    .list{
-      display:grid;
-      gap:9px;
-    }
-
-    .item{
-      padding:13px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:#fffaf1;
-      box-shadow:0 6px 15px rgba(50,21,26,.055);
-    }
-
-    .item-top{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:9px;
-    }
-
-    .item h3{
-      margin:0;
-      color:var(--wine-dark);
-      font:900 16px Georgia,serif;
-    }
-
-    .subtitle{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:10px;
-      line-height:1.35;
-    }
-
-    .badge{
-      flex:0 0 auto;
-      padding:6px 8px;
-      border-radius:999px;
-      font-size:8px;
-      font-weight:900;
-      letter-spacing:.4px;
-      text-transform:uppercase;
-    }
-
-    .good{color:#20513b;background:#dceee4}
-    .warn{color:#6c4a1c;background:#f3e3b7}
-    .info{color:#22566e;background:#dbeaf1}
-    .bad{color:#75232f;background:#f1d6dc}
-
-    .meta{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:6px;
-      margin-top:10px;
-    }
-
-    .meta div{
-      min-height:48px;
-      padding:8px;
-      border-radius:12px;
-      background:#f2e5d1;
-    }
-
-    .meta label{
-      display:block;
-      color:var(--muted);
-      font-size:7px;
-      font-weight:900;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-
-    .meta strong{
-      display:block;
-      margin-top:4px;
-      font-size:10px;
-      overflow-wrap:anywhere;
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin-top:10px;
-    }
-
-    .mini{
-      min-height:34px;
-      padding:7px 10px;
-      border:0;
-      border-radius:10px;
-      color:var(--wine);
-      background:#eadbc1;
-      font-size:9px;
-      font-weight:900;
-    }
-
-    .mini.primary{color:white;background:var(--wine)}
-    .mini.green{color:white;background:var(--green)}
-    .mini.info{color:white;background:var(--blue)}
-    .mini.danger{color:white;background:var(--red)}
-
-    .empty{
-      padding:27px 13px;
-      border:1px dashed #cdb99b;
-      border-radius:18px;
-      color:var(--muted);
-      text-align:center;
-      background:rgba(255,255,255,.4);
-      font-size:11px;
-    }
-
-    .empty strong{
-      display:block;
-      margin-bottom:6px;
-      color:var(--wine);
-      font:900 17px Georgia,serif;
-    }
-
-    .analysis{
-      display:grid;
-      gap:9px;
-    }
-
-    .analysis-box{
-      padding:15px;
-      border-radius:18px;
-      color:white;
-      background:linear-gradient(145deg,#48141f,#74243a);
-    }
-
-    .analysis-box:nth-child(even){
-      background:linear-gradient(145deg,#57401e,#947139);
-    }
-
-    .analysis-box small{
-      font-size:8px;
-      font-weight:900;
-      letter-spacing:.7px;
-      text-transform:uppercase;
-      opacity:.76;
-    }
-
-    .analysis-box strong{
-      display:block;
-      margin-top:6px;
-      font:900 23px Georgia,serif;
-      overflow-wrap:anywhere;
-    }
-
-    .comparison{overflow-x:auto}
-
-    table{
-      width:100%;
-      min-width:700px;
-      border-collapse:collapse;
-      font-size:10px;
-    }
-
-    th,td{
-      padding:10px 8px;
-      border-bottom:1px solid #e1d0b5;
-      text-align:left;
-    }
-
-    th{
-      color:var(--wine);
-      font-size:8px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-
-    .best-row{
-      background:#e2f0e7;
-    }
-
-    .detail-header{
-      padding:18px;
-      border-radius:21px;
-      color:white;
-      background:
-        radial-gradient(circle at 88% 10%,rgba(223,197,143,.24),transparent 30%),
-        linear-gradient(135deg,var(--wine-dark),var(--wine));
-    }
-
-    .detail-header h2{
-      margin:0;
-      font:900 25px Georgia,serif;
-    }
-
-    .detail-header p{
-      margin:6px 0 0;
-      color:#eadaca;
-      font-size:11px;
-    }
-
-    .detail-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:8px;
-      margin-top:11px;
-    }
-
-    .detail-box{
-      padding:11px;
-      border-radius:14px;
-      background:#f1e4ce;
-    }
-
-    .detail-box small{
-      display:block;
-      color:var(--muted);
-      font-size:8px;
-      font-weight:900;
-      text-transform:uppercase;
-    }
-
-    .detail-box strong{
-      display:block;
-      margin-top:5px;
-      font-size:11px;
-      overflow-wrap:anywhere;
-    }
-
-    .timeline{
-      display:grid;
-      gap:8px;
-    }
-
-    .timeline-item{
-      position:relative;
-      padding:11px 11px 11px 35px;
-      border-radius:14px;
-      background:#f4e7d3;
-    }
-
-    .timeline-item::before{
-      content:"";
-      position:absolute;
-      left:14px;
-      top:16px;
-      width:9px;
-      height:9px;
-      border-radius:50%;
-      background:var(--wine);
-      box-shadow:0 0 0 4px rgba(96,26,42,.12);
-    }
-
-    .timeline-item strong{
-      display:block;
-      color:var(--wine-dark);
-      font-size:11px;
-    }
-
-    .timeline-item span{
-      display:block;
-      margin-top:4px;
-      color:var(--muted);
-      font-size:9px;
-    }
-
-    .modal-bg{
-      position:fixed;
-      inset:0;
-      z-index:100;
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      padding:12px;
-      background:rgba(34,14,18,.64);
-      backdrop-filter:blur(5px);
-    }
-
-    .modal-bg.show{display:flex}
-
-    .modal{
-      width:min(100%,800px);
-      max-height:94vh;
-      overflow:auto;
-      border-radius:27px 27px 18px 18px;
-      background:var(--cream);
-      box-shadow:0 25px 65px rgba(0,0,0,.35);
-    }
-
-    .modal-head{
-      position:sticky;
-      top:0;
-      z-index:2;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:15px 16px;
-      border-bottom:1px solid var(--line);
-      background:rgba(244,236,221,.96);
-      backdrop-filter:blur(13px);
-    }
-
-    .modal-head h3{
-      margin:0;
-      color:var(--wine-dark);
-      font:900 20px Georgia,serif;
-    }
-
-    .close{
-      width:38px;
-      height:38px;
-      border:0;
-      border-radius:12px;
-      color:white;
-      background:var(--wine);
-      font-size:19px;
-    }
-
-    .modal-body{padding:15px}
-
-    .form{
-      display:grid;
-      gap:11px;
-    }
-
-    .field label{
-      display:block;
-      margin:0 0 5px 2px;
-      color:var(--wine-dark);
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-
-    .cols{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:9px;
-    }
-
-    .form-actions{
-      display:flex;
-      gap:8px;
-      margin-top:4px;
-    }
-
-    .form-actions .btn{flex:1}
-
-    .order-lines{
-      display:grid;
-      gap:9px;
-      margin-top:8px;
-    }
-
-    .order-line{
-      padding:11px;
-      border:1px solid #dac7a8;
-      border-radius:15px;
-      background:#fffaf1;
-    }
-
-    .line-grid{
-      display:grid;
-      grid-template-columns:1fr 78px;
-      gap:7px;
-    }
-
-    .line-grid-3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:7px;
-      margin-top:7px;
-    }
-
-    .line-total{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      margin-top:9px;
-      padding-top:8px;
-      border-top:1px solid #e1cfb2;
-      font-size:10px;
-      font-weight:900;
-    }
-
-    .summary{
-      margin-top:12px;
-      padding:13px;
-      border-radius:17px;
-      color:white;
-      background:linear-gradient(135deg,var(--wine-dark),var(--wine));
-    }
-
-    .summary-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:5px 0;
-      font-size:10px;
-    }
-
-    .summary-row.total{
-      margin-top:6px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.25);
-      color:#f4dca8;
-      font-size:15px;
-      font-weight:900;
-    }
-
-    .check-row{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:11px;
-      border:1px solid #dac7a8;
-      border-radius:14px;
-      background:#fffaf1;
-      font-size:10px;
-      font-weight:800;
-    }
-
-    .check-row input{
-      width:18px;
-      height:18px;
-      accent-color:var(--wine);
-    }
-
-    .bottom{
-      position:fixed;
-      left:50%;
-      bottom:0;
-      z-index:50;
-      width:min(100%,920px);
-      transform:translateX(-50%);
-      display:grid;
-      grid-template-columns:repeat(7,1fr);
-      gap:3px;
-      padding:7px 5px max(8px,env(safe-area-inset-bottom));
-      border-top:1px solid var(--line);
-      background:rgba(255,250,240,.97);
-      backdrop-filter:blur(18px);
-      box-shadow:0 -10px 25px rgba(50,21,26,.11);
-    }
-
-    .nav{
-      min-width:0;
-      padding:6px 1px;
-      border:0;
-      border-radius:11px;
-      color:#806e69;
-      background:transparent;
-      font-size:7px;
-      font-weight:900;
-    }
-
-    .nav b{
-      display:block;
-      margin-bottom:3px;
-      font-size:16px;
-      line-height:1;
-    }
-
-    .nav.active{
-      color:white;
-      background:linear-gradient(135deg,var(--wine-dark),var(--wine));
-    }
-
-    .more-menu{
-      position:fixed;
-      right:12px;
-      bottom:82px;
-      z-index:70;
-      display:none;
-      width:190px;
-      padding:8px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:#fffaf0;
-      box-shadow:0 16px 36px rgba(44,18,23,.24);
-    }
-
-    .more-menu.show{display:grid;gap:6px}
-
-    .more-menu button{
-      padding:11px;
-      border:0;
-      border-radius:12px;
-      color:var(--wine-dark);
-      text-align:left;
-      background:#f0e2ca;
-      font-size:10px;
-      font-weight:900;
-    }
-
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:95px;
-      z-index:150;
-      width:calc(100% - 28px);
-      max-width:480px;
-      padding:12px;
-      border-radius:15px;
-      color:white;
-      background:#332326;
-      text-align:center;
-      font-size:10px;
-      font-weight:900;
-      opacity:0;
-      transform:translate(-50%,100px);
-      transition:.22s;
-    }
-
-    .toast.show{
-      opacity:1;
-      transform:translate(-50%,0);
-    }
-
-    @media(min-width:700px){
-      .stats{grid-template-columns:repeat(4,1fr)}
-      .quick{grid-template-columns:repeat(4,1fr)}
-      .analysis{grid-template-columns:repeat(2,1fr)}
-      .detail-grid{grid-template-columns:repeat(4,1fr)}
-      .modal-bg{align-items:center}
-      .modal{border-radius:27px}
-    }
-
-    @media(max-width:460px){
-      .brand h1{font-size:15px}
-      .brand p{font-size:7px}
-      .version{font-size:7px}
-      .line-grid-3{grid-template-columns:1fr 1fr}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4b101d">
+<title>XA Supply Command V2</title>
+
+<style>
+:root{
+  --wine:#641d31;
+  --wine2:#8b2e49;
+  --dark:#241419;
+  --cream:#f3eadb;
+  --ivory:#fffaf2;
+  --gold:#c39b55;
+  --muted:#756b66;
+  --line:rgba(76,24,38,.14);
+  --green:#2f7656;
+  --orange:#b16a2f;
+  --red:#a53646;
+  --blue:#376b83;
+  --shadow:0 12px 30px rgba(52,22,29,.11);
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  padding-bottom:88px;
+  color:var(--dark);
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+  radial-gradient(circle at 5% 0,rgba(195,155,85,.17),transparent 30%),
+  linear-gradient(180deg,#fbf6ec,#eee2d0);
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:min(100%,980px);
+  margin:auto;
+}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:40;
+  padding:9px 10px;
+  border-bottom:1px solid var(--line);
+  background:rgba(247,239,225,.94);
+  backdrop-filter:blur(18px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-height:69px;
+  padding:10px 12px;
+  border-radius:22px;
+  color:white;
+  background:
+  radial-gradient(circle at 90% 10%,rgba(232,204,149,.24),transparent 30%),
+  linear-gradient(135deg,#321017,#681d33 66%,#8a3048);
+  box-shadow:0 10px 24px rgba(56,16,25,.25);
+}
+
+.logo{
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  border:2px solid #e1c88f;
+  border-radius:16px;
+  color:#e7cf98;
+  font:900 25px Georgia,serif;
+  letter-spacing:-3px;
+}
+
+.brand-copy{
+  min-width:0;
+  flex:1;
+}
+
+.brand h1{
+  margin:0;
+  font:900 18px Georgia,serif;
+  letter-spacing:.7px;
+}
+
+.brand p{
+  margin:4px 0 0;
+  color:#eadabd;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+.version{
+  padding:7px 9px;
+  border:1px solid rgba(225,200,143,.55);
+  border-radius:999px;
+  color:#f8e9c9;
+  font-size:8px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+main{
+  padding:11px;
+}
+
+.page{
+  display:none;
+  animation:fade .18s ease;
+}
+
+.page.active{
+  display:block;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(4px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:21px 18px;
+  border-radius:27px;
+  color:white;
+  background:
+  radial-gradient(circle at 86% 10%,rgba(225,200,143,.29),transparent 30%),
+  linear-gradient(145deg,#351017,#6d2037 65%,#933b53);
+  box-shadow:var(--shadow);
+}
+
+.hero:after{
+  content:"XA";
+  position:absolute;
+  right:-18px;
+  bottom:-48px;
+  color:rgba(255,255,255,.055);
+  font:900 145px Georgia,serif;
+  letter-spacing:-17px;
+}
+
+.hero > *{
+  position:relative;
+  z-index:1;
+}
+
+.hero-tag{
+  display:inline-block;
+  padding:6px 10px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:999px;
+  color:#f3dfbb;
+  background:rgba(255,255,255,.07);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.hero h2{
+  max-width:620px;
+  margin:14px 0 7px;
+  font:900 clamp(27px,7vw,43px)/1 Georgia,serif;
+}
+
+.hero p{
+  max-width:590px;
+  margin:0;
+  color:#eadbca;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.hero-actions,
+.actions,
+.form-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.hero-actions{
+  margin-top:17px;
+}
+
+.btn{
+  min-height:42px;
+  padding:10px 13px;
+  border:0;
+  border-radius:13px;
+  font-size:10px;
+  font-weight:900;
+}
+
+.btn.primary,
+.mini.primary{
+  color:white;
+  background:linear-gradient(135deg,var(--wine),var(--wine2));
+}
+
+.btn.gold{
+  color:#352016;
+  background:linear-gradient(135deg,#edd7a6,var(--gold));
+}
+
+.btn.soft{
+  color:var(--wine);
+  border:1px solid #ddc9a7;
+  background:#f2e4cc;
+}
+
+.btn.dark{
+  color:white;
+  background:#332429;
+}
+
+.btn.green,
+.mini.green{
+  color:white;
+  background:var(--green);
+}
+
+.btn.red,
+.mini.red{
+  color:white;
+  background:var(--red);
+}
+
+.btn.block{
+  width:100%;
+}
+
+.title-row{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:10px;
+  margin:5px 2px 12px;
+}
+
+.title-row h2{
+  margin:0;
+  color:#3b111c;
+  font:900 25px Georgia,serif;
+}
+
+.title-row p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin:10px 0;
+}
+
+.stat{
+  min-height:91px;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,250,242,.92);
+  box-shadow:0 7px 18px rgba(50,21,26,.06);
+}
+
+.stat small{
+  color:var(--muted);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+}
+
+.stat strong{
+  display:block;
+  margin-top:7px;
+  color:#43131f;
+  font:900 22px Georgia,serif;
+}
+
+.stat span{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.card{
+  margin-top:10px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(255,250,242,.94);
+  box-shadow:0 8px 20px rgba(50,21,26,.07);
+}
+
+.card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.card-head h3{
+  margin:0;
+  color:#43131f;
+  font:900 17px Georgia,serif;
+}
+
+.card-head span{
+  color:var(--muted);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+
+.quick{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.quick button{
+  min-height:73px;
+  padding:11px;
+  border:1px solid #dfceb0;
+  border-radius:16px;
+  color:var(--dark);
+  text-align:left;
+  background:linear-gradient(145deg,#fffaf2,#eee0c8);
+}
+
+.quick strong{
+  display:block;
+  margin-bottom:4px;
+  color:var(--wine);
+  font-size:12px;
+}
+
+.quick small{
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.35;
+}
+
+.alerts,
+.list{
+  display:grid;
+  gap:8px;
+}
+
+.alert{
+  padding:10px 11px;
+  border-radius:13px;
+  font-size:10px;
+  font-weight:800;
+  line-height:1.4;
+}
+
+.alert.bad{
+  color:#6e1c27;
+  background:#f0d7db;
+  border:1px solid #e3b9c0;
+}
+
+.alert.warn{
+  color:#70401d;
+  background:#f2dfc8;
+  border:1px solid #e6c59f;
+}
+
+.alert.good{
+  color:#20523b;
+  background:#dceddf;
+  border:1px solid #badbc8;
+}
+
+.toolbar{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:7px;
+  margin-bottom:9px;
+}
+
+.search,
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d8c6a7;
+  border-radius:12px;
+  color:var(--dark);
+  background:#fffdf8;
+  outline:none;
+}
+
+.search{
+  height:43px;
+  padding:0 12px;
+}
+
+.field input,
+.field select{
+  height:43px;
+  padding:0 10px;
+}
+
+.field textarea{
+  min-height:80px;
+  padding:10px;
+  resize:vertical;
+}
+
+.search:focus,
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--wine);
+  box-shadow:0 0 0 3px rgba(100,29,49,.08);
+}
+
+.item{
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:#fffaf2;
+  box-shadow:0 6px 15px rgba(50,21,26,.055);
+}
+
+.item-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.item h3{
+  margin:0;
+  color:#43131f;
+  font:900 16px Georgia,serif;
+}
+
+.subtitle{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.35;
+}
+
+.badge{
+  flex:0 0 auto;
+  padding:6px 8px;
+  border-radius:999px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+}
+
+.b-good{
+  color:#20513b;
+  background:#dceee4;
+}
+
+.b-warn{
+  color:#6c4a1c;
+  background:#f3e3b7;
+}
+
+.b-info{
+  color:#22566e;
+  background:#dbeaf1;
+}
+
+.b-bad{
+  color:#75232f;
+  background:#f1d6dc;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:6px;
+  margin-top:9px;
+}
+
+.meta div{
+  min-height:45px;
+  padding:8px;
+  border-radius:11px;
+  background:#f2e5d1;
+}
+
+.meta label{
+  display:block;
+  color:var(--muted);
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+
+.meta strong{
+  display:block;
+  margin-top:4px;
+  font-size:10px;
+  overflow-wrap:anywhere;
+}
+
+.mini{
+  min-height:33px;
+  padding:7px 9px;
+  border:0;
+  border-radius:9px;
+  color:var(--wine);
+  background:#eadbc1;
+  font-size:9px;
+  font-weight:900;
+}
+
+.empty{
+  padding:26px 12px;
+  border:1px dashed #cdb99b;
+  border-radius:17px;
+  color:var(--muted);
+  text-align:center;
+  background:rgba(255,255,255,.4);
+  font-size:11px;
+}
+
+.empty strong{
+  display:block;
+  margin-bottom:5px;
+  color:var(--wine);
+  font:900 17px Georgia,serif;
+}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.kpi{
+  padding:14px;
+  border-radius:17px;
+  color:white;
+  background:linear-gradient(145deg,#48141f,#74243a);
+}
+
+.kpi:nth-child(even){
+  background:linear-gradient(145deg,#57401e,#947139);
+}
+
+.kpi small{
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  opacity:.76;
+}
+
+.kpi strong{
+  display:block;
+  margin-top:6px;
+  font:900 22px Georgia,serif;
+}
+
+.progress{
+  height:9px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#e6d8c1;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,var(--wine),var(--gold));
+}
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  padding:11px;
+  background:rgba(34,14,18,.66);
+  backdrop-filter:blur(5px);
+}
+
+.modal-bg.show{
+  display:flex;
+}
+
+.modal{
+  width:min(100%,820px);
+  max-height:94vh;
+  overflow:auto;
+  border-radius:26px 26px 17px 17px;
+  background:var(--cream);
+  box-shadow:0 25px 65px rgba(0,0,0,.35);
+}
+
+.modal-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:14px 15px;
+  border-bottom:1px solid var(--line);
+  background:rgba(244,236,221,.96);
+  backdrop-filter:blur(13px);
+}
+
+.modal-head h3{
+  margin:0;
+  color:#43131f;
+  font:900 20px Georgia,serif;
+}
+
+.close{
+  width:37px;
+  height:37px;
+  border:0;
+  border-radius:11px;
+  color:white;
+  background:var(--wine);
+  font-size:19px;
+}
+
+.modal-body{
+  padding:14px;
+}
+
+.form{
+  display:grid;
+  gap:10px;
+}
+
+.field label{
+  display:block;
+  margin:0 0 5px 2px;
+  color:#43131f;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+
+.cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.form-actions .btn{
+  flex:1;
+}
+
+.bottom{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  z-index:50;
+  width:min(100%,980px);
+  transform:translateX(-50%);
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:3px;
+  padding:7px 5px max(8px,env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  background:rgba(255,250,240,.97);
+  backdrop-filter:blur(18px);
+  box-shadow:0 -10px 25px rgba(50,21,26,.11);
+}
+
+.nav{
+  min-width:0;
+  padding:6px 1px;
+  border:0;
+  border-radius:10px;
+  color:#806e69;
+  background:transparent;
+  font-size:7px;
+  font-weight:900;
+}
+
+.nav b{
+  display:block;
+  margin-bottom:3px;
+  font-size:16px;
+  line-height:1;
+}
+
+.nav.active{
+  color:white;
+  background:linear-gradient(135deg,#3b111c,var(--wine));
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  z-index:200;
+  max-width:90%;
+  transform:translate(-50%,20px);
+  padding:11px 14px;
+  border-radius:13px;
+  color:white;
+  background:#2f2226;
+  box-shadow:0 13px 30px rgba(0,0,0,.25);
+  font-size:10px;
+  font-weight:900;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(min-width:700px){
+  .stats{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .quick{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .kpi-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .meta{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+@media(max-width:430px){
+  .brand h1{
+    font-size:15px;
+  }
+
+  .version{
+    font-size:7px;
+  }
+
+  .cols{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
+
 <div class="app">
 
-  <header class="top">
-    <div class="brand">
-      <div class="logo">XA</div>
+<header class="top">
+  <div class="brand">
+    <div class="logo">XA</div>
 
-      <div class="brand-copy">
-        <h1>XA SUPPLY COMMAND</h1>
-        <p>Supplier, Procurement & Delivery Management</p>
-      </div>
-
-      <div class="version">V1.2 PRO</div>
+    <div class="brand-copy">
+      <h1>SUPPLY COMMAND</h1>
+      <p>Procurement · Suppliers · Orders · Control</p>
     </div>
-  </header>
 
-  <main>
+    <div class="version">V2 ONLINE</div>
+  </div>
+</header>
 
-    <section class="page active" id="page-home">
-      <div class="hero">
-        <span class="hero-tag">● XA SUPPLY CONTROL</span>
+<main>
 
-        <h2>Dall’ordine alla consegna</h2>
+<section class="page active" id="dashboard">
 
-        <p>
-          Gestione completa di fornitori, prodotti, acquisti, scadenze,
-          pagamenti, spedizioni e tracking.
-        </p>
+  <div class="hero">
+    <span class="hero-tag">XA PROCUREMENT CONTROL SYSTEM</span>
 
-        <div class="hero-actions">
-          <button class="btn btn-gold" onclick="openSupplier()">+ Fornitore</button>
-          <button class="btn btn-dark" onclick="openOrder()">+ Nuovo ordine</button>
-          <button class="btn btn-primary" onclick="openDelivery()">+ Consegna</button>
-        </div>
+    <h2>Ogni fornitore sotto controllo.</h2>
+
+    <p>
+      Una console unica per anagrafiche, prodotti, ordini,
+      costi, scadenze e decisioni d’acquisto.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn gold" onclick="openSupplier()">
+        ＋ NUOVO FORNITORE
+      </button>
+
+      <button class="btn soft" onclick="openOrder()">
+        ＋ NUOVO ORDINE
+      </button>
+    </div>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Fornitori attivi</small>
+      <strong id="sSuppliers">0</strong>
+      <span>Anagrafiche operative</span>
+    </div>
+
+    <div class="stat">
+      <small>Ordini aperti</small>
+      <strong id="sOrders">0</strong>
+      <span>Da completare</span>
+    </div>
+
+    <div class="stat">
+      <small>Valore aperto</small>
+      <strong id="sOpenValue">€ 0</strong>
+      <span>Impegni correnti</span>
+    </div>
+
+    <div class="stat">
+      <small>Scadenze</small>
+      <strong id="sDue">0</strong>
+      <span>Entro 7 giorni</span>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Comandi rapidi</h3>
+      <span>OPERATIONS</span>
+    </div>
+
+    <div class="quick">
+
+      <button onclick="openSupplier()">
+        <strong>🏭 Fornitore</strong>
+        <small>Crea una nuova anagrafica completa</small>
+      </button>
+
+      <button onclick="openProduct()">
+        <strong>📦 Prodotto</strong>
+        <small>Registra prodotto, prezzo e scorta</small>
+      </button>
+
+      <button onclick="openOrder()">
+        <strong>🧾 Ordine</strong>
+        <small>Inserisci ordine e data prevista</small>
+      </button>
+
+      <button onclick="showPage('analysis')">
+        <strong>📊 Analisi</strong>
+        <small>Controlla spesa e performance</small>
+      </button>
+
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Centro avvisi</h3>
+      <span>LIVE</span>
+    </div>
+
+    <div class="alerts" id="alerts"></div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Ultimi ordini</h3>
+      <span>RECENT</span>
+    </div>
+
+    <div class="list" id="recentOrders"></div>
+
+  </div>
+
+</section>
+
+<section class="page" id="suppliers">
+
+  <div class="title-row">
+
+    <div>
+      <h2>Fornitori</h2>
+      <p>Anagrafiche, affidabilità e condizioni</p>
+    </div>
+
+    <button class="btn primary" onclick="openSupplier()">
+      ＋ NUOVO
+    </button>
+
+  </div>
+
+  <div class="toolbar">
+
+    <input
+      class="search"
+      id="supplierSearch"
+      placeholder="Cerca fornitore, categoria, città..."
+      oninput="renderSuppliers()"
+    >
+
+    <button class="btn soft" onclick="renderSuppliers()">
+      CERCA
+    </button>
+
+  </div>
+
+  <div class="list" id="supplierList"></div>
+
+</section>
+
+<section class="page" id="products">
+
+  <div class="title-row">
+
+    <div>
+      <h2>Prodotti</h2>
+      <p>Catalogo, prezzi e livelli di scorta</p>
+    </div>
+
+    <button class="btn primary" onclick="openProduct()">
+      ＋ NUOVO
+    </button>
+
+  </div>
+
+  <div class="toolbar">
+
+    <input
+      class="search"
+      id="productSearch"
+      placeholder="Cerca prodotto, categoria, fornitore..."
+      oninput="renderProducts()"
+    >
+
+    <button class="btn soft" onclick="renderProducts()">
+      CERCA
+    </button>
+
+  </div>
+
+  <div class="list" id="productList"></div>
+
+</section>
+
+<section class="page" id="orders">
+
+  <div class="title-row">
+
+    <div>
+      <h2>Ordini</h2>
+      <p>Acquisti, consegne e pagamenti</p>
+    </div>
+
+    <button class="btn primary" onclick="openOrder()">
+      ＋ NUOVO
+    </button>
+
+  </div>
+
+  <div class="toolbar">
+
+    <input
+      class="search"
+      id="orderSearch"
+      placeholder="Cerca ordine, fornitore o stato..."
+      oninput="renderOrders()"
+    >
+
+    <button class="btn soft" onclick="renderOrders()">
+      CERCA
+    </button>
+
+  </div>
+
+  <div class="list" id="orderList"></div>
+
+</section>
+
+<section class="page" id="analysis">
+
+  <div class="title-row">
+
+    <div>
+      <h2>Analisi</h2>
+      <p>Indicatori per decidere meglio</p>
+    </div>
+
+    <button class="btn soft" onclick="renderAnalysis()">
+      AGGIORNA
+    </button>
+
+  </div>
+
+  <div class="kpi-grid">
+
+    <div class="kpi">
+      <small>Spesa totale</small>
+      <strong id="aSpend">€ 0</strong>
+    </div>
+
+    <div class="kpi">
+      <small>Ticket medio</small>
+      <strong id="aAvg">€ 0</strong>
+    </div>
+
+    <div class="kpi">
+      <small>Consegne completate</small>
+      <strong id="aDelivered">0</strong>
+    </div>
+
+    <div class="kpi">
+      <small>Affidabilità media</small>
+      <strong id="aRating">0%</strong>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Spesa per fornitore</h3>
+      <span>TOP SUPPLIERS</span>
+    </div>
+
+    <div id="supplierSpend"></div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Stato operativo</h3>
+      <span>ORDER MIX</span>
+    </div>
+
+    <div id="orderMix"></div>
+
+  </div>
+
+</section>
+
+<section class="page" id="settings">
+
+  <div class="title-row">
+
+    <div>
+      <h2>Archivio</h2>
+      <p>Backup, ripristino e dati demo</p>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Gestione dati</h3>
+      <span>LOCAL STORAGE</span>
+    </div>
+
+    <div class="actions">
+
+      <button class="btn primary" onclick="exportData()">
+        ESPORTA BACKUP
+      </button>
+
+      <button
+        class="btn soft"
+        onclick="document.getElementById('importFile').click()"
+      >
+        IMPORTA BACKUP
+      </button>
+
+      <button class="btn gold" onclick="loadDemo()">
+        CARICA DATI DEMO
+      </button>
+
+      <button class="btn red" onclick="resetAll()">
+        AZZERA TUTTO
+      </button>
+
+      <input
+        id="importFile"
+        type="file"
+        accept=".json"
+        hidden
+        onchange="importData(event)"
+      >
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Informazioni</h3>
+      <span>XA V2</span>
+    </div>
+
+    <div class="meta">
+
+      <div>
+        <label>Versione</label>
+        <strong>2.0</strong>
       </div>
 
-      <div class="stats">
-        <div class="stat">
-          <small>Fornitori</small>
-          <strong id="statSuppliers">0</strong>
-          <span>Archivio attivo</span>
-        </div>
-
-        <div class="stat">
-          <small>Ordini aperti</small>
-          <strong id="statOrders">0</strong>
-          <span>Da completare</span>
-        </div>
-
-        <div class="stat">
-          <small>In viaggio</small>
-          <strong id="statDeliveries">0</strong>
-          <span>Spedizioni aperte</span>
-        </div>
-
-        <div class="stat">
-          <small>Da pagare</small>
-          <strong id="statPayments">€ 0,00</strong>
-          <span>Scadenze aperte</span>
-        </div>
+      <div>
+        <label>Database</label>
+        <strong>Locale dispositivo</strong>
       </div>
 
-      <div class="card">
-        <div class="card-head">
-          <h3>Avvisi operativi</h3>
-          <span>XA DEADLINE MONITOR</span>
-        </div>
-
-        <div class="alerts" id="alerts"></div>
+      <div>
+        <label>Formato</label>
+        <strong>Single index.html</strong>
       </div>
 
-      <div class="card">
-        <div class="card-head">
-          <h3>Comandi rapidi</h3>
-          <span>CONTROL PANEL</span>
-        </div>
-
-        <div class="quick">
-          <button onclick="openSupplier()">
-            <strong>🏢 Fornitore</strong>
-            <small>Contatti e condizioni</small>
-          </button>
-
-          <button onclick="openProduct()">
-            <strong>📦 Prodotto</strong>
-            <small>Prezzo e formato</small>
-          </button>
-
-          <button onclick="openOrder()">
-            <strong>🛒 Ordine</strong>
-            <small>Righe e totali automatici</small>
-          </button>
-
-          <button onclick="openDelivery()">
-            <strong>🚚 Consegna</strong>
-            <small>Corriere e tracking</small>
-          </button>
-        </div>
+      <div>
+        <label>Stato</label>
+        <strong>Operativo</strong>
       </div>
 
-      <div class="card">
-        <div class="card-head">
-          <h3>Ultimi ordini</h3>
-          <span id="homeOrderCount">0 ORDINI</span>
-        </div>
+    </div>
 
-        <div class="list" id="homeOrders"></div>
-      </div>
-    </section>
+  </div>
 
-    <section class="page" id="page-suppliers">
-      <div class="title-row">
-        <div>
-          <h2>Fornitori</h2>
-          <p>Anagrafica, storico e affidabilità</p>
-        </div>
-      </div>
+</section>
 
-      <div class="toolbar">
-        <input class="search" id="supplierSearch"
-          placeholder="Cerca azienda, nazione o categoria"
-          oninput="renderSuppliers()">
-
-        <button class="btn btn-primary" onclick="openSupplier()">+</button>
-      </div>
-
-      <div class="list" id="supplierList"></div>
-    </section>
-
-    <section class="page" id="page-products">
-      <div class="title-row">
-        <div>
-          <h2>Prodotti</h2>
-          <p>Catalogo, prezzi e costo reale</p>
-        </div>
-      </div>
-
-      <div class="toolbar">
-        <input class="search" id="productSearch"
-          placeholder="Cerca prodotto, fornitore o categoria"
-          oninput="renderProducts()">
-
-        <button class="btn btn-primary" onclick="openProduct()">+</button>
-      </div>
-
-      <div class="list" id="productList"></div>
-    </section>
-
-    <section class="page" id="page-orders">
-      <div class="title-row">
-        <div>
-          <h2>Ordini</h2>
-          <p>Prodotti, IVA, sconti e pagamento</p>
-        </div>
-      </div>
-
-      <div class="toolbar">
-        <input class="search" id="orderSearch"
-          placeholder="Cerca ordine, fornitore o stato"
-          oninput="renderOrders()">
-
-        <button class="btn btn-primary" onclick="openOrder()">+</button>
-      </div>
-
-      <div class="list" id="orderList"></div>
-    </section>
-
-    <section class="page" id="page-deliveries">
-      <div class="title-row">
-        <div>
-          <h2>Consegne</h2>
-          <p>Tracking, corrieri e ritardi</p>
-        </div>
-      </div>
-
-      <div class="toolbar">
-        <input class="search" id="deliverySearch"
-          placeholder="Cerca ordine, corriere, tracking o stato"
-          oninput="renderDeliveries()">
-
-        <button class="btn btn-primary" onclick="openDelivery()">+</button>
-      </div>
-
-      <div class="list" id="deliveryList"></div>
-    </section>
-
-    <section class="page" id="page-payments">
-      <div class="title-row">
-        <div>
-          <h2>Pagamenti</h2>
-          <p>Scadenze collegate agli ordini</p>
-        </div>
-      </div>
-
-      <div class="toolbar">
-        <input class="search" id="paymentSearch"
-          placeholder="Cerca fornitore, fattura o ordine"
-          oninput="renderPayments()">
-
-        <button class="btn btn-primary" onclick="openPayment()">+</button>
-      </div>
-
-      <div class="list" id="paymentList"></div>
-    </section>
-
-    <section class="page" id="page-analysis">
-      <div class="title-row">
-        <div>
-          <h2>Analisi</h2>
-          <p>Spese, affidabilità e confronto reale</p>
-        </div>
-      </div>
-
-      <div class="analysis">
-        <div class="analysis-box">
-          <small>Spesa complessiva</small>
-          <strong id="analysisSpend">€ 0,00</strong>
-        </div>
-
-        <div class="analysis-box">
-          <small>Ordine medio</small>
-          <strong id="analysisAverage">€ 0,00</strong>
-        </div>
-
-        <div class="analysis-box">
-          <small>Fornitore più usato</small>
-          <strong id="analysisSupplier">—</strong>
-        </div>
-
-        <div class="analysis-box">
-          <small>Pagamenti aperti</small>
-          <strong id="analysisPayments">€ 0,00</strong>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <h3>Confronto fornitori</h3>
-          <span>COSTO REALE UNITARIO</span>
-        </div>
-
-        <div class="field">
-          <label>Filtra nome prodotto</label>
-          <input id="comparisonSearch"
-            placeholder="Esempio: bottiglia, tappo, succo"
-            oninput="renderComparison()">
-        </div>
-
-        <div class="comparison">
-          <table>
-            <thead>
-              <tr>
-                <th>Prodotto</th>
-                <th>Fornitore</th>
-                <th>Prezzo</th>
-                <th>Minimo</th>
-                <th>Trasporto</th>
-                <th>Costo reale</th>
-                <th>Consegna</th>
-              </tr>
-            </thead>
-
-            <tbody id="comparisonBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="page" id="page-supplier-detail">
-      <div id="supplierDetailContent"></div>
-    </section>
-
-    <section class="page" id="page-settings">
-      <div class="title-row">
-        <div>
-          <h2>Impostazioni</h2>
-          <p>Configurazione e backup</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <h3>Dati azienda</h3>
-          <span>XA SETTINGS</span>
-        </div>
-
-        <div class="form">
-          <div class="field">
-            <label>Nome azienda</label>
-            <input id="companyName">
-          </div>
-
-          <div class="field">
-            <label>Valuta</label>
-            <select id="currency">
-              <option value="EUR">Euro – EUR</option>
-              <option value="HUF">Fiorino ungherese – HUF</option>
-              <option value="GBP">Sterlina – GBP</option>
-              <option value="USD">Dollaro – USD</option>
-            </select>
-          </div>
-
-          <button class="btn btn-primary btn-block" onclick="saveSettings()">
-            Salva impostazioni
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <h3>Backup</h3>
-          <span>ARCHIVIO LOCALE</span>
-        </div>
-
-        <div class="form-actions">
-          <button class="btn btn-soft" onclick="exportBackup()">Esporta</button>
-
-          <button class="btn btn-dark"
-            onclick="document.getElementById('backupFile').click()">
-            Importa
-          </button>
-        </div>
-
-        <input type="file" id="backupFile" hidden accept=".json"
-          onchange="importBackup(event)">
-      </div>
-
-      <div class="card">
-        <button class="btn btn-danger btn-block" onclick="resetData()">
-          Cancella tutti i dati
-        </button>
-      </div>
-    </section>
-
-  </main>
-</div>
+</main>
 
 <nav class="bottom">
-  <button class="nav active" onclick="goPage('home',this)">
-    <b>⌂</b>HOME
+
+  <button
+    class="nav active"
+    data-page="dashboard"
+    onclick="showPage('dashboard',this)"
+  >
+    <b>⌂</b>
+    HOME
   </button>
 
-  <button class="nav" onclick="goPage('suppliers',this)">
-    <b>🏢</b>FORNITORI
+  <button
+    class="nav"
+    data-page="suppliers"
+    onclick="showPage('suppliers',this)"
+  >
+    <b>🏭</b>
+    FORNITORI
   </button>
 
-  <button class="nav" onclick="goPage('products',this)">
-    <b>📦</b>PRODOTTI
+  <button
+    class="nav"
+    data-page="products"
+    onclick="showPage('products',this)"
+  >
+    <b>📦</b>
+    PRODOTTI
   </button>
 
-  <button class="nav" onclick="goPage('orders',this)">
-    <b>🛒</b>ORDINI
+  <button
+    class="nav"
+    data-page="orders"
+    onclick="showPage('orders',this)"
+  >
+    <b>🧾</b>
+    ORDINI
   </button>
 
-  <button class="nav" onclick="goPage('deliveries',this)">
-    <b>🚚</b>CONSEGNE
+  <button
+    class="nav"
+    data-page="analysis"
+    onclick="showPage('analysis',this)"
+  >
+    <b>▥</b>
+    ANALISI
   </button>
 
-  <button class="nav" onclick="goPage('payments',this)">
-    <b>💶</b>PAGAMENTI
+  <button
+    class="nav"
+    data-page="settings"
+    onclick="showPage('settings',this)"
+  >
+    <b>⚙</b>
+    ARCHIVIO
   </button>
 
-  <button class="nav" onclick="toggleMoreMenu()">
-    <b>☰</b>ALTRO
-  </button>
 </nav>
 
-<div class="more-menu" id="moreMenu">
-  <button onclick="openMorePage('analysis')">📊 Analisi e confronto</button>
-  <button onclick="openMorePage('settings')">⚙️ Impostazioni e backup</button>
 </div>
 
-<!-- FORNITORE -->
-<div class="modal-bg" id="supplierModal">
+<div
+  class="modal-bg"
+  id="modalBg"
+  onclick="if(event.target===this)closeModal()"
+>
+
   <div class="modal">
+
     <div class="modal-head">
-      <h3 id="supplierTitle">Nuovo fornitore</h3>
-      <button class="close" onclick="closeModal('supplierModal')">×</button>
+
+      <h3 id="modalTitle">Nuovo</h3>
+
+      <button class="close" onclick="closeModal()">
+        ×
+      </button>
+
     </div>
 
-    <div class="modal-body">
-      <form class="form" onsubmit="saveSupplier(event)">
-        <input type="hidden" id="supplierId">
+    <div class="modal-body" id="modalBody"></div>
 
-        <div class="cols">
-          <div class="field">
-            <label>Ragione sociale *</label>
-            <input id="supplierName" required>
-          </div>
-
-          <div class="field">
-            <label>Referente</label>
-            <input id="supplierContact">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Telefono</label>
-            <input id="supplierPhone" type="tel">
-          </div>
-
-          <div class="field">
-            <label>Email</label>
-            <input id="supplierEmail" type="email">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Nazione</label>
-            <input id="supplierCountry">
-          </div>
-
-          <div class="field">
-            <label>Città</label>
-            <input id="supplierCity">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Indirizzo</label>
-          <input id="supplierAddress">
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Partita IVA</label>
-            <input id="supplierVat">
-          </div>
-
-          <div class="field">
-            <label>Sito web</label>
-            <input id="supplierWebsite" placeholder="https://">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Categoria</label>
-            <select id="supplierCategory">
-              <option>Sidro</option>
-              <option>Succhi e mosti</option>
-              <option>Bottiglie</option>
-              <option>Tappi</option>
-              <option>Etichette</option>
-              <option>Ingredienti</option>
-              <option>Attrezzature</option>
-              <option>Logistica</option>
-              <option>Altro</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Stato</label>
-            <select id="supplierStatus">
-              <option>Attivo</option>
-              <option>In valutazione</option>
-              <option>Sospeso</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Condizioni pagamento</label>
-            <input id="supplierTerms" placeholder="Esempio: 30 giorni">
-          </div>
-
-          <div class="field">
-            <label>Consegna media, giorni</label>
-            <input id="supplierDelivery" type="number" min="0">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Valutazione</label>
-          <select id="supplierRating">
-            <option value="5">★★★★★</option>
-            <option value="4">★★★★☆</option>
-            <option value="3">★★★☆☆</option>
-            <option value="2">★★☆☆☆</option>
-            <option value="1">★☆☆☆☆</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Note</label>
-          <textarea id="supplierNotes"></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-soft"
-            onclick="closeModal('supplierModal')">Annulla</button>
-
-          <button class="btn btn-primary">Salva</button>
-        </div>
-      </form>
-    </div>
   </div>
-</div>
 
-<!-- PRODOTTO -->
-<div class="modal-bg" id="productModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="productTitle">Nuovo prodotto</h3>
-      <button class="close" onclick="closeModal('productModal')">×</button>
-    </div>
-
-    <div class="modal-body">
-      <form class="form" onsubmit="saveProduct(event)">
-        <input type="hidden" id="productId">
-
-        <div class="field">
-          <label>Nome prodotto *</label>
-          <input id="productName" required>
-        </div>
-
-        <div class="field">
-          <label>Fornitore *</label>
-          <select id="productSupplier" required></select>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Categoria</label>
-            <select id="productCategory">
-              <option>Sidro</option>
-              <option>Succhi e mosti</option>
-              <option>Bottiglie</option>
-              <option>Tappi</option>
-              <option>Etichette</option>
-              <option>Ingredienti</option>
-              <option>Attrezzature</option>
-              <option>Altro</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Formato</label>
-            <input id="productFormat" placeholder="75 cl, scatola, kg">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Prezzo unitario *</label>
-            <input id="productPrice" type="number" min="0" step="0.01" required>
-          </div>
-
-          <div class="field">
-            <label>Minimo ordine</label>
-            <input id="productMinimum" type="number" min="0" step="1">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Trasporto stimato ordine</label>
-            <input id="productShipping" type="number" min="0" step="0.01">
-          </div>
-
-          <div class="field">
-            <label>Disponibilità</label>
-            <select id="productAvailability">
-              <option>Disponibile</option>
-              <option>Limitata</option>
-              <option>Non disponibile</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Codice</label>
-          <input id="productCode">
-        </div>
-
-        <div class="field">
-          <label>Note</label>
-          <textarea id="productNotes"></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-soft"
-            onclick="closeModal('productModal')">Annulla</button>
-
-          <button class="btn btn-primary">Salva</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- ORDINE -->
-<div class="modal-bg" id="orderModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="orderTitle">Nuovo ordine</h3>
-      <button class="close" onclick="closeModal('orderModal')">×</button>
-    </div>
-
-    <div class="modal-body">
-      <form class="form" onsubmit="saveOrder(event)">
-        <input type="hidden" id="orderId">
-
-        <div class="cols">
-          <div class="field">
-            <label>Numero ordine *</label>
-            <input id="orderNumber" required>
-          </div>
-
-          <div class="field">
-            <label>Fornitore *</label>
-            <select id="orderSupplier" required onchange="supplierChanged()"></select>
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Data ordine</label>
-            <input id="orderDate" type="date">
-          </div>
-
-          <div class="field">
-            <label>Consegna prevista</label>
-            <input id="orderDeliveryDate" type="date">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Stato ordine</label>
-            <select id="orderStatus">
-              <option>Bozza</option>
-              <option>Inviato</option>
-              <option>Confermato</option>
-              <option>In viaggio</option>
-              <option>Consegnato</option>
-              <option>Annullato</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Pagamento</label>
-            <select id="orderPaymentStatus">
-              <option>Da pagare</option>
-              <option>Parziale</option>
-              <option>Pagato</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:0">
-          <div class="card-head">
-            <h3>Prodotti dell’ordine</h3>
-
-            <button type="button" class="mini primary" onclick="addOrderLine()">
-              + Prodotto
-            </button>
-          </div>
-
-          <div class="order-lines" id="orderLines"></div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Sconto ordine %</label>
-            <input id="orderDiscount" type="number" min="0" max="100"
-              step="0.01" value="0" oninput="calculateOrder()">
-          </div>
-
-          <div class="field">
-            <label>Trasporto</label>
-            <input id="orderShipping" type="number" min="0"
-              step="0.01" value="0" oninput="calculateOrder()">
-          </div>
-        </div>
-
-        <div class="summary">
-          <div class="summary-row">
-            <span>Imponibile prodotti</span>
-            <strong id="summarySubtotal">€ 0,00</strong>
-          </div>
-
-          <div class="summary-row">
-            <span>Sconto</span>
-            <strong id="summaryDiscount">€ 0,00</strong>
-          </div>
-
-          <div class="summary-row">
-            <span>IVA</span>
-            <strong id="summaryVat">€ 0,00</strong>
-          </div>
-
-          <div class="summary-row">
-            <span>Trasporto</span>
-            <strong id="summaryShipping">€ 0,00</strong>
-          </div>
-
-          <div class="summary-row total">
-            <span>TOTALE ORDINE</span>
-            <strong id="summaryTotal">€ 0,00</strong>
-          </div>
-        </div>
-
-        <label class="check-row">
-          <input type="checkbox" id="createPayment" checked>
-          Crea automaticamente il pagamento
-        </label>
-
-        <label class="check-row">
-          <input type="checkbox" id="createDelivery" checked>
-          Crea automaticamente la consegna
-        </label>
-
-        <div class="field">
-          <label>Scadenza pagamento</label>
-          <input id="orderPaymentDue" type="date">
-        </div>
-
-        <div class="field">
-          <label>Note ordine</label>
-          <textarea id="orderNotes"></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-soft"
-            onclick="closeModal('orderModal')">Annulla</button>
-
-          <button class="btn btn-primary">Salva ordine</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- CONSEGNA -->
-<div class="modal-bg" id="deliveryModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="deliveryTitle">Nuova consegna</h3>
-      <button class="close" onclick="closeModal('deliveryModal')">×</button>
-    </div>
-
-    <div class="modal-body">
-      <form class="form" onsubmit="saveDelivery(event)">
-        <input type="hidden" id="deliveryId">
-
-        <div class="field">
-          <label>Ordine collegato *</label>
-          <select id="deliveryOrder" required onchange="deliveryOrderChanged()"></select>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Corriere</label>
-            <input id="deliveryCarrier">
-          </div>
-
-          <div class="field">
-            <label>Codice tracking</label>
-            <input id="deliveryTracking">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Link tracking</label>
-          <input id="deliveryTrackingUrl" placeholder="https://">
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Data spedizione</label>
-            <input id="deliveryShipDate" type="date">
-          </div>
-
-          <div class="field">
-            <label>Consegna prevista</label>
-            <input id="deliveryExpectedDate" type="date">
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Data effettiva</label>
-            <input id="deliveryActualDate" type="date">
-          </div>
-
-          <div class="field">
-            <label>Costo trasporto</label>
-            <input id="deliveryCost" type="number" min="0" step="0.01">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Stato</label>
-          <select id="deliveryStatus">
-            <option>In preparazione</option>
-            <option>Ritirato</option>
-            <option>In transito</option>
-            <option>In dogana</option>
-            <option>Consegnato</option>
-            <option>Problema</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Note e problemi</label>
-          <textarea id="deliveryNotes"></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-soft"
-            onclick="closeModal('deliveryModal')">Annulla</button>
-
-          <button class="btn btn-primary">Salva consegna</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- PAGAMENTO -->
-<div class="modal-bg" id="paymentModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="paymentTitle">Nuovo pagamento</h3>
-      <button class="close" onclick="closeModal('paymentModal')">×</button>
-    </div>
-
-    <div class="modal-body">
-      <form class="form" onsubmit="savePayment(event)">
-        <input type="hidden" id="paymentId">
-
-        <div class="field">
-          <label>Fornitore *</label>
-          <select id="paymentSupplier" required></select>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Riferimento</label>
-            <input id="paymentReference">
-          </div>
-
-          <div class="field">
-            <label>Importo *</label>
-            <input id="paymentAmount" type="number" min="0" step="0.01" required>
-          </div>
-        </div>
-
-        <div class="cols">
-          <div class="field">
-            <label>Scadenza</label>
-            <input id="paymentDue" type="date">
-          </div>
-
-          <div class="field">
-            <label>Stato</label>
-            <select id="paymentStatus">
-              <option>Da pagare</option>
-              <option>Pagato</option>
-              <option>Scaduto</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Metodo</label>
-          <select id="paymentMethod">
-            <option>Bonifico</option>
-            <option>Carta</option>
-            <option>Contanti</option>
-            <option>Contrassegno</option>
-            <option>Altro</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Note</label>
-          <textarea id="paymentNotes"></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-soft"
-            onclick="closeModal('paymentModal')">Annulla</button>
-
-          <button class="btn btn-primary">Salva</button>
-        </div>
-      </form>
-    </div>
-  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const KEY = "xaSupplyCommandV12";
+const KEY = "xa_supply_command_v2";
 
-const blankData = {
+let db = load() || {
   suppliers: [],
   products: [],
-  orders: [],
-  payments: [],
-  deliveries: [],
-  settings: {
-    company: "XA Fermented Redrinks",
-    currency: "EUR"
-  }
+  orders: []
 };
 
-let data = load();
-let currentOrderLines = [];
-let currentSupplierDetailId = "";
-
-function clone(value){
-  return JSON.parse(JSON.stringify(value));
+function uid(prefix){
+  return prefix + "_" +
+    Date.now().toString(36) + "_" +
+    Math.random().toString(36).slice(2,7);
 }
 
-function load(){
-  try{
-    const current = localStorage.getItem(KEY);
-
-    if(current){
-      return normalizeData(JSON.parse(current));
-    }
-
-    const v11 = localStorage.getItem("xaSupplyCommandV11");
-
-    if(v11){
-      return normalizeData(JSON.parse(v11));
-    }
-
-    const v10 = localStorage.getItem("xaSupplyCommandV1");
-
-    if(v10){
-      return normalizeData(JSON.parse(v10));
-    }
-
-    return clone(blankData);
-  }catch(error){
-    console.error(error);
-    return clone(blankData);
-  }
+function esc(v){
+  return String(v ?? "").replace(/[&<>"']/g, m => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
 }
 
-function normalizeData(value){
-  return {
-    suppliers: Array.isArray(value.suppliers) ? value.suppliers : [],
-    products: Array.isArray(value.products)
-      ? value.products.map(product => ({
-          shippingEstimate: 0,
-          ...product
-        }))
-      : [],
-    orders: Array.isArray(value.orders)
-      ? value.orders.map(order => ({
-          lines: [],
-          subtotal: Number(order.total || 0),
-          discountPercent: 0,
-          discountAmount: 0,
-          vatTotal: 0,
-          shipping: 0,
-          grandTotal: Number(order.total || 0),
-          ...order
-        }))
-      : [],
-    payments: Array.isArray(value.payments) ? value.payments : [],
-    deliveries: Array.isArray(value.deliveries) ? value.deliveries : [],
-    settings: {
-      ...blankData.settings,
-      ...(value.settings || {})
-    }
-  };
-}
-
-function persist(){
-  localStorage.setItem(KEY, JSON.stringify(data));
-  renderAll();
-}
-
-function createId(prefix){
-  return prefix + "_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+function money(v){
+  return new Intl.NumberFormat("it-IT",{
+    style:"currency",
+    currency:"EUR"
+  }).format(Number(v) || 0);
 }
 
 function today(){
   return new Date().toISOString().slice(0,10);
 }
 
-function addDays(dateString, days){
-  const date = dateString
-    ? new Date(dateString + "T12:00:00")
-    : new Date();
-
-  date.setDate(date.getDate() + Number(days || 0));
-  return date.toISOString().slice(0,10);
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(db));
+  renderAll();
 }
 
-function money(value){
-  return new Intl.NumberFormat("it-IT", {
-    style: "currency",
-    currency: data.settings.currency || "EUR"
-  }).format(Number(value || 0));
+function load(){
+  try{
+    return JSON.parse(localStorage.getItem(KEY));
+  }catch(e){
+    return null;
+  }
 }
 
-function esc(value = ""){
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+function toast(msg){
+  const t = document.getElementById("toast");
+
+  t.textContent = msg;
+  t.classList.add("show");
+
+  clearTimeout(window.__toast);
+
+  window.__toast = setTimeout(() => {
+    t.classList.remove("show");
+  },1800);
 }
 
-function toast(message){
-  const box = document.getElementById("toast");
+function showPage(id,btn){
 
-  box.textContent = message;
-  box.classList.add("show");
-
-  clearTimeout(toast.timer);
-
-  toast.timer = setTimeout(() => {
-    box.classList.remove("show");
-  }, 2200);
-}
-
-function goPage(name, button){
   document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
+    page.classList.toggle("active",page.id === id);
   });
-
-  document.getElementById("page-" + name).classList.add("active");
 
   document.querySelectorAll(".nav").forEach(nav => {
-    nav.classList.remove("active");
+    nav.classList.toggle("active",nav.dataset.page === id);
   });
 
-  if(button) button.classList.add("active");
+  if(btn){
+    btn.classList.add("active");
+  }
 
-  document.getElementById("moreMenu").classList.remove("show");
-
-  if(name === "analysis"){
+  if(id === "analysis"){
     renderAnalysis();
-    renderComparison();
   }
 
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-function toggleMoreMenu(){
-  document.getElementById("moreMenu").classList.toggle("show");
-}
-
-function openMorePage(name){
-  goPage(name, null);
-}
-
-function openModal(modalId){
-  document.getElementById(modalId).classList.add("show");
-}
-
-function closeModal(modalId){
-  document.getElementById(modalId).classList.remove("show");
-}
-
-document.querySelectorAll(".modal-bg").forEach(bg => {
-  bg.addEventListener("click", event => {
-    if(event.target === bg){
-      bg.classList.remove("show");
-    }
-  });
-});
-
-function supplierName(supplierId){
-  return data.suppliers.find(supplier => supplier.id === supplierId)?.name ||
-    "Fornitore non indicato";
-}
-
-function orderNumber(orderId){
-  return data.orders.find(order => order.id === orderId)?.number ||
-    "Ordine non indicato";
-}
-
-function statusClass(status){
-  if([
-    "Attivo",
-    "Consegnato",
-    "Pagato",
-    "Disponibile"
-  ].includes(status)) return "good";
-
-  if([
-    "Inviato",
-    "Confermato",
-    "In viaggio",
-    "Ritirato",
-    "In transito",
-    "In dogana"
-  ].includes(status)) return "info";
-
-  if([
-    "Bozza",
-    "In valutazione",
-    "Parziale",
-    "Limitata",
-    "Da pagare",
-    "In preparazione"
-  ].includes(status)) return "warn";
-
-  return "bad";
-}
-
-function empty(title,text){
-  return `
-    <div class="empty">
-      <strong>${title}</strong>
-      ${text}
-    </div>
-  `;
-}
-
-function populateSupplierSelects(){
-  ["productSupplier","orderSupplier","paymentSupplier"].forEach(selectId => {
-    const select = document.getElementById(selectId);
-    if(!select) return;
-
-    const selected = select.value;
-
-    select.innerHTML =
-      '<option value="">Seleziona fornitore</option>' +
-      data.suppliers.map(supplier => `
-        <option value="${supplier.id}">${esc(supplier.name)}</option>
-      `).join("");
-
-    select.value = selected;
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
   });
 }
 
-function populateOrderSelect(){
-  const select = document.getElementById("deliveryOrder");
-  if(!select) return;
+function openModal(title,body){
 
-  const selected = select.value;
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalBody").innerHTML = body;
+  document.getElementById("modalBg").classList.add("show");
 
-  select.innerHTML =
-    '<option value="">Seleziona ordine</option>' +
-    data.orders
-      .filter(order => order.status !== "Annullato")
-      .map(order => `
-        <option value="${order.id}">
-          ${esc(order.number)} – ${esc(supplierName(order.supplierId))}
-        </option>
-      `).join("");
-
-  select.value = selected;
 }
 
-/* DASHBOARD */
-
-function renderDashboard(){
-  const openOrders = data.orders.filter(order =>
-    !["Consegnato","Annullato"].includes(order.status)
-  );
-
-  const activeDeliveries = data.deliveries.filter(delivery =>
-    delivery.status !== "Consegnato"
-  );
-
-  const duePayments = data.payments.filter(payment =>
-    payment.status !== "Pagato"
-  );
-
-  const dueValue = duePayments.reduce(
-    (sum,payment) => sum + Number(payment.amount || 0),
-    0
-  );
-
-  document.getElementById("statSuppliers").textContent = data.suppliers.length;
-  document.getElementById("statOrders").textContent = openOrders.length;
-  document.getElementById("statDeliveries").textContent = activeDeliveries.length;
-  document.getElementById("statPayments").textContent = money(dueValue);
-
-  const latest = [...data.orders]
-    .sort((a,b) => String(b.createdAt).localeCompare(String(a.createdAt)))
-    .slice(0,3);
-
-  document.getElementById("homeOrderCount").textContent =
-    data.orders.length + " ORDINI";
-
-  document.getElementById("homeOrders").innerHTML =
-    latest.length
-      ? latest.map(order => orderCard(order,false)).join("")
-      : empty("Nessun ordine registrato","Crea il primo ordine XA.");
-
-  renderAlerts();
+function closeModal(){
+  document.getElementById("modalBg").classList.remove("show");
 }
 
-function renderAlerts(){
-  const now = today();
+function openSupplier(id = ""){
 
-  const overduePayments = data.payments.filter(payment =>
-    payment.status !== "Pagato" &&
-    payment.dueDate &&
-    payment.dueDate < now
-  );
-
-  const dueSoon = data.payments.filter(payment => {
-    if(payment.status === "Pagato" || !payment.dueDate) return false;
-
-    const difference =
-      (new Date(payment.dueDate) - new Date(now)) / 86400000;
-
-    return difference >= 0 && difference <= 7;
-  });
-
-  const lateDeliveries = data.deliveries.filter(delivery =>
-    delivery.status !== "Consegnato" &&
-    delivery.expectedDate &&
-    delivery.expectedDate < now
-  );
-
-  const customsDeliveries = data.deliveries.filter(delivery =>
-    delivery.status === "In dogana"
-  );
-
-  const alerts = [];
-
-  if(overduePayments.length){
-    const total = overduePayments.reduce(
-      (sum,payment) => sum + Number(payment.amount || 0),
-      0
-    );
-
-    alerts.push(`
-      <div class="alert alert-red">
-        ⚠ ${overduePayments.length} pagamenti scaduti:
-        ${money(total)}
-      </div>
-    `);
-  }
-
-  if(lateDeliveries.length){
-    alerts.push(`
-      <div class="alert alert-red">
-        🚚 ${lateDeliveries.length} consegne hanno superato la data prevista.
-      </div>
-    `);
-  }
-
-  if(dueSoon.length){
-    alerts.push(`
-      <div class="alert alert-orange">
-        ⏱ ${dueSoon.length} pagamenti scadono entro 7 giorni.
-      </div>
-    `);
-  }
-
-  if(customsDeliveries.length){
-    alerts.push(`
-      <div class="alert alert-orange">
-        🛃 ${customsDeliveries.length} spedizioni risultano in dogana.
-      </div>
-    `);
-  }
-
-  if(!alerts.length){
-    alerts.push(`
-      <div class="alert alert-green">
-        ✓ Nessuna scadenza urgente o consegna in ritardo.
-      </div>
-    `);
-  }
-
-  document.getElementById("alerts").innerHTML = alerts.join("");
-}
-
-/* FORNITORI */
-
-function openSupplier(supplier = null){
-  document.getElementById("supplierTitle").textContent =
-    supplier ? "Modifica fornitore" : "Nuovo fornitore";
-
-  document.getElementById("supplierId").value = supplier?.id || "";
-  document.getElementById("supplierName").value = supplier?.name || "";
-  document.getElementById("supplierContact").value = supplier?.contact || "";
-  document.getElementById("supplierPhone").value = supplier?.phone || "";
-  document.getElementById("supplierEmail").value = supplier?.email || "";
-  document.getElementById("supplierCountry").value = supplier?.country || "";
-  document.getElementById("supplierCity").value = supplier?.city || "";
-  document.getElementById("supplierAddress").value = supplier?.address || "";
-  document.getElementById("supplierVat").value = supplier?.vat || "";
-  document.getElementById("supplierWebsite").value = supplier?.website || "";
-  document.getElementById("supplierCategory").value =
-    supplier?.category || "Sidro";
-  document.getElementById("supplierStatus").value =
-    supplier?.status || "Attivo";
-  document.getElementById("supplierTerms").value = supplier?.terms || "";
-  document.getElementById("supplierDelivery").value =
-    supplier?.deliveryDays || "";
-  document.getElementById("supplierRating").value =
-    supplier?.rating || "5";
-  document.getElementById("supplierNotes").value = supplier?.notes || "";
-
-  openModal("supplierModal");
-}
-
-function saveSupplier(event){
-  event.preventDefault();
-
-  const supplierId = document.getElementById("supplierId").value;
-  const previous = data.suppliers.find(supplier => supplier.id === supplierId);
-
-  const supplier = {
-    id: supplierId || createId("supplier"),
-    name: document.getElementById("supplierName").value.trim(),
-    contact: document.getElementById("supplierContact").value.trim(),
-    phone: document.getElementById("supplierPhone").value.trim(),
-    email: document.getElementById("supplierEmail").value.trim(),
-    country: document.getElementById("supplierCountry").value.trim(),
-    city: document.getElementById("supplierCity").value.trim(),
-    address: document.getElementById("supplierAddress").value.trim(),
-    vat: document.getElementById("supplierVat").value.trim(),
-    website: document.getElementById("supplierWebsite").value.trim(),
-    category: document.getElementById("supplierCategory").value,
-    status: document.getElementById("supplierStatus").value,
-    terms: document.getElementById("supplierTerms").value.trim(),
-    deliveryDays: document.getElementById("supplierDelivery").value,
-    rating: document.getElementById("supplierRating").value,
-    notes: document.getElementById("supplierNotes").value.trim(),
-    createdAt: previous?.createdAt || new Date().toISOString()
+  const x = db.suppliers.find(v => v.id === id) || {
+    name:"",
+    category:"",
+    contact:"",
+    phone:"",
+    email:"",
+    city:"",
+    terms:"30 giorni",
+    rating:90,
+    status:"Attivo",
+    notes:""
   };
 
-  if(supplierId){
-    data.suppliers = data.suppliers.map(item =>
-      item.id === supplierId ? supplier : item
+  openModal(
+    id ? "Modifica fornitore" : "Nuovo fornitore",
+    `
+    <form class="form" onsubmit="saveSupplier(event,'${id}')">
+
+      <div class="field">
+        <label>Ragione sociale *</label>
+        <input
+          name="name"
+          required
+          value="${esc(x.name)}"
+        >
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Categoria</label>
+          <input
+            name="category"
+            value="${esc(x.category)}"
+            placeholder="Sidri, packaging, ingredienti..."
+          >
+        </div>
+
+        <div class="field">
+          <label>Città / Paese</label>
+          <input
+            name="city"
+            value="${esc(x.city)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Referente</label>
+          <input
+            name="contact"
+            value="${esc(x.contact)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Telefono</label>
+          <input
+            name="phone"
+            value="${esc(x.phone)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input
+          name="email"
+          type="email"
+          value="${esc(x.email)}"
+        >
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Pagamento</label>
+          <input
+            name="terms"
+            value="${esc(x.terms)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Affidabilità %</label>
+          <input
+            name="rating"
+            type="number"
+            min="0"
+            max="100"
+            value="${esc(x.rating)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Stato</label>
+
+        <select name="status">
+          <option ${x.status === "Attivo" ? "selected" : ""}>
+            Attivo
+          </option>
+
+          <option ${x.status === "In prova" ? "selected" : ""}>
+            In prova
+          </option>
+
+          <option ${x.status === "Sospeso" ? "selected" : ""}>
+            Sospeso
+          </option>
+        </select>
+
+      </div>
+
+      <div class="field">
+        <label>Note</label>
+
+        <textarea name="notes">${esc(x.notes)}</textarea>
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn soft"
+          onclick="closeModal()"
+        >
+          ANNULLA
+        </button>
+
+        <button class="btn primary">
+          SALVA
+        </button>
+
+      </div>
+
+    </form>
+    `
+  );
+}
+
+function saveSupplier(e,id){
+
+  e.preventDefault();
+
+  const f = Object.fromEntries(new FormData(e.target));
+
+  f.rating = Number(f.rating) || 0;
+
+  if(id){
+
+    Object.assign(
+      db.suppliers.find(x => x.id === id),
+      f
     );
+
   }else{
-    data.suppliers.push(supplier);
+
+    db.suppliers.unshift({
+      ...f,
+      id:uid("sup"),
+      created:today()
+    });
+
   }
 
-  closeModal("supplierModal");
-  persist();
-  toast(supplierId ? "Fornitore aggiornato" : "Fornitore creato");
+  save();
+  closeModal();
+  toast("Fornitore salvato");
+}
+
+function openProduct(id = ""){
+
+  const x = db.products.find(v => v.id === id) || {
+    name:"",
+    category:"",
+    supplierId:"",
+    sku:"",
+    unit:"pz",
+    price:"",
+    stock:"",
+    minStock:"",
+    notes:""
+  };
+
+  const opts = db.suppliers.map(s => `
+    <option
+      value="${s.id}"
+      ${x.supplierId === s.id ? "selected" : ""}
+    >
+      ${esc(s.name)}
+    </option>
+  `).join("");
+
+  openModal(
+    id ? "Modifica prodotto" : "Nuovo prodotto",
+    `
+    <form class="form" onsubmit="saveProduct(event,'${id}')">
+
+      <div class="field">
+        <label>Nome prodotto *</label>
+        <input
+          name="name"
+          required
+          value="${esc(x.name)}"
+        >
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Categoria</label>
+          <input
+            name="category"
+            value="${esc(x.category)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Codice / SKU</label>
+          <input
+            name="sku"
+            value="${esc(x.sku)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Fornitore</label>
+
+        <select name="supplierId">
+          <option value="">Nessun fornitore</option>
+          ${opts}
+        </select>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Prezzo unitario €</label>
+          <input
+            name="price"
+            type="number"
+            step="0.01"
+            min="0"
+            value="${esc(x.price)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Unità</label>
+          <input
+            name="unit"
+            value="${esc(x.unit)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Scorta attuale</label>
+          <input
+            name="stock"
+            type="number"
+            step="0.01"
+            value="${esc(x.stock)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Scorta minima</label>
+          <input
+            name="minStock"
+            type="number"
+            step="0.01"
+            value="${esc(x.minStock)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Note</label>
+        <textarea name="notes">${esc(x.notes)}</textarea>
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn soft"
+          onclick="closeModal()"
+        >
+          ANNULLA
+        </button>
+
+        <button class="btn primary">
+          SALVA
+        </button>
+
+      </div>
+
+    </form>
+    `
+  );
+}
+
+function saveProduct(e,id){
+
+  e.preventDefault();
+
+  const f = Object.fromEntries(new FormData(e.target));
+
+  ["price","stock","minStock"].forEach(k => {
+    f[k] = Number(f[k]) || 0;
+  });
+
+  if(id){
+
+    Object.assign(
+      db.products.find(x => x.id === id),
+      f
+    );
+
+  }else{
+
+    db.products.unshift({
+      ...f,
+      id:uid("prd"),
+      created:today()
+    });
+
+  }
+
+  save();
+  closeModal();
+  toast("Prodotto salvato");
+}
+
+function openOrder(id = ""){
+
+  const x = db.orders.find(v => v.id === id) || {
+    supplierId:"",
+    code:
+      "XA-" +
+      new Date().getFullYear() +
+      "-" +
+      String(db.orders.length + 1).padStart(3,"0"),
+    date:today(),
+    due:"",
+    amount:"",
+    status:"Bozza",
+    payment:"Da pagare",
+    notes:""
+  };
+
+  const opts = db.suppliers.map(s => `
+    <option
+      value="${s.id}"
+      ${x.supplierId === s.id ? "selected" : ""}
+    >
+      ${esc(s.name)}
+    </option>
+  `).join("");
+
+  openModal(
+    id ? "Modifica ordine" : "Nuovo ordine",
+    `
+    <form class="form" onsubmit="saveOrder(event,'${id}')">
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Codice ordine *</label>
+
+          <input
+            name="code"
+            required
+            value="${esc(x.code)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Fornitore *</label>
+
+          <select name="supplierId" required>
+            <option value="">Seleziona</option>
+            ${opts}
+          </select>
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Data ordine</label>
+
+          <input
+            name="date"
+            type="date"
+            value="${esc(x.date)}"
+          >
+        </div>
+
+        <div class="field">
+          <label>Consegna prevista</label>
+
+          <input
+            name="due"
+            type="date"
+            value="${esc(x.due)}"
+          >
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Valore ordine €</label>
+
+        <input
+          name="amount"
+          type="number"
+          step="0.01"
+          min="0"
+          value="${esc(x.amount)}"
+        >
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Stato</label>
+
+          <select name="status">
+
+            ${[
+              "Bozza",
+              "Inviato",
+              "Confermato",
+              "In consegna",
+              "Consegnato",
+              "Annullato"
+            ].map(v => `
+              <option ${x.status === v ? "selected" : ""}>
+                ${v}
+              </option>
+            `).join("")}
+
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Pagamento</label>
+
+          <select name="payment">
+
+            ${[
+              "Da pagare",
+              "Parziale",
+              "Pagato"
+            ].map(v => `
+              <option ${x.payment === v ? "selected" : ""}>
+                ${v}
+              </option>
+            `).join("")}
+
+          </select>
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Note</label>
+        <textarea name="notes">${esc(x.notes)}</textarea>
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn soft"
+          onclick="closeModal()"
+        >
+          ANNULLA
+        </button>
+
+        <button class="btn primary">
+          SALVA
+        </button>
+
+      </div>
+
+    </form>
+    `
+  );
+}
+
+function saveOrder(e,id){
+
+  e.preventDefault();
+
+  const f = Object.fromEntries(new FormData(e.target));
+
+  f.amount = Number(f.amount) || 0;
+
+  if(id){
+
+    Object.assign(
+      db.orders.find(x => x.id === id),
+      f
+    );
+
+  }else{
+
+    db.orders.unshift({
+      ...f,
+      id:uid("ord"),
+      created:today()
+    });
+
+  }
+
+  save();
+  closeModal();
+  toast("Ordine salvato");
+}
+
+function supplierName(id){
+
+  return db.suppliers.find(s => s.id === id)?.name ||
+    "Fornitore non assegnato";
+
+}
+
+function remove(kind,id){
+
+  if(!confirm("Eliminare definitivamente questo elemento?")){
+    return;
+  }
+
+  db[kind] = db[kind].filter(x => x.id !== id);
+
+  save();
+  toast("Elemento eliminato");
+}
+
+function statusBadge(s){
+
+  let c = "b-warn";
+
+  if(
+    s === "Attivo" ||
+    s === "Consegnato" ||
+    s === "Pagato"
+  ){
+    c = "b-good";
+  }
+
+  if(
+    s === "Sospeso" ||
+    s === "Annullato"
+  ){
+    c = "b-bad";
+  }
+
+  if(
+    s === "In consegna" ||
+    s === "Confermato"
+  ){
+    c = "b-info";
+  }
+
+  return `
+    <span class="badge ${c}">
+      ${esc(s)}
+    </span>
+  `;
 }
 
 function renderSuppliers(){
-  const query =
-    (document.getElementById("supplierSearch")?.value || "").toLowerCase();
 
-  const filtered = data.suppliers.filter(supplier =>
-    [
-      supplier.name,
-      supplier.contact,
-      supplier.country,
-      supplier.city,
-      supplier.category,
-      supplier.email
-    ].join(" ").toLowerCase().includes(query)
-  );
+  const q = (
+    document.getElementById("supplierSearch")?.value || ""
+  ).toLowerCase();
+
+  const arr = db.suppliers.filter(x => {
+
+    return [
+      x.name,
+      x.category,
+      x.city,
+      x.contact
+    ].join(" ").toLowerCase().includes(q);
+
+  });
 
   document.getElementById("supplierList").innerHTML =
-    filtered.length
-      ? filtered
-          .sort((a,b) => a.name.localeCompare(b.name))
-          .map(supplier => {
-            const stars =
-              "★".repeat(Number(supplier.rating || 0)) +
-              "☆".repeat(5 - Number(supplier.rating || 0));
+  arr.length
+  ? arr.map(x => `
 
-            const orders = data.orders.filter(
-              order => order.supplierId === supplier.id
-            );
-
-            const spend = orders.reduce(
-              (sum,order) =>
-                sum + Number(order.grandTotal ?? order.total ?? 0),
-              0
-            );
-
-            return `
-              <article class="item">
-                <div class="item-top">
-                  <div>
-                    <h3>${esc(supplier.name)}</h3>
-
-                    <div class="subtitle">
-                      ${esc(supplier.category || "Categoria non indicata")} ·
-                      ${esc(
-                        [supplier.city,supplier.country]
-                          .filter(Boolean)
-                          .join(", ") || "Località non indicata"
-                      )}
-                    </div>
-                  </div>
-
-                  <span class="badge ${statusClass(supplier.status)}">
-                    ${esc(supplier.status)}
-                  </span>
-                </div>
-
-                <div class="meta">
-                  <div>
-                    <label>Referente</label>
-                    <strong>${esc(supplier.contact || "—")}</strong>
-                  </div>
-
-                  <div>
-                    <label>Valutazione</label>
-                    <strong>${stars}</strong>
-                  </div>
-
-                  <div>
-                    <label>Ordini</label>
-                    <strong>${orders.length}</strong>
-                  </div>
-
-                  <div>
-                    <label>Acquisti</label>
-                    <strong>${money(spend)}</strong>
-                  </div>
-                </div>
-
-                <div class="actions">
-                  <button class="mini info"
-                    onclick="openSupplierDetail('${supplier.id}')">
-                    Scheda completa
-                  </button>
-
-                  ${supplier.phone ? `
-                    <button class="mini"
-                      onclick="location.href='tel:${esc(supplier.phone)}'">
-                      Chiama
-                    </button>
-                  ` : ""}
-
-                  ${supplier.email ? `
-                    <button class="mini"
-                      onclick="location.href='mailto:${esc(supplier.email)}'">
-                      Email
-                    </button>
-                  ` : ""}
-
-                  <button class="mini primary"
-                    onclick="editSupplier('${supplier.id}')">
-                    Modifica
-                  </button>
-
-                  <button class="mini danger"
-                    onclick="deleteSupplier('${supplier.id}')">
-                    Elimina
-                  </button>
-                </div>
-              </article>
-            `;
-          }).join("")
-      : empty("Nessun fornitore trovato","Registra il primo fornitore XA.");
-}
-
-function openSupplierDetail(supplierId){
-  currentSupplierDetailId = supplierId;
-  renderSupplierDetail();
-
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
-  });
-
-  document.getElementById("page-supplier-detail").classList.add("active");
-
-  document.querySelectorAll(".nav").forEach(nav => {
-    nav.classList.remove("active");
-  });
-
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function renderSupplierDetail(){
-  const supplier = data.suppliers.find(
-    item => item.id === currentSupplierDetailId
-  );
-
-  if(!supplier) return;
-
-  const orders = data.orders.filter(
-    order => order.supplierId === supplier.id
-  );
-
-  const payments = data.payments.filter(
-    payment => payment.supplierId === supplier.id
-  );
-
-  const products = data.products.filter(
-    product => product.supplierId === supplier.id
-  );
-
-  const deliveries = data.deliveries.filter(delivery => {
-    const order = data.orders.find(item => item.id === delivery.orderId);
-    return order?.supplierId === supplier.id;
-  });
-
-  const spend = orders.reduce(
-    (sum,order) => sum + Number(order.grandTotal ?? order.total ?? 0),
-    0
-  );
-
-  const openPayments = payments
-    .filter(payment => payment.status !== "Pagato")
-    .reduce((sum,payment) => sum + Number(payment.amount || 0),0);
-
-  document.getElementById("supplierDetailContent").innerHTML = `
-    <button class="btn btn-soft" onclick="backToSuppliers()">
-      ← Torna ai fornitori
-    </button>
-
-    <div class="detail-header" style="margin-top:10px">
-      <h2>${esc(supplier.name)}</h2>
-
-      <p>
-        ${esc(supplier.category || "Categoria non indicata")} ·
-        ${esc([supplier.city,supplier.country].filter(Boolean).join(", "))}
-      </p>
-    </div>
-
-    <div class="detail-grid">
-      <div class="detail-box">
-        <small>Ordini</small>
-        <strong>${orders.length}</strong>
-      </div>
-
-      <div class="detail-box">
-        <small>Acquisti totali</small>
-        <strong>${money(spend)}</strong>
-      </div>
-
-      <div class="detail-box">
-        <small>Da pagare</small>
-        <strong>${money(openPayments)}</strong>
-      </div>
-
-      <div class="detail-box">
-        <small>Prodotti</small>
-        <strong>${products.length}</strong>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <h3>Dati del fornitore</h3>
-        <span>ANAGRAFICA</span>
-      </div>
-
-      <div class="detail-grid">
-        <div class="detail-box">
-          <small>Referente</small>
-          <strong>${esc(supplier.contact || "—")}</strong>
-        </div>
-
-        <div class="detail-box">
-          <small>Telefono</small>
-          <strong>${esc(supplier.phone || "—")}</strong>
-        </div>
-
-        <div class="detail-box">
-          <small>Email</small>
-          <strong>${esc(supplier.email || "—")}</strong>
-        </div>
-
-        <div class="detail-box">
-          <small>Partita IVA</small>
-          <strong>${esc(supplier.vat || "—")}</strong>
-        </div>
-
-        <div class="detail-box">
-          <small>Pagamento</small>
-          <strong>${esc(supplier.terms || "—")}</strong>
-        </div>
-
-        <div class="detail-box">
-          <small>Consegna media</small>
-          <strong>
-            ${supplier.deliveryDays
-              ? esc(supplier.deliveryDays) + " giorni"
-              : "—"}
-          </strong>
-        </div>
-      </div>
-
-      <div class="actions">
-        ${supplier.phone ? `
-          <button class="mini"
-            onclick="location.href='tel:${esc(supplier.phone)}'">
-            Chiama
-          </button>
-        ` : ""}
-
-        ${supplier.email ? `
-          <button class="mini"
-            onclick="location.href='mailto:${esc(supplier.email)}'">
-            Email
-          </button>
-        ` : ""}
-
-        ${supplier.website ? `
-          <button class="mini"
-            onclick="window.open('${esc(supplier.website)}','_blank')">
-            Sito web
-          </button>
-        ` : ""}
-
-        <button class="mini primary"
-          onclick="editSupplier('${supplier.id}')">
-          Modifica scheda
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <h3>Storico ordini</h3>
-        <span>${orders.length} ORDINI</span>
-      </div>
-
-      <div class="timeline">
-        ${
-          orders.length
-            ? [...orders]
-                .sort((a,b) => String(b.date).localeCompare(String(a.date)))
-                .map(order => `
-                  <div class="timeline-item">
-                    <strong>
-                      ${esc(order.number)} ·
-                      ${money(order.grandTotal ?? order.total ?? 0)}
-                    </strong>
-
-                    <span>
-                      ${esc(order.date || "Data non indicata")} ·
-                      ${esc(order.status)}
-                    </span>
-                  </div>
-                `).join("")
-            : empty("Nessun ordine","Non risultano ordini per questo fornitore.")
-        }
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <h3>Consegne</h3>
-        <span>${deliveries.length} SPEDIZIONI</span>
-      </div>
-
-      <div class="timeline">
-        ${
-          deliveries.length
-            ? deliveries.map(delivery => `
-                <div class="timeline-item">
-                  <strong>
-                    ${esc(orderNumber(delivery.orderId))} ·
-                    ${esc(delivery.status)}
-                  </strong>
-
-                  <span>
-                    ${esc(delivery.carrier || "Corriere non indicato")} ·
-                    ${esc(delivery.tracking || "Tracking non indicato")}
-                  </span>
-                </div>
-              `).join("")
-            : empty("Nessuna consegna","Non risultano spedizioni registrate.")
-        }
-      </div>
-    </div>
-  `;
-}
-
-function backToSuppliers(){
-  const supplierButton = document.querySelectorAll(".nav")[1];
-  goPage("suppliers",supplierButton);
-}
-
-function editSupplier(supplierId){
-  const supplier = data.suppliers.find(item => item.id === supplierId);
-  if(supplier) openSupplier(supplier);
-}
-
-function deleteSupplier(supplierId){
-  const linked =
-    data.products.some(product => product.supplierId === supplierId) ||
-    data.orders.some(order => order.supplierId === supplierId) ||
-    data.payments.some(payment => payment.supplierId === supplierId);
-
-  if(linked){
-    toast("Fornitore collegato ad altri dati");
-    return;
-  }
-
-  if(!confirm("Eliminare definitivamente questo fornitore?")) return;
-
-  data.suppliers = data.suppliers.filter(
-    supplier => supplier.id !== supplierId
-  );
-
-  persist();
-  toast("Fornitore eliminato");
-}
-
-/* PRODOTTI */
-
-function openProduct(product = null){
-  populateSupplierSelects();
-
-  if(!data.suppliers.length){
-    toast("Prima registra almeno un fornitore");
-    openSupplier();
-    return;
-  }
-
-  document.getElementById("productTitle").textContent =
-    product ? "Modifica prodotto" : "Nuovo prodotto";
-
-  document.getElementById("productId").value = product?.id || "";
-  document.getElementById("productName").value = product?.name || "";
-  document.getElementById("productSupplier").value =
-    product?.supplierId || "";
-  document.getElementById("productCategory").value =
-    product?.category || "Sidro";
-  document.getElementById("productFormat").value = product?.format || "";
-  document.getElementById("productPrice").value = product?.price ?? "";
-  document.getElementById("productMinimum").value =
-    product?.minimum ?? "";
-  document.getElementById("productShipping").value =
-    product?.shippingEstimate ?? "";
-  document.getElementById("productAvailability").value =
-    product?.availability || "Disponibile";
-  document.getElementById("productCode").value = product?.code || "";
-  document.getElementById("productNotes").value = product?.notes || "";
-
-  openModal("productModal");
-}
-
-function saveProduct(event){
-  event.preventDefault();
-
-  const productId = document.getElementById("productId").value;
-  const previous = data.products.find(product => product.id === productId);
-
-  const product = {
-    id: productId || createId("product"),
-    name: document.getElementById("productName").value.trim(),
-    supplierId: document.getElementById("productSupplier").value,
-    category: document.getElementById("productCategory").value,
-    format: document.getElementById("productFormat").value.trim(),
-    price: Number(document.getElementById("productPrice").value || 0),
-    minimum: Number(document.getElementById("productMinimum").value || 0),
-    shippingEstimate: Number(
-      document.getElementById("productShipping").value || 0
-    ),
-    availability: document.getElementById("productAvailability").value,
-    code: document.getElementById("productCode").value.trim(),
-    notes: document.getElementById("productNotes").value.trim(),
-    createdAt: previous?.createdAt || new Date().toISOString()
-  };
-
-  if(productId){
-    data.products = data.products.map(item =>
-      item.id === productId ? product : item
-    );
-  }else{
-    data.products.push(product);
-  }
-
-  closeModal("productModal");
-  persist();
-  toast(productId ? "Prodotto aggiornato" : "Prodotto creato");
-}
-
-function realUnitCost(product){
-  const minimum = Number(product.minimum || 0);
-  const price = Number(product.price || 0);
-  const shipping = Number(product.shippingEstimate || 0);
-
-  if(minimum <= 0) return price;
-
-  return price + shipping / minimum;
-}
-
-function renderProducts(){
-  const query =
-    (document.getElementById("productSearch")?.value || "").toLowerCase();
-
-  const filtered = data.products.filter(product =>
-    [
-      product.name,
-      product.category,
-      product.format,
-      product.code,
-      supplierName(product.supplierId)
-    ].join(" ").toLowerCase().includes(query)
-  );
-
-  document.getElementById("productList").innerHTML =
-    filtered.length
-      ? filtered
-          .sort((a,b) => a.name.localeCompare(b.name))
-          .map(product => `
-            <article class="item">
-              <div class="item-top">
-                <div>
-                  <h3>${esc(product.name)}</h3>
-
-                  <div class="subtitle">
-                    ${esc(supplierName(product.supplierId))} ·
-                    ${esc(product.category)} ·
-                    ${esc(product.format || "Formato non indicato")}
-                  </div>
-                </div>
-
-                <span class="badge ${statusClass(product.availability)}">
-                  ${esc(product.availability)}
-                </span>
-              </div>
-
-              <div class="meta">
-                <div>
-                  <label>Prezzo unitario</label>
-                  <strong>${money(product.price)}</strong>
-                </div>
-
-                <div>
-                  <label>Costo reale unitario</label>
-                  <strong>${money(realUnitCost(product))}</strong>
-                </div>
-
-                <div>
-                  <label>Minimo ordine</label>
-                  <strong>${product.minimum || "—"}</strong>
-                </div>
-
-                <div>
-                  <label>Trasporto stimato</label>
-                  <strong>${money(product.shippingEstimate || 0)}</strong>
-                </div>
-              </div>
-
-              <div class="actions">
-                <button class="mini primary"
-                  onclick="editProduct('${product.id}')">
-                  Modifica
-                </button>
-
-                <button class="mini danger"
-                  onclick="deleteProduct('${product.id}')">
-                  Elimina
-                </button>
-              </div>
-            </article>
-          `).join("")
-      : empty("Nessun prodotto trovato","Aggiungi prodotti al catalogo.");
-}
-
-function editProduct(productId){
-  const product = data.products.find(item => item.id === productId);
-  if(product) openProduct(product);
-}
-
-function deleteProduct(productId){
-  const used = data.orders.some(order =>
-    (order.lines || []).some(line => line.productId === productId)
-  );
-
-  if(used){
-    toast("Prodotto già utilizzato in un ordine");
-    return;
-  }
-
-  if(!confirm("Eliminare definitivamente questo prodotto?")) return;
-
-  data.products = data.products.filter(
-    product => product.id !== productId
-  );
-
-  persist();
-  toast("Prodotto eliminato");
-}
-
-/* ORDINI */
-
-function openOrder(order = null){
-  populateSupplierSelects();
-
-  if(!data.suppliers.length){
-    toast("Prima registra almeno un fornitore");
-    openSupplier();
-    return;
-  }
-
-  document.getElementById("orderTitle").textContent =
-    order ? "Modifica ordine" : "Nuovo ordine";
-
-  document.getElementById("orderId").value = order?.id || "";
-
-  document.getElementById("orderNumber").value =
-    order?.number ||
-    `XA-${new Date().getFullYear()}-${String(data.orders.length + 1).padStart(3,"0")}`;
-
-  document.getElementById("orderSupplier").value =
-    order?.supplierId || "";
-
-  document.getElementById("orderDate").value =
-    order?.date || today();
-
-  document.getElementById("orderDeliveryDate").value =
-    order?.deliveryDate || "";
-
-  document.getElementById("orderStatus").value =
-    order?.status || "Bozza";
-
-  document.getElementById("orderPaymentStatus").value =
-    order?.paymentStatus || "Da pagare";
-
-  document.getElementById("orderDiscount").value =
-    order?.discountPercent ?? 0;
-
-  document.getElementById("orderShipping").value =
-    order?.shipping ?? 0;
-
-  document.getElementById("orderNotes").value =
-    order?.notes || "";
-
-  document.getElementById("createPayment").checked = !order;
-  document.getElementById("createDelivery").checked = !order;
-
-  document.getElementById("orderPaymentDue").value =
-    order?.paymentDue || addDays(today(),30);
-
-  currentOrderLines = clone(order?.lines || []);
-
-  if(!currentOrderLines.length){
-    currentOrderLines.push(newOrderLine());
-  }
-
-  renderOrderLines();
-  calculateOrder();
-  openModal("orderModal");
-}
-
-function newOrderLine(){
-  return {
-    id:createId("line"),
-    productId:"",
-    description:"",
-    quantity:1,
-    unitPrice:0,
-    vatRate:22
-  };
-}
-
-function supplierChanged(){
-  const supplierId = document.getElementById("orderSupplier").value;
-
-  const supplier = data.suppliers.find(
-    item => item.id === supplierId
-  );
-
-  if(supplier?.deliveryDays){
-    document.getElementById("orderDeliveryDate").value =
-      addDays(
-        document.getElementById("orderDate").value || today(),
-        supplier.deliveryDays
-      );
-  }
-
-  renderOrderLines();
-}
-
-function productsForSelectedSupplier(){
-  const supplierId = document.getElementById("orderSupplier").value;
-
-  return supplierId
-    ? data.products.filter(product => product.supplierId === supplierId)
-    : data.products;
-}
-
-function addOrderLine(){
-  currentOrderLines.push(newOrderLine());
-  renderOrderLines();
-}
-
-function removeOrderLine(lineId){
-  if(currentOrderLines.length === 1){
-    toast("L’ordine deve avere almeno una riga");
-    return;
-  }
-
-  currentOrderLines = currentOrderLines.filter(
-    line => line.id !== lineId
-  );
-
-  renderOrderLines();
-  calculateOrder();
-}
-
-function updateLine(lineId,field,value){
-  const line = currentOrderLines.find(item => item.id === lineId);
-  if(!line) return;
-
-  if(["quantity","unitPrice","vatRate"].includes(field)){
-    line[field] = Number(value || 0);
-  }else{
-    line[field] = value;
-  }
-
-  if(field === "productId"){
-    const product = data.products.find(item => item.id === value);
-
-    if(product){
-      line.description = product.name;
-      line.unitPrice = Number(product.price || 0);
-    }
-  }
-
-  renderOrderLines();
-  calculateOrder();
-}
-
-function renderOrderLines(){
-  const products = productsForSelectedSupplier();
-
-  document.getElementById("orderLines").innerHTML =
-    currentOrderLines.map((line,index) => {
-      const net =
-        Number(line.quantity || 0) * Number(line.unitPrice || 0);
-
-      const vat =
-        net * Number(line.vatRate || 0) / 100;
-
-      return `
-        <div class="order-line">
-          <div class="line-grid">
-            <div class="field">
-              <label>Prodotto ${index + 1}</label>
-
-              <select onchange="updateLine('${line.id}','productId',this.value)">
-                <option value="">Seleziona prodotto</option>
-
-                ${products.map(product => `
-                  <option value="${product.id}"
-                    ${product.id === line.productId ? "selected" : ""}>
-                    ${esc(product.name)} – ${money(product.price)}
-                  </option>
-                `).join("")}
-              </select>
-            </div>
-
-            <button type="button" class="btn btn-danger"
-              onclick="removeOrderLine('${line.id}')">
-              ×
-            </button>
-          </div>
-
-          <div class="field" style="margin-top:7px">
-            <label>Descrizione</label>
-
-            <input value="${esc(line.description || "")}"
-              oninput="updateLine('${line.id}','description',this.value)">
-          </div>
-
-          <div class="line-grid-3">
-            <div class="field">
-              <label>Quantità</label>
-
-              <input type="number" min="0" step="0.01"
-                value="${line.quantity}"
-                onchange="updateLine('${line.id}','quantity',this.value)">
-            </div>
-
-            <div class="field">
-              <label>Prezzo unitario</label>
-
-              <input type="number" min="0" step="0.01"
-                value="${line.unitPrice}"
-                onchange="updateLine('${line.id}','unitPrice',this.value)">
-            </div>
-
-            <div class="field">
-              <label>IVA %</label>
-
-              <select onchange="updateLine('${line.id}','vatRate',this.value)">
-                ${[0,4,5,10,22].map(rate => `
-                  <option value="${rate}"
-                    ${Number(line.vatRate) === rate ? "selected" : ""}>
-                    ${rate}%
-                  </option>
-                `).join("")}
-              </select>
-            </div>
-          </div>
-
-          <div class="line-total">
-            <span>Imponibile: ${money(net)}</span>
-            <span>IVA: ${money(vat)}</span>
-          </div>
-        </div>
-      `;
-    }).join("");
-}
-
-function calculateOrder(){
-  const subtotal = currentOrderLines.reduce(
-    (sum,line) =>
-      sum + Number(line.quantity || 0) * Number(line.unitPrice || 0),
-    0
-  );
-
-  const discountPercent = Number(
-    document.getElementById("orderDiscount")?.value || 0
-  );
-
-  const discountAmount = subtotal * discountPercent / 100;
-  const discountedSubtotal = subtotal - discountAmount;
-
-  let vatTotal = 0;
-
-  currentOrderLines.forEach(line => {
-    const net =
-      Number(line.quantity || 0) * Number(line.unitPrice || 0);
-
-    const discountedNet = subtotal > 0
-      ? net - discountAmount * (net / subtotal)
-      : net;
-
-    vatTotal +=
-      discountedNet * Number(line.vatRate || 0) / 100;
-  });
-
-  const shipping = Number(
-    document.getElementById("orderShipping")?.value || 0
-  );
-
-  const total = discountedSubtotal + vatTotal + shipping;
-
-  document.getElementById("summarySubtotal").textContent = money(subtotal);
-  document.getElementById("summaryDiscount").textContent = money(discountAmount);
-  document.getElementById("summaryVat").textContent = money(vatTotal);
-  document.getElementById("summaryShipping").textContent = money(shipping);
-  document.getElementById("summaryTotal").textContent = money(total);
-
-  return {
-    subtotal,
-    discountPercent,
-    discountAmount,
-    vatTotal,
-    shipping,
-    total
-  };
-}
-
-function saveOrder(event){
-  event.preventDefault();
-
-  const orderId = document.getElementById("orderId").value;
-  const supplierId = document.getElementById("orderSupplier").value;
-
-  const validLines = currentOrderLines.filter(line =>
-    line.description.trim() && Number(line.quantity) > 0
-  );
-
-  if(!validLines.length){
-    toast("Inserisci almeno un prodotto");
-    return;
-  }
-
-  const totals = calculateOrder();
-
-  const previous = data.orders.find(order => order.id === orderId);
-
-  const order = {
-    id: orderId || createId("order"),
-    number: document.getElementById("orderNumber").value.trim(),
-    supplierId,
-    date: document.getElementById("orderDate").value,
-    deliveryDate: document.getElementById("orderDeliveryDate").value,
-    status: document.getElementById("orderStatus").value,
-    paymentStatus: document.getElementById("orderPaymentStatus").value,
-    lines: clone(validLines),
-    subtotal: totals.subtotal,
-    discountPercent: totals.discountPercent,
-    discountAmount: totals.discountAmount,
-    vatTotal: totals.vatTotal,
-    shipping: totals.shipping,
-    grandTotal: totals.total,
-    paymentDue: document.getElementById("orderPaymentDue").value,
-    notes: document.getElementById("orderNotes").value.trim(),
-    createdAt: previous?.createdAt || new Date().toISOString()
-  };
-
-  if(orderId){
-    data.orders = data.orders.map(item =>
-      item.id === orderId ? order : item
-    );
-  }else{
-    data.orders.push(order);
-  }
-
-  const createPayment =
-    document.getElementById("createPayment").checked &&
-    !orderId &&
-    order.paymentStatus !== "Pagato";
-
-  const createDelivery =
-    document.getElementById("createDelivery").checked &&
-    !orderId;
-
-  if(createPayment){
-    data.payments.push({
-      id:createId("payment"),
-      supplierId:order.supplierId,
-      orderId:order.id,
-      reference:"Ordine " + order.number,
-      amount:order.grandTotal,
-      dueDate:order.paymentDue,
-      status:"Da pagare",
-      method:"Bonifico",
-      notes:"Pagamento creato automaticamente dall’ordine.",
-      createdAt:new Date().toISOString()
-    });
-  }
-
-  if(createDelivery){
-    data.deliveries.push({
-      id:createId("delivery"),
-      orderId:order.id,
-      carrier:"",
-      tracking:"",
-      trackingUrl:"",
-      shipDate:"",
-      expectedDate:order.deliveryDate,
-      actualDate:"",
-      cost:order.shipping,
-      status:"In preparazione",
-      notes:"Consegna creata automaticamente dall’ordine.",
-      createdAt:new Date().toISOString()
-    });
-  }
-
-  closeModal("orderModal");
-  persist();
-  toast("Ordine salvato e collegamenti creati");
-}
-
-function orderCard(order, actions = true){
-  const total = Number(order.grandTotal ?? order.total ?? 0);
-  const lines = order.lines || [];
-
-  return `
     <article class="item">
+
       <div class="item-top">
+
         <div>
-          <h3>${esc(order.number)}</h3>
+          <h3>${esc(x.name)}</h3>
 
           <div class="subtitle">
-            ${esc(supplierName(order.supplierId))} ·
-            ${lines.length} ${lines.length === 1 ? "prodotto" : "prodotti"}
+            ${esc(x.category || "Categoria non indicata")}
+            ·
+            ${esc(x.city || "Località non indicata")}
           </div>
         </div>
 
-        <span class="badge ${statusClass(order.status)}">
-          ${esc(order.status)}
-        </span>
+        ${statusBadge(x.status)}
+
       </div>
 
       <div class="meta">
+
         <div>
-          <label>Totale</label>
-          <strong>${money(total)}</strong>
+          <label>Referente</label>
+          <strong>${esc(x.contact || "—")}</strong>
         </div>
 
         <div>
-          <label>Data ordine</label>
-          <strong>${esc(order.date || "—")}</strong>
-        </div>
-
-        <div>
-          <label>Consegna prevista</label>
-          <strong>${esc(order.deliveryDate || "—")}</strong>
+          <label>Telefono</label>
+          <strong>${esc(x.phone || "—")}</strong>
         </div>
 
         <div>
           <label>Pagamento</label>
-          <strong>${esc(order.paymentStatus || "—")}</strong>
+          <strong>${esc(x.terms || "—")}</strong>
         </div>
+
+        <div>
+          <label>Affidabilità</label>
+          <strong>${esc(x.rating)}%</strong>
+        </div>
+
       </div>
 
-      ${actions ? `
-        <div class="actions">
-          <button class="mini"
-            onclick="advanceOrder('${order.id}')">
-            Avanza stato
-          </button>
+      <div class="actions">
 
-          <button class="mini info"
-            onclick="openDeliveryForOrder('${order.id}')">
-            Consegna
-          </button>
+        <button
+          class="mini primary"
+          onclick="openSupplier('${x.id}')"
+        >
+          MODIFICA
+        </button>
 
-          <button class="mini primary"
-            onclick="editOrder('${order.id}')">
-            Modifica
-          </button>
+        <button
+          class="mini"
+          onclick="showSupplierOrders('${x.id}')"
+        >
+          ORDINI
+        </button>
 
-          <button class="mini danger"
-            onclick="deleteOrder('${order.id}')">
-            Elimina
-          </button>
-        </div>
-      ` : ""}
+        <button
+          class="mini red"
+          onclick="remove('suppliers','${x.id}')"
+        >
+          ELIMINA
+        </button>
+
+      </div>
+
     </article>
+
+  `).join("")
+  : `
+    <div class="empty">
+      <strong>Nessun fornitore</strong>
+      Aggiungi la prima anagrafica.
+    </div>
+  `;
+}
+
+function showSupplierOrders(id){
+
+  showPage("orders");
+
+  document.getElementById("orderSearch").value =
+    supplierName(id);
+
+  renderOrders();
+}
+
+function renderProducts(){
+
+  const q = (
+    document.getElementById("productSearch")?.value || ""
+  ).toLowerCase();
+
+  const arr = db.products.filter(x => {
+
+    return [
+      x.name,
+      x.category,
+      x.sku,
+      supplierName(x.supplierId)
+    ].join(" ").toLowerCase().includes(q);
+
+  });
+
+  document.getElementById("productList").innerHTML =
+  arr.length
+  ? arr.map(x => {
+
+    const low = Number(x.stock) <= Number(x.minStock);
+
+    return `
+
+    <article class="item">
+
+      <div class="item-top">
+
+        <div>
+          <h3>${esc(x.name)}</h3>
+
+          <div class="subtitle">
+            ${esc(x.category || "Senza categoria")}
+            ·
+            ${esc(supplierName(x.supplierId))}
+          </div>
+        </div>
+
+        ${statusBadge(low ? "Scorta bassa" : "Disponibile")}
+
+      </div>
+
+      <div class="meta">
+
+        <div>
+          <label>SKU</label>
+          <strong>${esc(x.sku || "—")}</strong>
+        </div>
+
+        <div>
+          <label>Prezzo</label>
+          <strong>
+            ${money(x.price)} / ${esc(x.unit)}
+          </strong>
+        </div>
+
+        <div>
+          <label>Scorta</label>
+          <strong>
+            ${esc(x.stock)} ${esc(x.unit)}
+          </strong>
+        </div>
+
+        <div>
+          <label>Minimo</label>
+          <strong>
+            ${esc(x.minStock)} ${esc(x.unit)}
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="mini primary"
+          onclick="openProduct('${x.id}')"
+        >
+          MODIFICA
+        </button>
+
+        <button
+          class="mini red"
+          onclick="remove('products','${x.id}')"
+        >
+          ELIMINA
+        </button>
+
+      </div>
+
+    </article>
+
+    `;
+
+  }).join("")
+  : `
+    <div class="empty">
+      <strong>Nessun prodotto</strong>
+      Registra il primo prodotto.
+    </div>
   `;
 }
 
 function renderOrders(){
-  const query =
-    (document.getElementById("orderSearch")?.value || "").toLowerCase();
 
-  const filtered = data.orders.filter(order =>
-    [
-      order.number,
-      order.status,
-      order.paymentStatus,
-      supplierName(order.supplierId),
-      ...(order.lines || []).map(line => line.description)
-    ].join(" ").toLowerCase().includes(query)
-  );
+  const q = (
+    document.getElementById("orderSearch")?.value || ""
+  ).toLowerCase();
+
+  const arr = db.orders.filter(x => {
+
+    return [
+      x.code,
+      x.status,
+      x.payment,
+      supplierName(x.supplierId)
+    ].join(" ").toLowerCase().includes(q);
+
+  });
 
   document.getElementById("orderList").innerHTML =
-    filtered.length
-      ? [...filtered]
-          .sort((a,b) => String(b.date).localeCompare(String(a.date)))
-          .map(order => orderCard(order,true))
-          .join("")
-      : empty("Nessun ordine trovato","Crea il primo ordine professionale.");
+  arr.length
+  ? arr.map(x => `
+
+    <article class="item">
+
+      <div class="item-top">
+
+        <div>
+          <h3>${esc(x.code)}</h3>
+
+          <div class="subtitle">
+            ${esc(supplierName(x.supplierId))}
+            ·
+            ${esc(x.date || "")}
+          </div>
+        </div>
+
+        ${statusBadge(x.status)}
+
+      </div>
+
+      <div class="meta">
+
+        <div>
+          <label>Valore</label>
+          <strong>${money(x.amount)}</strong>
+        </div>
+
+        <div>
+          <label>Consegna</label>
+          <strong>${esc(x.due || "—")}</strong>
+        </div>
+
+        <div>
+          <label>Pagamento</label>
+          <strong>${esc(x.payment)}</strong>
+        </div>
+
+        <div>
+          <label>Stato</label>
+          <strong>${esc(x.status)}</strong>
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="mini primary"
+          onclick="openOrder('${x.id}')"
+        >
+          MODIFICA
+        </button>
+
+        ${
+          x.status !== "Consegnato"
+          ? `
+            <button
+              class="mini green"
+              onclick="completeOrder('${x.id}')"
+            >
+              CONSEGNATO
+            </button>
+          `
+          : ""
+        }
+
+        <button
+          class="mini red"
+          onclick="remove('orders','${x.id}')"
+        >
+          ELIMINA
+        </button>
+
+      </div>
+
+    </article>
+
+  `).join("")
+  : `
+    <div class="empty">
+      <strong>Nessun ordine</strong>
+      Crea il primo ordine d’acquisto.
+    </div>
+  `;
 }
 
-function editOrder(orderId){
-  const order = data.orders.find(item => item.id === orderId);
-  if(order) openOrder(order);
+function completeOrder(id){
+
+  const x = db.orders.find(o => o.id === id);
+
+  x.status = "Consegnato";
+
+  save();
+  toast("Ordine completato");
 }
 
-function advanceOrder(orderId){
-  const states = [
-    "Bozza",
-    "Inviato",
-    "Confermato",
-    "In viaggio",
-    "Consegnato"
-  ];
+function renderDashboard(){
 
-  const order = data.orders.find(item => item.id === orderId);
-  if(!order || order.status === "Annullato") return;
+  const active = db.suppliers.filter(
+    x => x.status === "Attivo"
+  ).length;
 
-  const index = states.indexOf(order.status);
-  order.status = states[Math.min(index + 1, states.length - 1)];
-
-  persist();
-  toast("Stato ordine: " + order.status);
-}
-
-function deleteOrder(orderId){
-  if(!confirm("Eliminare ordine, pagamento e consegna collegati?")) return;
-
-  data.orders = data.orders.filter(order => order.id !== orderId);
-  data.payments = data.payments.filter(payment => payment.orderId !== orderId);
-  data.deliveries = data.deliveries.filter(
-    delivery => delivery.orderId !== orderId
+  const open = db.orders.filter(
+    x => !["Consegnato","Annullato"].includes(x.status)
   );
 
-  persist();
-  toast("Ordine e collegamenti eliminati");
-}
+  const now = new Date();
 
-/* CONSEGNE */
+  const next = new Date();
 
-function openDelivery(delivery = null){
-  populateOrderSelect();
+  next.setDate(now.getDate() + 7);
 
-  if(!data.orders.length){
-    toast("Prima crea almeno un ordine");
-    return;
-  }
+  const due = open.filter(x => {
 
-  document.getElementById("deliveryTitle").textContent =
-    delivery ? "Modifica consegna" : "Nuova consegna";
+    return x.due &&
+      new Date(x.due) >= new Date(now.toDateString()) &&
+      new Date(x.due) <= next;
 
-  document.getElementById("deliveryId").value = delivery?.id || "";
-  document.getElementById("deliveryOrder").value = delivery?.orderId || "";
-  document.getElementById("deliveryCarrier").value = delivery?.carrier || "";
-  document.getElementById("deliveryTracking").value = delivery?.tracking || "";
-  document.getElementById("deliveryTrackingUrl").value =
-    delivery?.trackingUrl || "";
-  document.getElementById("deliveryShipDate").value =
-    delivery?.shipDate || "";
-  document.getElementById("deliveryExpectedDate").value =
-    delivery?.expectedDate || "";
-  document.getElementById("deliveryActualDate").value =
-    delivery?.actualDate || "";
-  document.getElementById("deliveryCost").value = delivery?.cost ?? "";
-  document.getElementById("deliveryStatus").value =
-    delivery?.status || "In preparazione";
-  document.getElementById("deliveryNotes").value = delivery?.notes || "";
+  }).length;
 
-  openModal("deliveryModal");
-}
+  document.getElementById("sSuppliers").textContent =
+    active;
 
-function openDeliveryForOrder(orderId){
-  const existing = data.deliveries.find(
-    delivery => delivery.orderId === orderId
-  );
+  document.getElementById("sOrders").textContent =
+    open.length;
 
-  if(existing){
-    openDelivery(existing);
-    return;
-  }
-
-  openDelivery();
-
-  document.getElementById("deliveryOrder").value = orderId;
-  deliveryOrderChanged();
-}
-
-function deliveryOrderChanged(){
-  const orderId = document.getElementById("deliveryOrder").value;
-  const order = data.orders.find(item => item.id === orderId);
-
-  if(!order) return;
-
-  document.getElementById("deliveryExpectedDate").value =
-    order.deliveryDate || "";
-
-  document.getElementById("deliveryCost").value =
-    order.shipping ?? "";
-}
-
-function saveDelivery(event){
-  event.preventDefault();
-
-  const deliveryId = document.getElementById("deliveryId").value;
-  const previous = data.deliveries.find(
-    delivery => delivery.id === deliveryId
-  );
-
-  const delivery = {
-    id: deliveryId || createId("delivery"),
-    orderId: document.getElementById("deliveryOrder").value,
-    carrier: document.getElementById("deliveryCarrier").value.trim(),
-    tracking: document.getElementById("deliveryTracking").value.trim(),
-    trackingUrl: document.getElementById("deliveryTrackingUrl").value.trim(),
-    shipDate: document.getElementById("deliveryShipDate").value,
-    expectedDate: document.getElementById("deliveryExpectedDate").value,
-    actualDate: document.getElementById("deliveryActualDate").value,
-    cost: Number(document.getElementById("deliveryCost").value || 0),
-    status: document.getElementById("deliveryStatus").value,
-    notes: document.getElementById("deliveryNotes").value.trim(),
-    createdAt: previous?.createdAt || new Date().toISOString()
-  };
-
-  if(delivery.status === "Consegnato" && !delivery.actualDate){
-    delivery.actualDate = today();
-  }
-
-  if(deliveryId){
-    data.deliveries = data.deliveries.map(item =>
-      item.id === deliveryId ? delivery : item
-    );
-  }else{
-    const duplicate = data.deliveries.some(
-      item => item.orderId === delivery.orderId
+  document.getElementById("sOpenValue").textContent =
+    money(
+      open.reduce(
+        (a,b) => a + Number(b.amount || 0),
+        0
+      )
     );
 
-    if(duplicate){
-      toast("Esiste già una consegna per questo ordine");
-      return;
-    }
+  document.getElementById("sDue").textContent =
+    due;
 
-    data.deliveries.push(delivery);
+  const low = db.products.filter(
+    x => Number(x.stock) <= Number(x.minStock)
+  );
+
+  const late = open.filter(x => {
+
+    return x.due &&
+      new Date(x.due) <
+      new Date(new Date().toDateString());
+
+  });
+
+  const alerts = [];
+
+  if(late.length){
+
+    alerts.push(`
+      <div class="alert bad">
+        ⚠ ${late.length} ordini risultano oltre la data prevista.
+      </div>
+    `);
+
   }
 
-  const order = data.orders.find(item => item.id === delivery.orderId);
+  if(low.length){
 
-  if(order){
-    if(delivery.status === "Consegnato"){
-      order.status = "Consegnato";
-    }else if(["Ritirato","In transito","In dogana"].includes(delivery.status)){
-      order.status = "In viaggio";
-    }
+    alerts.push(`
+      <div class="alert warn">
+        📦 ${low.length} prodotti sono alla scorta minima o sotto soglia.
+      </div>
+    `);
+
   }
 
-  closeModal("deliveryModal");
-  persist();
-  toast(deliveryId ? "Consegna aggiornata" : "Consegna creata");
-}
+  if(!late.length && !low.length){
 
-function renderDeliveries(){
-  const query =
-    (document.getElementById("deliverySearch")?.value || "").toLowerCase();
+    alerts.push(`
+      <div class="alert good">
+        ✓ Nessuna criticità operativa rilevata.
+      </div>
+    `);
 
-  const now = today();
-
-  const filtered = data.deliveries.filter(delivery =>
-    [
-      orderNumber(delivery.orderId),
-      delivery.carrier,
-      delivery.tracking,
-      delivery.status
-    ].join(" ").toLowerCase().includes(query)
-  );
-
-  document.getElementById("deliveryList").innerHTML =
-    filtered.length
-      ? [...filtered]
-          .sort((a,b) =>
-            String(a.expectedDate).localeCompare(String(b.expectedDate))
-          )
-          .map(delivery => {
-            const order = data.orders.find(
-              item => item.id === delivery.orderId
-            );
-
-            const late =
-              delivery.status !== "Consegnato" &&
-              delivery.expectedDate &&
-              delivery.expectedDate < now;
-
-            return `
-              <article class="item">
-                <div class="item-top">
-                  <div>
-                    <h3>${esc(orderNumber(delivery.orderId))}</h3>
-
-                    <div class="subtitle">
-                      ${esc(supplierName(order?.supplierId))} ·
-                      ${esc(delivery.carrier || "Corriere non indicato")}
-                    </div>
-                  </div>
-
-                  <span class="badge ${late ? "bad" : statusClass(delivery.status)}">
-                    ${late ? "In ritardo" : esc(delivery.status)}
-                  </span>
-                </div>
-
-                <div class="meta">
-                  <div>
-                    <label>Tracking</label>
-                    <strong>${esc(delivery.tracking || "—")}</strong>
-                  </div>
-
-                  <div>
-                    <label>Consegna prevista</label>
-                    <strong>${esc(delivery.expectedDate || "—")}</strong>
-                  </div>
-
-                  <div>
-                    <label>Data effettiva</label>
-                    <strong>${esc(delivery.actualDate || "—")}</strong>
-                  </div>
-
-                  <div>
-                    <label>Costo trasporto</label>
-                    <strong>${money(delivery.cost)}</strong>
-                  </div>
-                </div>
-
-                <div class="actions">
-                  ${delivery.trackingUrl ? `
-                    <button class="mini info"
-                      onclick="window.open('${esc(delivery.trackingUrl)}','_blank')">
-                      Apri tracking
-                    </button>
-                  ` : ""}
-
-                  ${delivery.status !== "Consegnato" ? `
-                    <button class="mini green"
-                      onclick="markDelivered('${delivery.id}')">
-                      Consegnato
-                    </button>
-                  ` : ""}
-
-                  <button class="mini primary"
-                    onclick="editDelivery('${delivery.id}')">
-                    Modifica
-                  </button>
-
-                  <button class="mini danger"
-                    onclick="deleteDelivery('${delivery.id}')">
-                    Elimina
-                  </button>
-                </div>
-              </article>
-            `;
-          }).join("")
-      : empty("Nessuna consegna trovata","Crea o collega una consegna a un ordine.");
-}
-
-function editDelivery(deliveryId){
-  const delivery = data.deliveries.find(
-    item => item.id === deliveryId
-  );
-
-  if(delivery) openDelivery(delivery);
-}
-
-function markDelivered(deliveryId){
-  const delivery = data.deliveries.find(
-    item => item.id === deliveryId
-  );
-
-  if(!delivery) return;
-
-  delivery.status = "Consegnato";
-  delivery.actualDate = today();
-
-  const order = data.orders.find(
-    item => item.id === delivery.orderId
-  );
-
-  if(order) order.status = "Consegnato";
-
-  persist();
-  toast("Consegna completata");
-}
-
-function deleteDelivery(deliveryId){
-  if(!confirm("Eliminare questa consegna?")) return;
-
-  data.deliveries = data.deliveries.filter(
-    delivery => delivery.id !== deliveryId
-  );
-
-  persist();
-  toast("Consegna eliminata");
-}
-
-/* PAGAMENTI */
-
-function openPayment(payment = null){
-  populateSupplierSelects();
-
-  if(!data.suppliers.length){
-    toast("Prima registra almeno un fornitore");
-    return;
   }
 
-  document.getElementById("paymentTitle").textContent =
-    payment ? "Modifica pagamento" : "Nuovo pagamento";
+  document.getElementById("alerts").innerHTML =
+    alerts.join("");
 
-  document.getElementById("paymentId").value = payment?.id || "";
-  document.getElementById("paymentSupplier").value =
-    payment?.supplierId || "";
-  document.getElementById("paymentReference").value =
-    payment?.reference || "";
-  document.getElementById("paymentAmount").value =
-    payment?.amount ?? "";
-  document.getElementById("paymentDue").value =
-    payment?.dueDate || "";
-  document.getElementById("paymentStatus").value =
-    payment?.status || "Da pagare";
-  document.getElementById("paymentMethod").value =
-    payment?.method || "Bonifico";
-  document.getElementById("paymentNotes").value =
-    payment?.notes || "";
+  document.getElementById("recentOrders").innerHTML =
+  db.orders.slice(0,4).map(x => `
 
-  openModal("paymentModal");
+    <div class="item">
+
+      <div class="item-top">
+
+        <div>
+          <h3>${esc(x.code)}</h3>
+
+          <div class="subtitle">
+            ${esc(supplierName(x.supplierId))}
+          </div>
+        </div>
+
+        ${statusBadge(x.status)}
+
+      </div>
+
+      <div class="meta">
+
+        <div>
+          <label>Valore</label>
+          <strong>${money(x.amount)}</strong>
+        </div>
+
+        <div>
+          <label>Consegna</label>
+          <strong>${esc(x.due || "—")}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("")
+  ||
+  `
+    <div class="empty">
+      <strong>Nessun ordine recente</strong>
+      Gli ultimi ordini compariranno qui.
+    </div>
+  `;
 }
-
-function savePayment(event){
-  event.preventDefault();
-
-  const paymentId = document.getElementById("paymentId").value;
-
-  const previous = data.payments.find(
-    payment => payment.id === paymentId
-  );
-
-  const payment = {
-    id: paymentId || createId("payment"),
-    supplierId: document.getElementById("paymentSupplier").value,
-    orderId: previous?.orderId || "",
-    reference: document.getElementById("paymentReference").value.trim(),
-    amount: Number(document.getElementById("paymentAmount").value || 0),
-    dueDate: document.getElementById("paymentDue").value,
-    status: document.getElementById("paymentStatus").value,
-    method: document.getElementById("paymentMethod").value,
-    notes: document.getElementById("paymentNotes").value.trim(),
-    createdAt: previous?.createdAt || new Date().toISOString()
-  };
-
-  if(paymentId){
-    data.payments = data.payments.map(item =>
-      item.id === paymentId ? payment : item
-    );
-  }else{
-    data.payments.push(payment);
-  }
-
-  if(payment.orderId){
-    const order = data.orders.find(
-      item => item.id === payment.orderId
-    );
-
-    if(order){
-      order.paymentStatus =
-        payment.status === "Pagato" ? "Pagato" : "Da pagare";
-    }
-  }
-
-  closeModal("paymentModal");
-  persist();
-  toast(paymentId ? "Pagamento aggiornato" : "Pagamento creato");
-}
-
-function renderPayments(){
-  const query =
-    (document.getElementById("paymentSearch")?.value || "").toLowerCase();
-
-  const filtered = data.payments.filter(payment =>
-    [
-      payment.reference,
-      payment.status,
-      payment.method,
-      supplierName(payment.supplierId)
-    ].join(" ").toLowerCase().includes(query)
-  );
-
-  document.getElementById("paymentList").innerHTML =
-    filtered.length
-      ? [...filtered]
-          .sort((a,b) =>
-            String(a.dueDate).localeCompare(String(b.dueDate))
-          )
-          .map(payment => `
-            <article class="item">
-              <div class="item-top">
-                <div>
-                  <h3>${esc(payment.reference || "Pagamento XA")}</h3>
-
-                  <div class="subtitle">
-                    ${esc(supplierName(payment.supplierId))}
-                    ${payment.orderId ? " · Collegato a ordine" : ""}
-                  </div>
-                </div>
-
-                <span class="badge ${statusClass(payment.status)}">
-                  ${esc(payment.status)}
-                </span>
-              </div>
-
-              <div class="meta">
-                <div>
-                  <label>Importo</label>
-                  <strong>${money(payment.amount)}</strong>
-                </div>
-
-                <div>
-                  <label>Scadenza</label>
-                  <strong>${esc(payment.dueDate || "—")}</strong>
-                </div>
-
-                <div>
-                  <label>Metodo</label>
-                  <strong>${esc(payment.method || "—")}</strong>
-                </div>
-
-                <div>
-                  <label>Fornitore</label>
-                  <strong>${esc(supplierName(payment.supplierId))}</strong>
-                </div>
-              </div>
-
-              <div class="actions">
-                ${payment.status !== "Pagato" ? `
-                  <button class="mini green"
-                    onclick="markPaid('${payment.id}')">
-                    Segna pagato
-                  </button>
-                ` : ""}
-
-                <button class="mini primary"
-                  onclick="editPayment('${payment.id}')">
-                  Modifica
-                </button>
-
-                <button class="mini danger"
-                  onclick="deletePayment('${payment.id}')">
-                  Elimina
-                </button>
-              </div>
-            </article>
-          `).join("")
-      : empty("Nessun pagamento trovato","Registra una fattura o una scadenza.");
-}
-
-function editPayment(paymentId){
-  const payment = data.payments.find(
-    item => item.id === paymentId
-  );
-
-  if(payment) openPayment(payment);
-}
-
-function markPaid(paymentId){
-  const payment = data.payments.find(
-    item => item.id === paymentId
-  );
-
-  if(!payment) return;
-
-  payment.status = "Pagato";
-
-  if(payment.orderId){
-    const order = data.orders.find(
-      item => item.id === payment.orderId
-    );
-
-    if(order) order.paymentStatus = "Pagato";
-  }
-
-  persist();
-  toast("Pagamento segnato come pagato");
-}
-
-function deletePayment(paymentId){
-  if(!confirm("Eliminare definitivamente questo pagamento?")) return;
-
-  data.payments = data.payments.filter(
-    payment => payment.id !== paymentId
-  );
-
-  persist();
-  toast("Pagamento eliminato");
-}
-
-/* ANALISI */
 
 function renderAnalysis(){
-  const orders = data.orders.filter(
-    order => order.status !== "Annullato"
+
+  const valid = db.orders.filter(
+    x => x.status !== "Annullato"
   );
 
-  const spend = orders.reduce(
-    (sum,order) =>
-      sum + Number(order.grandTotal ?? order.total ?? 0),
+  const total = valid.reduce(
+    (a,b) => a + Number(b.amount || 0),
     0
   );
 
-  const average = orders.length ? spend / orders.length : 0;
+  document.getElementById("aSpend").textContent =
+    money(total);
 
-  const counts = {};
+  document.getElementById("aAvg").textContent =
+    money(valid.length ? total / valid.length : 0);
 
-  orders.forEach(order => {
-    counts[order.supplierId] =
-      (counts[order.supplierId] || 0) + 1;
+  document.getElementById("aDelivered").textContent =
+    db.orders.filter(
+      x => x.status === "Consegnato"
+    ).length;
+
+  document.getElementById("aRating").textContent =
+    Math.round(
+      db.suppliers.length
+      ? db.suppliers.reduce(
+          (a,b) => a + Number(b.rating || 0),
+          0
+        ) / db.suppliers.length
+      : 0
+    ) + "%";
+
+  const spend = {};
+
+  valid.forEach(o => {
+
+    spend[o.supplierId] =
+      (spend[o.supplierId] || 0) +
+      Number(o.amount || 0);
+
   });
 
-  const topSupplierId = Object.entries(counts)
-    .sort((a,b) => b[1] - a[1])[0]?.[0];
+  const rows = Object.entries(spend)
+    .sort((a,b) => b[1] - a[1]);
 
-  const due = data.payments
-    .filter(payment => payment.status !== "Pagato")
-    .reduce(
-      (sum,payment) => sum + Number(payment.amount || 0),
-      0
-    );
+  const max = rows[0]?.[1] || 1;
 
-  document.getElementById("analysisSpend").textContent = money(spend);
-  document.getElementById("analysisAverage").textContent = money(average);
+  document.getElementById("supplierSpend").innerHTML =
+  rows.length
+  ? rows.map(([id,v]) => `
 
-  document.getElementById("analysisSupplier").textContent =
-    topSupplierId ? supplierName(topSupplierId) : "—";
+    <div style="margin:11px 0">
 
-  document.getElementById("analysisPayments").textContent = money(due);
-}
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          gap:8px;
+          font-size:10px;
+          font-weight:900;
+          margin-bottom:5px;
+        "
+      >
 
-function renderComparison(){
-  const query =
-    (document.getElementById("comparisonSearch")?.value || "").toLowerCase();
+        <span>${esc(supplierName(id))}</span>
+        <span>${money(v)}</span>
 
-  const products = data.products
-    .filter(product => product.name.toLowerCase().includes(query))
-    .sort((a,b) => {
-      const nameCompare = a.name.localeCompare(b.name);
+      </div>
 
-      return nameCompare ||
-        realUnitCost(a) - realUnitCost(b);
-    });
+      <div class="progress">
+        <i style="width:${Math.max(4,v/max*100)}%"></i>
+      </div>
 
-  const cheapestByName = {};
+    </div>
 
-  products.forEach(product => {
-    const key = product.name.trim().toLowerCase();
-    const cost = realUnitCost(product);
+  `).join("")
+  : `
+    <div class="empty">
+      Nessun dato di spesa disponibile.
+    </div>
+  `;
 
-    if(
-      cheapestByName[key] === undefined ||
-      cost < cheapestByName[key]
-    ){
-      cheapestByName[key] = cost;
-    }
+  const states = {};
+
+  db.orders.forEach(o => {
+
+    states[o.status] =
+      (states[o.status] || 0) + 1;
+
   });
 
-  document.getElementById("comparisonBody").innerHTML =
-    products.length
-      ? products.map(product => {
-          const supplier = data.suppliers.find(
-            item => item.id === product.supplierId
-          );
+  document.getElementById("orderMix").innerHTML =
+  Object.entries(states).map(([s,n]) => `
 
-          const realCost = realUnitCost(product);
+    <div class="item" style="margin:7px 0">
 
-          const best =
-            realCost === cheapestByName[product.name.trim().toLowerCase()];
+      <div class="item-top">
+        <strong>${esc(s)}</strong>
+        ${statusBadge(String(n) + " ordini")}
+      </div>
 
-          return `
-            <tr class="${best ? "best-row" : ""}">
-              <td>
-                <strong>${esc(product.name)}</strong>
-                ${best ? " ✓" : ""}
-              </td>
+    </div>
 
-              <td>${esc(supplierName(product.supplierId))}</td>
-              <td>${money(product.price)}</td>
-              <td>${product.minimum || "—"}</td>
-              <td>${money(product.shippingEstimate || 0)}</td>
-              <td><strong>${money(realCost)}</strong></td>
-
-              <td>
-                ${supplier?.deliveryDays
-                  ? esc(supplier.deliveryDays) + " giorni"
-                  : "—"}
-              </td>
-            </tr>
-          `;
-        }).join("")
-      : `<tr><td colspan="7">Nessun prodotto da confrontare.</td></tr>`;
-}
-
-/* IMPOSTAZIONI */
-
-function loadSettingsForm(){
-  document.getElementById("companyName").value =
-    data.settings.company || "XA Fermented Redrinks";
-
-  document.getElementById("currency").value =
-    data.settings.currency || "EUR";
-}
-
-function saveSettings(){
-  data.settings.company =
-    document.getElementById("companyName").value.trim() ||
-    "XA Fermented Redrinks";
-
-  data.settings.currency =
-    document.getElementById("currency").value;
-
-  persist();
-  toast("Impostazioni salvate");
-}
-
-function exportBackup(){
-  const blob = new Blob(
-    [JSON.stringify(data,null,2)],
-    {type:"application/json"}
-  );
-
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-
-  link.href = url;
-  link.download = "xa-supply-backup-" + today() + ".json";
-
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  URL.revokeObjectURL(url);
-  toast("Backup esportato");
-}
-
-function importBackup(event){
-  const file = event.target.files?.[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    try{
-      const imported = JSON.parse(reader.result);
-
-      if(
-        !Array.isArray(imported.suppliers) ||
-        !Array.isArray(imported.products) ||
-        !Array.isArray(imported.orders) ||
-        !Array.isArray(imported.payments)
-      ){
-        throw new Error("Backup non valido");
-      }
-
-      data = normalizeData(imported);
-
-      persist();
-      loadSettingsForm();
-      toast("Backup importato");
-    }catch(error){
-      alert("Il file non è un backup XA valido.");
-    }
-
-    event.target.value = "";
-  };
-
-  reader.readAsText(file);
-}
-
-function resetData(){
-  const answer = prompt("Per cancellare tutto scrivi: CANCELLA XA");
-
-  if(answer !== "CANCELLA XA"){
-    toast("Cancellazione annullata");
-    return;
-  }
-
-  data = clone(blankData);
-  localStorage.removeItem(KEY);
-
-  persist();
-  loadSettingsForm();
-  toast("Archivio cancellato");
+  `).join("")
+  ||
+  `
+    <div class="empty">
+      Nessun ordine registrato.
+    </div>
+  `;
 }
 
 function renderAll(){
-  populateSupplierSelects();
-  populateOrderSelect();
+
   renderDashboard();
   renderSuppliers();
   renderProducts();
   renderOrders();
-  renderDeliveries();
-  renderPayments();
   renderAnalysis();
-  renderComparison();
 
-  if(currentSupplierDetailId){
-    renderSupplierDetail();
-  }
 }
 
-loadSettingsForm();
+function exportData(){
+
+  const blob = new Blob(
+    [JSON.stringify(db,null,2)],
+    {type:"application/json"}
+  );
+
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download =
+    "XA-Supply-Command-backup-" +
+    today() +
+    ".json";
+
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+
+  toast("Backup esportato");
+}
+
+function importData(e){
+
+  const file = e.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+  const r = new FileReader();
+
+  r.onload = () => {
+
+    try{
+
+      const x = JSON.parse(r.result);
+
+      if(
+        !x.suppliers ||
+        !x.products ||
+        !x.orders
+      ){
+        throw new Error();
+      }
+
+      db = x;
+
+      save();
+
+      toast("Backup importato");
+
+    }catch{
+
+      alert("File backup non valido");
+
+    }
+
+  };
+
+  r.readAsText(file);
+
+  e.target.value = "";
+}
+
+function resetAll(){
+
+  if(
+    !confirm(
+      "Azzera completamente fornitori, prodotti e ordini?"
+    )
+  ){
+    return;
+  }
+
+  db = {
+    suppliers:[],
+    products:[],
+    orders:[]
+  };
+
+  save();
+
+  toast("Archivio azzerato");
+}
+
+function loadDemo(){
+
+  if(
+    (
+      db.suppliers.length ||
+      db.products.length ||
+      db.orders.length
+    )
+    &&
+    !confirm(
+      "I dati demo saranno aggiunti all’archivio attuale. Continuare?"
+    )
+  ){
+    return;
+  }
+
+  const s1 = uid("sup");
+  const s2 = uid("sup");
+  const s3 = uid("sup");
+
+  db.suppliers.unshift(
+
+    {
+      id:s1,
+      name:"Sidra Norte Asturias",
+      category:"Sidri premium",
+      contact:"Carlos Méndez",
+      phone:"+34 600 123 456",
+      email:"ventas@sidranorte.es",
+      city:"Gijón, Spagna",
+      terms:"30 giorni",
+      rating:96,
+      status:"Attivo",
+      notes:""
+    },
+
+    {
+      id:s2,
+      name:"Vetro Toscana",
+      category:"Bottiglie e vetro",
+      contact:"Marco Bini",
+      phone:"+39 0571 000000",
+      email:"ordini@vetrotoscana.it",
+      city:"Empoli, Italia",
+      terms:"Bonifico 30 gg",
+      rating:88,
+      status:"Attivo",
+      notes:""
+    },
+
+    {
+      id:s3,
+      name:"Botanica Europea",
+      category:"Botaniche e ingredienti",
+      contact:"Élise Martin",
+      phone:"+33 600 000000",
+      email:"trade@botanica.eu",
+      city:"Lione, Francia",
+      terms:"Pagamento anticipato",
+      rating:82,
+      status:"In prova",
+      notes:""
+    }
+
+  );
+
+  db.products.unshift(
+
+    {
+      id:uid("prd"),
+      name:"Sidro Brut Asturiano",
+      category:"Sidro",
+      supplierId:s1,
+      sku:"SID-AST-001",
+      unit:"bott.",
+      price:4.8,
+      stock:36,
+      minStock:24,
+      notes:""
+    },
+
+    {
+      id:uid("prd"),
+      name:"Bottiglia 750 ml ambra",
+      category:"Packaging",
+      supplierId:s2,
+      sku:"BOT-750-A",
+      unit:"pz",
+      price:.72,
+      stock:120,
+      minStock:150,
+      notes:""
+    },
+
+    {
+      id:uid("prd"),
+      name:"Timo limonato essiccato",
+      category:"Botaniche",
+      supplierId:s3,
+      sku:"BOT-TL-01",
+      unit:"kg",
+      price:22,
+      stock:4,
+      minStock:2,
+      notes:""
+    }
+
+  );
+
+  const d1 = new Date();
+  d1.setDate(d1.getDate() + 4);
+
+  const d2 = new Date();
+  d2.setDate(d2.getDate() - 2);
+
+  db.orders.unshift(
+
+    {
+      id:uid("ord"),
+      supplierId:s1,
+      code:"XA-2026-001",
+      date:today(),
+      due:d1.toISOString().slice(0,10),
+      amount:1240,
+      status:"Confermato",
+      payment:"Da pagare",
+      notes:""
+    },
+
+    {
+      id:uid("ord"),
+      supplierId:s2,
+      code:"XA-2026-002",
+      date:today(),
+      due:d2.toISOString().slice(0,10),
+      amount:480,
+      status:"In consegna",
+      payment:"Parziale",
+      notes:""
+    },
+
+    {
+      id:uid("ord"),
+      supplierId:s3,
+      code:"XA-2026-003",
+      date:today(),
+      due:"",
+      amount:220,
+      status:"Bozza",
+      payment:"Da pagare",
+      notes:""
+    }
+
+  );
+
+  save();
+
+  toast("Dati demo caricati");
+}
+
 renderAll();
 </script>
+
 </body>
 </html>
