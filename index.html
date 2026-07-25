@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#641b2b">
-  <title>XA Supply Command V1.1</title>
+  <meta name="theme-color" content="#601a2a">
+  <title>XA Supply Command V1.2</title>
 
   <style>
     :root{
-      --wine:#641b2b;
-      --wine2:#3d0f1a;
-      --wine3:#8b2940;
-      --cream:#f4ecdd;
+      --wine:#601a2a;
+      --wine-dark:#381019;
+      --wine-light:#8c2b43;
+      --cream:#f3ead9;
       --ivory:#fffaf0;
-      --gold:#b38a45;
-      --gold2:#dfc58e;
+      --gold:#b28a47;
+      --gold-light:#dfc58f;
       --ink:#291d1f;
       --muted:#766b67;
-      --green:#327254;
-      --orange:#af672d;
-      --red:#a53440;
-      --blue:#34647d;
-      --line:rgba(100,27,43,.13);
-      --shadow:0 12px 28px rgba(52,21,27,.10);
+      --green:#317252;
+      --blue:#33677f;
+      --orange:#ad672d;
+      --red:#a63240;
+      --line:rgba(96,26,42,.13);
+      --shadow:0 12px 28px rgba(53,20,27,.10);
     }
 
     *{
@@ -35,30 +35,31 @@
     body{
       margin:0;
       min-height:100vh;
-      padding-bottom:92px;
+      padding-bottom:95px;
       color:var(--ink);
       font-family:Arial,Helvetica,sans-serif;
       background:
-        radial-gradient(circle at 10% 0,rgba(179,138,69,.16),transparent 32%),
+        radial-gradient(circle at 8% 0,rgba(178,138,71,.17),transparent 32%),
         linear-gradient(180deg,#faf4e8,#eee2cf);
     }
 
     button,input,select,textarea{font:inherit}
     button{cursor:pointer}
+    a{color:inherit}
 
     .app{
-      width:min(100%,900px);
+      width:min(100%,920px);
       margin:auto;
     }
 
     .top{
       position:sticky;
       top:0;
-      z-index:30;
+      z-index:40;
       padding:10px 12px;
       border-bottom:1px solid var(--line);
-      background:rgba(247,239,225,.94);
-      backdrop-filter:blur(16px);
+      background:rgba(247,239,225,.95);
+      backdrop-filter:blur(17px);
     }
 
     .brand{
@@ -70,9 +71,9 @@
       border-radius:23px;
       color:white;
       background:
-        radial-gradient(circle at 88% 15%,rgba(223,197,142,.23),transparent 30%),
-        linear-gradient(135deg,var(--wine2),var(--wine));
-      box-shadow:0 10px 24px rgba(61,15,26,.25);
+        radial-gradient(circle at 88% 12%,rgba(223,197,143,.25),transparent 30%),
+        linear-gradient(135deg,var(--wine-dark),var(--wine));
+      box-shadow:0 10px 24px rgba(56,16,25,.25);
     }
 
     .logo{
@@ -81,9 +82,9 @@
       flex:0 0 auto;
       display:grid;
       place-items:center;
-      border:2px solid var(--gold2);
+      border:2px solid var(--gold-light);
       border-radius:17px;
-      color:var(--gold2);
+      color:var(--gold-light);
       font:900 25px Georgia,serif;
       letter-spacing:-3px;
     }
@@ -95,25 +96,25 @@
 
     .brand h1{
       margin:0;
-      font:900 19px Georgia,serif;
+      font:900 18px Georgia,serif;
       letter-spacing:.8px;
     }
 
     .brand p{
       margin:5px 0 0;
       color:#eadabc;
-      font-size:9px;
+      font-size:8px;
       font-weight:800;
-      letter-spacing:1.3px;
+      letter-spacing:1.25px;
       text-transform:uppercase;
     }
 
     .version{
       padding:7px 9px;
-      border:1px solid rgba(223,197,142,.55);
+      border:1px solid rgba(223,197,143,.55);
       border-radius:999px;
       color:#f8e9c8;
-      font-size:9px;
+      font-size:8px;
       font-weight:900;
       white-space:nowrap;
     }
@@ -139,12 +140,12 @@
       border-radius:28px;
       color:white;
       background:
-        radial-gradient(circle at 85% 10%,rgba(223,197,142,.29),transparent 30%),
-        linear-gradient(145deg,#351018,#702037 65%,#96394f);
+        radial-gradient(circle at 85% 10%,rgba(223,197,143,.29),transparent 30%),
+        linear-gradient(145deg,#341017,#6e2035 65%,#93394e);
       box-shadow:var(--shadow);
     }
 
-    .hero:after{
+    .hero::after{
       content:"XA";
       position:absolute;
       right:-18px;
@@ -171,7 +172,7 @@
     .hero h2{
       position:relative;
       z-index:1;
-      max-width:560px;
+      max-width:570px;
       margin:15px 0 7px;
       font:900 clamp(27px,7vw,42px)/1 Georgia,serif;
     }
@@ -179,7 +180,7 @@
     .hero p{
       position:relative;
       z-index:1;
-      max-width:550px;
+      max-width:560px;
       margin:0;
       color:#eadbca;
       font-size:12px;
@@ -206,7 +207,7 @@
 
     .btn-primary{
       color:white;
-      background:linear-gradient(135deg,var(--wine),var(--wine3));
+      background:linear-gradient(135deg,var(--wine),var(--wine-light));
     }
 
     .btn-gold{
@@ -247,7 +248,7 @@
 
     .title-row h2{
       margin:0;
-      color:var(--wine2);
+      color:var(--wine-dark);
       font:900 25px Georgia,serif;
     }
 
@@ -284,8 +285,8 @@
     .stat strong{
       display:block;
       margin-top:7px;
-      color:var(--wine2);
-      font:900 24px Georgia,serif;
+      color:var(--wine-dark);
+      font:900 23px Georgia,serif;
       overflow-wrap:anywhere;
     }
 
@@ -301,7 +302,7 @@
       padding:15px;
       border:1px solid var(--line);
       border-radius:21px;
-      background:rgba(255,250,240,.91);
+      background:rgba(255,250,240,.92);
       box-shadow:0 8px 20px rgba(50,21,26,.07);
     }
 
@@ -315,7 +316,7 @@
 
     .card-head h3{
       margin:0;
-      color:var(--wine2);
+      color:var(--wine-dark);
       font:900 17px Georgia,serif;
     }
 
@@ -365,6 +366,7 @@
       border-radius:14px;
       font-size:10px;
       font-weight:800;
+      line-height:1.4;
     }
 
     .alert-red{
@@ -419,7 +421,7 @@
 
     .search:focus,.field input:focus,.field select:focus,.field textarea:focus{
       border-color:var(--wine);
-      box-shadow:0 0 0 3px rgba(100,27,43,.08);
+      box-shadow:0 0 0 3px rgba(96,26,42,.08);
     }
 
     .list{
@@ -444,7 +446,7 @@
 
     .item h3{
       margin:0;
-      color:var(--wine2);
+      color:var(--wine-dark);
       font:900 16px Georgia,serif;
     }
 
@@ -520,6 +522,7 @@
 
     .mini.primary{color:white;background:var(--wine)}
     .mini.green{color:white;background:var(--green)}
+    .mini.info{color:white;background:var(--blue)}
     .mini.danger{color:white;background:var(--red)}
 
     .empty{
@@ -539,6 +542,148 @@
       font:900 17px Georgia,serif;
     }
 
+    .analysis{
+      display:grid;
+      gap:9px;
+    }
+
+    .analysis-box{
+      padding:15px;
+      border-radius:18px;
+      color:white;
+      background:linear-gradient(145deg,#48141f,#74243a);
+    }
+
+    .analysis-box:nth-child(even){
+      background:linear-gradient(145deg,#57401e,#947139);
+    }
+
+    .analysis-box small{
+      font-size:8px;
+      font-weight:900;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      opacity:.76;
+    }
+
+    .analysis-box strong{
+      display:block;
+      margin-top:6px;
+      font:900 23px Georgia,serif;
+      overflow-wrap:anywhere;
+    }
+
+    .comparison{overflow-x:auto}
+
+    table{
+      width:100%;
+      min-width:700px;
+      border-collapse:collapse;
+      font-size:10px;
+    }
+
+    th,td{
+      padding:10px 8px;
+      border-bottom:1px solid #e1d0b5;
+      text-align:left;
+    }
+
+    th{
+      color:var(--wine);
+      font-size:8px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+    }
+
+    .best-row{
+      background:#e2f0e7;
+    }
+
+    .detail-header{
+      padding:18px;
+      border-radius:21px;
+      color:white;
+      background:
+        radial-gradient(circle at 88% 10%,rgba(223,197,143,.24),transparent 30%),
+        linear-gradient(135deg,var(--wine-dark),var(--wine));
+    }
+
+    .detail-header h2{
+      margin:0;
+      font:900 25px Georgia,serif;
+    }
+
+    .detail-header p{
+      margin:6px 0 0;
+      color:#eadaca;
+      font-size:11px;
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:8px;
+      margin-top:11px;
+    }
+
+    .detail-box{
+      padding:11px;
+      border-radius:14px;
+      background:#f1e4ce;
+    }
+
+    .detail-box small{
+      display:block;
+      color:var(--muted);
+      font-size:8px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .detail-box strong{
+      display:block;
+      margin-top:5px;
+      font-size:11px;
+      overflow-wrap:anywhere;
+    }
+
+    .timeline{
+      display:grid;
+      gap:8px;
+    }
+
+    .timeline-item{
+      position:relative;
+      padding:11px 11px 11px 35px;
+      border-radius:14px;
+      background:#f4e7d3;
+    }
+
+    .timeline-item::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      top:16px;
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--wine);
+      box-shadow:0 0 0 4px rgba(96,26,42,.12);
+    }
+
+    .timeline-item strong{
+      display:block;
+      color:var(--wine-dark);
+      font-size:11px;
+    }
+
+    .timeline-item span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:9px;
+    }
+
     .modal-bg{
       position:fixed;
       inset:0;
@@ -554,7 +699,7 @@
     .modal-bg.show{display:flex}
 
     .modal{
-      width:min(100%,780px);
+      width:min(100%,800px);
       max-height:94vh;
       overflow:auto;
       border-radius:27px 27px 18px 18px;
@@ -578,7 +723,7 @@
 
     .modal-head h3{
       margin:0;
-      color:var(--wine2);
+      color:var(--wine-dark);
       font:900 20px Georgia,serif;
     }
 
@@ -602,7 +747,7 @@
     .field label{
       display:block;
       margin:0 0 5px 2px;
-      color:var(--wine2);
+      color:var(--wine-dark);
       font-size:9px;
       font-weight:900;
       letter-spacing:.6px;
@@ -666,7 +811,7 @@
       padding:13px;
       border-radius:17px;
       color:white;
-      background:linear-gradient(135deg,var(--wine2),var(--wine));
+      background:linear-gradient(135deg,var(--wine-dark),var(--wine));
     }
 
     .summary-row{
@@ -705,72 +850,17 @@
       accent-color:var(--wine);
     }
 
-    .analysis{
-      display:grid;
-      gap:9px;
-    }
-
-    .analysis-box{
-      padding:15px;
-      border-radius:18px;
-      color:white;
-      background:linear-gradient(145deg,#48141f,#74243a);
-    }
-
-    .analysis-box:nth-child(even){
-      background:linear-gradient(145deg,#57401e,#947139);
-    }
-
-    .analysis-box small{
-      font-size:8px;
-      font-weight:900;
-      letter-spacing:.7px;
-      text-transform:uppercase;
-      opacity:.76;
-    }
-
-    .analysis-box strong{
-      display:block;
-      margin-top:6px;
-      font:900 23px Georgia,serif;
-      overflow-wrap:anywhere;
-    }
-
-    .comparison{
-      overflow-x:auto;
-    }
-
-    table{
-      width:100%;
-      min-width:610px;
-      border-collapse:collapse;
-      font-size:10px;
-    }
-
-    th,td{
-      padding:10px 8px;
-      border-bottom:1px solid #e1d0b5;
-      text-align:left;
-    }
-
-    th{
-      color:var(--wine);
-      font-size:8px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-
     .bottom{
       position:fixed;
       left:50%;
       bottom:0;
-      z-index:40;
-      width:min(100%,900px);
+      z-index:50;
+      width:min(100%,920px);
       transform:translateX(-50%);
       display:grid;
-      grid-template-columns:repeat(6,1fr);
+      grid-template-columns:repeat(7,1fr);
       gap:3px;
-      padding:7px 6px max(8px,env(safe-area-inset-bottom));
+      padding:7px 5px max(8px,env(safe-area-inset-bottom));
       border-top:1px solid var(--line);
       background:rgba(255,250,240,.97);
       backdrop-filter:blur(18px);
@@ -779,31 +869,58 @@
 
     .nav{
       min-width:0;
-      padding:6px 2px;
+      padding:6px 1px;
       border:0;
-      border-radius:12px;
+      border-radius:11px;
       color:#806e69;
       background:transparent;
-      font-size:8px;
+      font-size:7px;
       font-weight:900;
     }
 
     .nav b{
       display:block;
       margin-bottom:3px;
-      font-size:17px;
+      font-size:16px;
       line-height:1;
     }
 
     .nav.active{
       color:white;
-      background:linear-gradient(135deg,var(--wine2),var(--wine));
+      background:linear-gradient(135deg,var(--wine-dark),var(--wine));
+    }
+
+    .more-menu{
+      position:fixed;
+      right:12px;
+      bottom:82px;
+      z-index:70;
+      display:none;
+      width:190px;
+      padding:8px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fffaf0;
+      box-shadow:0 16px 36px rgba(44,18,23,.24);
+    }
+
+    .more-menu.show{display:grid;gap:6px}
+
+    .more-menu button{
+      padding:11px;
+      border:0;
+      border-radius:12px;
+      color:var(--wine-dark);
+      text-align:left;
+      background:#f0e2ca;
+      font-size:10px;
+      font-weight:900;
     }
 
     .toast{
       position:fixed;
       left:50%;
-      bottom:92px;
+      bottom:95px;
       z-index:150;
       width:calc(100% - 28px);
       max-width:480px;
@@ -828,13 +945,13 @@
       .stats{grid-template-columns:repeat(4,1fr)}
       .quick{grid-template-columns:repeat(4,1fr)}
       .analysis{grid-template-columns:repeat(2,1fr)}
-      .form.desktop-cols{grid-template-columns:repeat(2,1fr)}
+      .detail-grid{grid-template-columns:repeat(4,1fr)}
       .modal-bg{align-items:center}
       .modal{border-radius:27px}
     }
 
-    @media(max-width:440px){
-      .brand h1{font-size:16px}
+    @media(max-width:460px){
+      .brand h1{font-size:15px}
       .brand p{font-size:7px}
       .version{font-size:7px}
       .line-grid-3{grid-template-columns:1fr 1fr}
@@ -851,28 +968,30 @@
 
       <div class="brand-copy">
         <h1>XA SUPPLY COMMAND</h1>
-        <p>Supplier & Procurement Management</p>
+        <p>Supplier, Procurement & Delivery Management</p>
       </div>
 
-      <div class="version">V1.1 PRO</div>
+      <div class="version">V1.2 PRO</div>
     </div>
   </header>
 
   <main>
 
-    <!-- HOME -->
     <section class="page active" id="page-home">
       <div class="hero">
-        <span class="hero-tag">● XA PROCUREMENT CONTROL</span>
-        <h2>Acquisti, fornitori e ordini sotto controllo</h2>
+        <span class="hero-tag">● XA SUPPLY CONTROL</span>
+
+        <h2>Dall’ordine alla consegna</h2>
+
         <p>
-          Crea ordini professionali con più prodotti, IVA, sconti,
-          trasporto e pagamenti collegati automaticamente.
+          Gestione completa di fornitori, prodotti, acquisti, scadenze,
+          pagamenti, spedizioni e tracking.
         </p>
 
         <div class="hero-actions">
           <button class="btn btn-gold" onclick="openSupplier()">+ Fornitore</button>
           <button class="btn btn-dark" onclick="openOrder()">+ Nuovo ordine</button>
+          <button class="btn btn-primary" onclick="openDelivery()">+ Consegna</button>
         </div>
       </div>
 
@@ -880,13 +999,19 @@
         <div class="stat">
           <small>Fornitori</small>
           <strong id="statSuppliers">0</strong>
-          <span>Archivio aziende</span>
+          <span>Archivio attivo</span>
         </div>
 
         <div class="stat">
           <small>Ordini aperti</small>
           <strong id="statOrders">0</strong>
-          <span>Non consegnati</span>
+          <span>Da completare</span>
+        </div>
+
+        <div class="stat">
+          <small>In viaggio</small>
+          <strong id="statDeliveries">0</strong>
+          <span>Spedizioni aperte</span>
         </div>
 
         <div class="stat">
@@ -894,18 +1019,12 @@
           <strong id="statPayments">€ 0,00</strong>
           <span>Scadenze aperte</span>
         </div>
-
-        <div class="stat">
-          <small>Spesa ordini</small>
-          <strong id="statSpend">€ 0,00</strong>
-          <span>Totale registrato</span>
-        </div>
       </div>
 
       <div class="card">
         <div class="card-head">
           <h3>Avvisi operativi</h3>
-          <span>SCADENZE XA</span>
+          <span>XA DEADLINE MONITOR</span>
         </div>
 
         <div class="alerts" id="alerts"></div>
@@ -919,23 +1038,23 @@
 
         <div class="quick">
           <button onclick="openSupplier()">
-            <strong>🏢 Nuovo fornitore</strong>
-            <small>Registra contatti e condizioni</small>
+            <strong>🏢 Fornitore</strong>
+            <small>Contatti e condizioni</small>
           </button>
 
           <button onclick="openProduct()">
-            <strong>📦 Nuovo prodotto</strong>
-            <small>Aggiungi prezzo e formato</small>
+            <strong>📦 Prodotto</strong>
+            <small>Prezzo e formato</small>
           </button>
 
           <button onclick="openOrder()">
-            <strong>🛒 Nuovo ordine</strong>
-            <small>Prodotti e totali automatici</small>
+            <strong>🛒 Ordine</strong>
+            <small>Righe e totali automatici</small>
           </button>
 
-          <button onclick="openPayment()">
-            <strong>💶 Nuovo pagamento</strong>
-            <small>Inserisci una scadenza</small>
+          <button onclick="openDelivery()">
+            <strong>🚚 Consegna</strong>
+            <small>Corriere e tracking</small>
           </button>
         </div>
       </div>
@@ -950,12 +1069,11 @@
       </div>
     </section>
 
-    <!-- FORNITORI -->
     <section class="page" id="page-suppliers">
       <div class="title-row">
         <div>
           <h2>Fornitori</h2>
-          <p>Anagrafica, condizioni e affidabilità</p>
+          <p>Anagrafica, storico e affidabilità</p>
         </div>
       </div>
 
@@ -970,12 +1088,11 @@
       <div class="list" id="supplierList"></div>
     </section>
 
-    <!-- PRODOTTI -->
     <section class="page" id="page-products">
       <div class="title-row">
         <div>
           <h2>Prodotti</h2>
-          <p>Catalogo, prezzi e minimi d’ordine</p>
+          <p>Catalogo, prezzi e costo reale</p>
         </div>
       </div>
 
@@ -990,12 +1107,11 @@
       <div class="list" id="productList"></div>
     </section>
 
-    <!-- ORDINI -->
     <section class="page" id="page-orders">
       <div class="title-row">
         <div>
           <h2>Ordini</h2>
-          <p>Righe prodotto, IVA, sconti e trasporto</p>
+          <p>Prodotti, IVA, sconti e pagamento</p>
         </div>
       </div>
 
@@ -1010,12 +1126,30 @@
       <div class="list" id="orderList"></div>
     </section>
 
-    <!-- PAGAMENTI -->
+    <section class="page" id="page-deliveries">
+      <div class="title-row">
+        <div>
+          <h2>Consegne</h2>
+          <p>Tracking, corrieri e ritardi</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input class="search" id="deliverySearch"
+          placeholder="Cerca ordine, corriere, tracking o stato"
+          oninput="renderDeliveries()">
+
+        <button class="btn btn-primary" onclick="openDelivery()">+</button>
+      </div>
+
+      <div class="list" id="deliveryList"></div>
+    </section>
+
     <section class="page" id="page-payments">
       <div class="title-row">
         <div>
           <h2>Pagamenti</h2>
-          <p>Scadenze e pagamenti collegati agli ordini</p>
+          <p>Scadenze collegate agli ordini</p>
         </div>
       </div>
 
@@ -1030,12 +1164,11 @@
       <div class="list" id="paymentList"></div>
     </section>
 
-    <!-- ANALISI -->
     <section class="page" id="page-analysis">
       <div class="title-row">
         <div>
           <h2>Analisi</h2>
-          <p>Spese, ordini e confronto prezzi</p>
+          <p>Spese, affidabilità e confronto reale</p>
         </div>
       </div>
 
@@ -1063,14 +1196,14 @@
 
       <div class="card">
         <div class="card-head">
-          <h3>Confronto prodotti</h3>
-          <span>PREZZI FORNITORI</span>
+          <h3>Confronto fornitori</h3>
+          <span>COSTO REALE UNITARIO</span>
         </div>
 
         <div class="field">
           <label>Filtra nome prodotto</label>
           <input id="comparisonSearch"
-            placeholder="Esempio: bottiglia, succo, tappo"
+            placeholder="Esempio: bottiglia, tappo, succo"
             oninput="renderComparison()">
         </div>
 
@@ -1082,21 +1215,27 @@
                 <th>Fornitore</th>
                 <th>Prezzo</th>
                 <th>Minimo</th>
-                <th>Formato</th>
+                <th>Trasporto</th>
+                <th>Costo reale</th>
+                <th>Consegna</th>
               </tr>
             </thead>
+
             <tbody id="comparisonBody"></tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- IMPOSTAZIONI -->
+    <section class="page" id="page-supplier-detail">
+      <div id="supplierDetailContent"></div>
+    </section>
+
     <section class="page" id="page-settings">
       <div class="title-row">
         <div>
           <h2>Impostazioni</h2>
-          <p>Configurazione e backup archivio</p>
+          <p>Configurazione e backup</p>
         </div>
       </div>
 
@@ -1136,6 +1275,7 @@
 
         <div class="form-actions">
           <button class="btn btn-soft" onclick="exportBackup()">Esporta</button>
+
           <button class="btn btn-dark"
             onclick="document.getElementById('backupFile').click()">
             Importa
@@ -1173,14 +1313,23 @@
     <b>🛒</b>ORDINI
   </button>
 
+  <button class="nav" onclick="goPage('deliveries',this)">
+    <b>🚚</b>CONSEGNE
+  </button>
+
   <button class="nav" onclick="goPage('payments',this)">
     <b>💶</b>PAGAMENTI
   </button>
 
-  <button class="nav" onclick="goPage('analysis',this)">
-    <b>▥</b>ANALISI
+  <button class="nav" onclick="toggleMoreMenu()">
+    <b>☰</b>ALTRO
   </button>
 </nav>
+
+<div class="more-menu" id="moreMenu">
+  <button onclick="openMorePage('analysis')">📊 Analisi e confronto</button>
+  <button onclick="openMorePage('settings')">⚙️ Impostazioni e backup</button>
+</div>
 
 <!-- FORNITORE -->
 <div class="modal-bg" id="supplierModal">
@@ -1243,7 +1392,7 @@
 
           <div class="field">
             <label>Sito web</label>
-            <input id="supplierWebsite">
+            <input id="supplierWebsite" placeholder="https://">
           </div>
         </div>
 
@@ -1304,6 +1453,7 @@
         <div class="form-actions">
           <button type="button" class="btn btn-soft"
             onclick="closeModal('supplierModal')">Annulla</button>
+
           <button class="btn btn-primary">Salva</button>
         </div>
       </form>
@@ -1368,8 +1518,8 @@
 
         <div class="cols">
           <div class="field">
-            <label>Codice</label>
-            <input id="productCode">
+            <label>Trasporto stimato ordine</label>
+            <input id="productShipping" type="number" min="0" step="0.01">
           </div>
 
           <div class="field">
@@ -1383,6 +1533,11 @@
         </div>
 
         <div class="field">
+          <label>Codice</label>
+          <input id="productCode">
+        </div>
+
+        <div class="field">
           <label>Note</label>
           <textarea id="productNotes"></textarea>
         </div>
@@ -1390,6 +1545,7 @@
         <div class="form-actions">
           <button type="button" class="btn btn-soft"
             onclick="closeModal('productModal')">Annulla</button>
+
           <button class="btn btn-primary">Salva</button>
         </div>
       </form>
@@ -1459,6 +1615,7 @@
         <div class="card" style="margin-top:0">
           <div class="card-head">
             <h3>Prodotti dell’ordine</h3>
+
             <button type="button" class="mini primary" onclick="addOrderLine()">
               + Prodotto
             </button>
@@ -1510,10 +1667,15 @@
 
         <label class="check-row">
           <input type="checkbox" id="createPayment" checked>
-          Crea automaticamente il pagamento collegato all’ordine
+          Crea automaticamente il pagamento
         </label>
 
-        <div class="field" id="paymentDueField">
+        <label class="check-row">
+          <input type="checkbox" id="createDelivery" checked>
+          Crea automaticamente la consegna
+        </label>
+
+        <div class="field">
           <label>Scadenza pagamento</label>
           <input id="orderPaymentDue" type="date">
         </div>
@@ -1526,7 +1688,94 @@
         <div class="form-actions">
           <button type="button" class="btn btn-soft"
             onclick="closeModal('orderModal')">Annulla</button>
+
           <button class="btn btn-primary">Salva ordine</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CONSEGNA -->
+<div class="modal-bg" id="deliveryModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="deliveryTitle">Nuova consegna</h3>
+      <button class="close" onclick="closeModal('deliveryModal')">×</button>
+    </div>
+
+    <div class="modal-body">
+      <form class="form" onsubmit="saveDelivery(event)">
+        <input type="hidden" id="deliveryId">
+
+        <div class="field">
+          <label>Ordine collegato *</label>
+          <select id="deliveryOrder" required onchange="deliveryOrderChanged()"></select>
+        </div>
+
+        <div class="cols">
+          <div class="field">
+            <label>Corriere</label>
+            <input id="deliveryCarrier">
+          </div>
+
+          <div class="field">
+            <label>Codice tracking</label>
+            <input id="deliveryTracking">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Link tracking</label>
+          <input id="deliveryTrackingUrl" placeholder="https://">
+        </div>
+
+        <div class="cols">
+          <div class="field">
+            <label>Data spedizione</label>
+            <input id="deliveryShipDate" type="date">
+          </div>
+
+          <div class="field">
+            <label>Consegna prevista</label>
+            <input id="deliveryExpectedDate" type="date">
+          </div>
+        </div>
+
+        <div class="cols">
+          <div class="field">
+            <label>Data effettiva</label>
+            <input id="deliveryActualDate" type="date">
+          </div>
+
+          <div class="field">
+            <label>Costo trasporto</label>
+            <input id="deliveryCost" type="number" min="0" step="0.01">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Stato</label>
+          <select id="deliveryStatus">
+            <option>In preparazione</option>
+            <option>Ritirato</option>
+            <option>In transito</option>
+            <option>In dogana</option>
+            <option>Consegnato</option>
+            <option>Problema</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Note e problemi</label>
+          <textarea id="deliveryNotes"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-soft"
+            onclick="closeModal('deliveryModal')">Annulla</button>
+
+          <button class="btn btn-primary">Salva consegna</button>
         </div>
       </form>
     </div>
@@ -1553,7 +1802,7 @@
         <div class="cols">
           <div class="field">
             <label>Riferimento</label>
-            <input id="paymentReference" placeholder="Fattura o ordine">
+            <input id="paymentReference">
           </div>
 
           <div class="field">
@@ -1597,6 +1846,7 @@
         <div class="form-actions">
           <button type="button" class="btn btn-soft"
             onclick="closeModal('paymentModal')">Annulla</button>
+
           <button class="btn btn-primary">Salva</button>
         </div>
       </form>
@@ -1607,13 +1857,14 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const KEY = "xaSupplyCommandV11";
+const KEY = "xaSupplyCommandV12";
 
 const blankData = {
   suppliers: [],
   products: [],
   orders: [],
   payments: [],
+  deliveries: [],
   settings: {
     company: "XA Fermented Redrinks",
     currency: "EUR"
@@ -1622,6 +1873,7 @@ const blankData = {
 
 let data = load();
 let currentOrderLines = [];
+let currentSupplierDetailId = "";
 
 function clone(value){
   return JSON.parse(JSON.stringify(value));
@@ -1629,46 +1881,22 @@ function clone(value){
 
 function load(){
   try{
-    const stored = localStorage.getItem(KEY);
+    const current = localStorage.getItem(KEY);
 
-    if(stored){
-      const parsed = JSON.parse(stored);
-
-      return {
-        suppliers: Array.isArray(parsed.suppliers) ? parsed.suppliers : [],
-        products: Array.isArray(parsed.products) ? parsed.products : [],
-        orders: Array.isArray(parsed.orders) ? parsed.orders : [],
-        payments: Array.isArray(parsed.payments) ? parsed.payments : [],
-        settings: {
-          ...blankData.settings,
-          ...(parsed.settings || {})
-        }
-      };
+    if(current){
+      return normalizeData(JSON.parse(current));
     }
 
-    const old = localStorage.getItem("xaSupplyCommandV1");
+    const v11 = localStorage.getItem("xaSupplyCommandV11");
 
-    if(old){
-      const parsedOld = JSON.parse(old);
+    if(v11){
+      return normalizeData(JSON.parse(v11));
+    }
 
-      return {
-        suppliers: parsedOld.suppliers || [],
-        products: parsedOld.products || [],
-        orders: (parsedOld.orders || []).map(order => ({
-          ...order,
-          lines: order.lines || [],
-          subtotal: Number(order.total || 0),
-          discountAmount: 0,
-          vatTotal: 0,
-          shipping: 0,
-          grandTotal: Number(order.total || 0)
-        })),
-        payments: parsedOld.payments || [],
-        settings: {
-          ...blankData.settings,
-          ...(parsedOld.settings || {})
-        }
-      };
+    const v10 = localStorage.getItem("xaSupplyCommandV1");
+
+    if(v10){
+      return normalizeData(JSON.parse(v10));
     }
 
     return clone(blankData);
@@ -1678,33 +1906,66 @@ function load(){
   }
 }
 
+function normalizeData(value){
+  return {
+    suppliers: Array.isArray(value.suppliers) ? value.suppliers : [],
+    products: Array.isArray(value.products)
+      ? value.products.map(product => ({
+          shippingEstimate: 0,
+          ...product
+        }))
+      : [],
+    orders: Array.isArray(value.orders)
+      ? value.orders.map(order => ({
+          lines: [],
+          subtotal: Number(order.total || 0),
+          discountPercent: 0,
+          discountAmount: 0,
+          vatTotal: 0,
+          shipping: 0,
+          grandTotal: Number(order.total || 0),
+          ...order
+        }))
+      : [],
+    payments: Array.isArray(value.payments) ? value.payments : [],
+    deliveries: Array.isArray(value.deliveries) ? value.deliveries : [],
+    settings: {
+      ...blankData.settings,
+      ...(value.settings || {})
+    }
+  };
+}
+
 function persist(){
-  localStorage.setItem(KEY,JSON.stringify(data));
+  localStorage.setItem(KEY, JSON.stringify(data));
   renderAll();
 }
 
-function id(prefix){
-  return prefix+"_"+Date.now()+"_"+Math.random().toString(16).slice(2);
+function createId(prefix){
+  return prefix + "_" + Date.now() + "_" + Math.random().toString(16).slice(2);
 }
 
 function today(){
   return new Date().toISOString().slice(0,10);
 }
 
-function addDays(dateString,days){
-  const date = dateString ? new Date(dateString+"T12:00:00") : new Date();
-  date.setDate(date.getDate()+Number(days || 0));
+function addDays(dateString, days){
+  const date = dateString
+    ? new Date(dateString + "T12:00:00")
+    : new Date();
+
+  date.setDate(date.getDate() + Number(days || 0));
   return date.toISOString().slice(0,10);
 }
 
 function money(value){
-  return new Intl.NumberFormat("it-IT",{
-    style:"currency",
-    currency:data.settings.currency || "EUR"
+  return new Intl.NumberFormat("it-IT", {
+    style: "currency",
+    currency: data.settings.currency || "EUR"
   }).format(Number(value || 0));
 }
 
-function esc(value=""){
+function esc(value = ""){
   return String(value)
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
@@ -1714,36 +1975,47 @@ function esc(value=""){
 }
 
 function toast(message){
-  const box=document.getElementById("toast");
-  box.textContent=message;
+  const box = document.getElementById("toast");
+
+  box.textContent = message;
   box.classList.add("show");
 
   clearTimeout(toast.timer);
 
-  toast.timer=setTimeout(()=>{
+  toast.timer = setTimeout(() => {
     box.classList.remove("show");
-  },2200);
+  }, 2200);
 }
 
-function goPage(name,button){
-  document.querySelectorAll(".page").forEach(page=>{
+function goPage(name, button){
+  document.querySelectorAll(".page").forEach(page => {
     page.classList.remove("active");
   });
 
-  document.getElementById("page-"+name).classList.add("active");
+  document.getElementById("page-" + name).classList.add("active");
 
-  document.querySelectorAll(".nav").forEach(nav=>{
+  document.querySelectorAll(".nav").forEach(nav => {
     nav.classList.remove("active");
   });
 
   if(button) button.classList.add("active");
 
-  if(name==="analysis"){
+  document.getElementById("moreMenu").classList.remove("show");
+
+  if(name === "analysis"){
     renderAnalysis();
     renderComparison();
   }
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function toggleMoreMenu(){
+  document.getElementById("moreMenu").classList.toggle("show");
+}
+
+function openMorePage(name){
+  goPage(name, null);
 }
 
 function openModal(modalId){
@@ -1754,111 +2026,186 @@ function closeModal(modalId){
   document.getElementById(modalId).classList.remove("show");
 }
 
-document.querySelectorAll(".modal-bg").forEach(bg=>{
-  bg.addEventListener("click",event=>{
-    if(event.target===bg) bg.classList.remove("show");
+document.querySelectorAll(".modal-bg").forEach(bg => {
+  bg.addEventListener("click", event => {
+    if(event.target === bg){
+      bg.classList.remove("show");
+    }
   });
 });
 
 function supplierName(supplierId){
-  return data.suppliers.find(s=>s.id===supplierId)?.name || "Fornitore non indicato";
+  return data.suppliers.find(supplier => supplier.id === supplierId)?.name ||
+    "Fornitore non indicato";
+}
+
+function orderNumber(orderId){
+  return data.orders.find(order => order.id === orderId)?.number ||
+    "Ordine non indicato";
 }
 
 function statusClass(status){
-  if(["Attivo","Consegnato","Pagato","Disponibile"].includes(status)) return "good";
-  if(["Inviato","Confermato","In viaggio"].includes(status)) return "info";
-  if(["Bozza","In valutazione","Parziale","Limitata","Da pagare"].includes(status)) return "warn";
+  if([
+    "Attivo",
+    "Consegnato",
+    "Pagato",
+    "Disponibile"
+  ].includes(status)) return "good";
+
+  if([
+    "Inviato",
+    "Confermato",
+    "In viaggio",
+    "Ritirato",
+    "In transito",
+    "In dogana"
+  ].includes(status)) return "info";
+
+  if([
+    "Bozza",
+    "In valutazione",
+    "Parziale",
+    "Limitata",
+    "Da pagare",
+    "In preparazione"
+  ].includes(status)) return "warn";
+
   return "bad";
 }
 
+function empty(title,text){
+  return `
+    <div class="empty">
+      <strong>${title}</strong>
+      ${text}
+    </div>
+  `;
+}
+
 function populateSupplierSelects(){
-  ["productSupplier","orderSupplier","paymentSupplier"].forEach(selectId=>{
-    const select=document.getElementById(selectId);
+  ["productSupplier","orderSupplier","paymentSupplier"].forEach(selectId => {
+    const select = document.getElementById(selectId);
     if(!select) return;
 
-    const selected=select.value;
+    const selected = select.value;
 
-    select.innerHTML=
-      '<option value="">Seleziona fornitore</option>'+
-      data.suppliers.map(s=>
-        `<option value="${s.id}">${esc(s.name)}</option>`
-      ).join("");
+    select.innerHTML =
+      '<option value="">Seleziona fornitore</option>' +
+      data.suppliers.map(supplier => `
+        <option value="${supplier.id}">${esc(supplier.name)}</option>
+      `).join("");
 
-    select.value=selected;
+    select.value = selected;
   });
+}
+
+function populateOrderSelect(){
+  const select = document.getElementById("deliveryOrder");
+  if(!select) return;
+
+  const selected = select.value;
+
+  select.innerHTML =
+    '<option value="">Seleziona ordine</option>' +
+    data.orders
+      .filter(order => order.status !== "Annullato")
+      .map(order => `
+        <option value="${order.id}">
+          ${esc(order.number)} – ${esc(supplierName(order.supplierId))}
+        </option>
+      `).join("");
+
+  select.value = selected;
 }
 
 /* DASHBOARD */
 
 function renderDashboard(){
-  const openOrders=data.orders.filter(order=>
+  const openOrders = data.orders.filter(order =>
     !["Consegnato","Annullato"].includes(order.status)
   );
 
-  const duePayments=data.payments.filter(payment=>
-    payment.status!=="Pagato"
+  const activeDeliveries = data.deliveries.filter(delivery =>
+    delivery.status !== "Consegnato"
   );
 
-  const spend=data.orders
-    .filter(order=>order.status!=="Annullato")
-    .reduce((sum,order)=>sum+Number(order.grandTotal ?? order.total ?? 0),0);
+  const duePayments = data.payments.filter(payment =>
+    payment.status !== "Pagato"
+  );
 
-  const due=duePayments.reduce((sum,p)=>sum+Number(p.amount || 0),0);
+  const dueValue = duePayments.reduce(
+    (sum,payment) => sum + Number(payment.amount || 0),
+    0
+  );
 
-  document.getElementById("statSuppliers").textContent=data.suppliers.length;
-  document.getElementById("statOrders").textContent=openOrders.length;
-  document.getElementById("statPayments").textContent=money(due);
-  document.getElementById("statSpend").textContent=money(spend);
+  document.getElementById("statSuppliers").textContent = data.suppliers.length;
+  document.getElementById("statOrders").textContent = openOrders.length;
+  document.getElementById("statDeliveries").textContent = activeDeliveries.length;
+  document.getElementById("statPayments").textContent = money(dueValue);
 
-  const latest=[...data.orders]
-    .sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)))
+  const latest = [...data.orders]
+    .sort((a,b) => String(b.createdAt).localeCompare(String(a.createdAt)))
     .slice(0,3);
 
-  document.getElementById("homeOrderCount").textContent=
-    data.orders.length+" ORDINI";
+  document.getElementById("homeOrderCount").textContent =
+    data.orders.length + " ORDINI";
 
-  document.getElementById("homeOrders").innerHTML=
+  document.getElementById("homeOrders").innerHTML =
     latest.length
-      ? latest.map(order=>orderCard(order,false)).join("")
-      : empty("Nessun ordine registrato","Crea il primo ordine professionale XA.");
+      ? latest.map(order => orderCard(order,false)).join("")
+      : empty("Nessun ordine registrato","Crea il primo ordine XA.");
 
   renderAlerts();
 }
 
 function renderAlerts(){
-  const now=today();
+  const now = today();
 
-  const overduePayments=data.payments.filter(p=>
-    p.status!=="Pagato" && p.dueDate && p.dueDate<now
+  const overduePayments = data.payments.filter(payment =>
+    payment.status !== "Pagato" &&
+    payment.dueDate &&
+    payment.dueDate < now
   );
 
-  const dueSoon=data.payments.filter(p=>{
-    if(p.status==="Pagato" || !p.dueDate) return false;
-    const diff=(new Date(p.dueDate)-new Date(now))/86400000;
-    return diff>=0 && diff<=7;
+  const dueSoon = data.payments.filter(payment => {
+    if(payment.status === "Pagato" || !payment.dueDate) return false;
+
+    const difference =
+      (new Date(payment.dueDate) - new Date(now)) / 86400000;
+
+    return difference >= 0 && difference <= 7;
   });
 
-  const lateOrders=data.orders.filter(o=>
-    !["Consegnato","Annullato"].includes(o.status) &&
-    o.deliveryDate &&
-    o.deliveryDate<now
+  const lateDeliveries = data.deliveries.filter(delivery =>
+    delivery.status !== "Consegnato" &&
+    delivery.expectedDate &&
+    delivery.expectedDate < now
   );
 
-  const alerts=[];
+  const customsDeliveries = data.deliveries.filter(delivery =>
+    delivery.status === "In dogana"
+  );
+
+  const alerts = [];
 
   if(overduePayments.length){
+    const total = overduePayments.reduce(
+      (sum,payment) => sum + Number(payment.amount || 0),
+      0
+    );
+
     alerts.push(`
       <div class="alert alert-red">
-        ⚠ ${overduePayments.length} pagamenti scaduti per
-        ${money(overduePayments.reduce((s,p)=>s+Number(p.amount||0),0))}
+        ⚠ ${overduePayments.length} pagamenti scaduti:
+        ${money(total)}
       </div>
     `);
   }
 
-  if(lateOrders.length){
+  if(lateDeliveries.length){
     alerts.push(`
       <div class="alert alert-red">
-        🚚 ${lateOrders.length} ordini hanno superato la data prevista di consegna.
+        🚚 ${lateDeliveries.length} consegne hanno superato la data prevista.
       </div>
     `);
   }
@@ -1866,7 +2213,15 @@ function renderAlerts(){
   if(dueSoon.length){
     alerts.push(`
       <div class="alert alert-orange">
-        ⏱ ${dueSoon.length} pagamenti scadono nei prossimi 7 giorni.
+        ⏱ ${dueSoon.length} pagamenti scadono entro 7 giorni.
+      </div>
+    `);
+  }
+
+  if(customsDeliveries.length){
+    alerts.push(`
+      <div class="alert alert-orange">
+        🛃 ${customsDeliveries.length} spedizioni risultano in dogana.
       </div>
     `);
   }
@@ -1879,40 +2234,35 @@ function renderAlerts(){
     `);
   }
 
-  document.getElementById("alerts").innerHTML=alerts.join("");
-}
-
-function empty(title,text){
-  return `
-    <div class="empty">
-      <strong>${title}</strong>
-      ${text}
-    </div>
-  `;
+  document.getElementById("alerts").innerHTML = alerts.join("");
 }
 
 /* FORNITORI */
 
-function openSupplier(supplier=null){
-  document.getElementById("supplierTitle").textContent=
+function openSupplier(supplier = null){
+  document.getElementById("supplierTitle").textContent =
     supplier ? "Modifica fornitore" : "Nuovo fornitore";
 
-  document.getElementById("supplierId").value=supplier?.id || "";
-  document.getElementById("supplierName").value=supplier?.name || "";
-  document.getElementById("supplierContact").value=supplier?.contact || "";
-  document.getElementById("supplierPhone").value=supplier?.phone || "";
-  document.getElementById("supplierEmail").value=supplier?.email || "";
-  document.getElementById("supplierCountry").value=supplier?.country || "";
-  document.getElementById("supplierCity").value=supplier?.city || "";
-  document.getElementById("supplierAddress").value=supplier?.address || "";
-  document.getElementById("supplierVat").value=supplier?.vat || "";
-  document.getElementById("supplierWebsite").value=supplier?.website || "";
-  document.getElementById("supplierCategory").value=supplier?.category || "Sidro";
-  document.getElementById("supplierStatus").value=supplier?.status || "Attivo";
-  document.getElementById("supplierTerms").value=supplier?.terms || "";
-  document.getElementById("supplierDelivery").value=supplier?.deliveryDays || "";
-  document.getElementById("supplierRating").value=supplier?.rating || "5";
-  document.getElementById("supplierNotes").value=supplier?.notes || "";
+  document.getElementById("supplierId").value = supplier?.id || "";
+  document.getElementById("supplierName").value = supplier?.name || "";
+  document.getElementById("supplierContact").value = supplier?.contact || "";
+  document.getElementById("supplierPhone").value = supplier?.phone || "";
+  document.getElementById("supplierEmail").value = supplier?.email || "";
+  document.getElementById("supplierCountry").value = supplier?.country || "";
+  document.getElementById("supplierCity").value = supplier?.city || "";
+  document.getElementById("supplierAddress").value = supplier?.address || "";
+  document.getElementById("supplierVat").value = supplier?.vat || "";
+  document.getElementById("supplierWebsite").value = supplier?.website || "";
+  document.getElementById("supplierCategory").value =
+    supplier?.category || "Sidro";
+  document.getElementById("supplierStatus").value =
+    supplier?.status || "Attivo";
+  document.getElementById("supplierTerms").value = supplier?.terms || "";
+  document.getElementById("supplierDelivery").value =
+    supplier?.deliveryDays || "";
+  document.getElementById("supplierRating").value =
+    supplier?.rating || "5";
+  document.getElementById("supplierNotes").value = supplier?.notes || "";
 
   openModal("supplierModal");
 }
@@ -1920,31 +2270,33 @@ function openSupplier(supplier=null){
 function saveSupplier(event){
   event.preventDefault();
 
-  const supplierId=document.getElementById("supplierId").value;
-  const old=data.suppliers.find(s=>s.id===supplierId);
+  const supplierId = document.getElementById("supplierId").value;
+  const previous = data.suppliers.find(supplier => supplier.id === supplierId);
 
-  const supplier={
-    id:supplierId || id("supplier"),
-    name:document.getElementById("supplierName").value.trim(),
-    contact:document.getElementById("supplierContact").value.trim(),
-    phone:document.getElementById("supplierPhone").value.trim(),
-    email:document.getElementById("supplierEmail").value.trim(),
-    country:document.getElementById("supplierCountry").value.trim(),
-    city:document.getElementById("supplierCity").value.trim(),
-    address:document.getElementById("supplierAddress").value.trim(),
-    vat:document.getElementById("supplierVat").value.trim(),
-    website:document.getElementById("supplierWebsite").value.trim(),
-    category:document.getElementById("supplierCategory").value,
-    status:document.getElementById("supplierStatus").value,
-    terms:document.getElementById("supplierTerms").value.trim(),
-    deliveryDays:document.getElementById("supplierDelivery").value,
-    rating:document.getElementById("supplierRating").value,
-    notes:document.getElementById("supplierNotes").value.trim(),
-    createdAt:old?.createdAt || new Date().toISOString()
+  const supplier = {
+    id: supplierId || createId("supplier"),
+    name: document.getElementById("supplierName").value.trim(),
+    contact: document.getElementById("supplierContact").value.trim(),
+    phone: document.getElementById("supplierPhone").value.trim(),
+    email: document.getElementById("supplierEmail").value.trim(),
+    country: document.getElementById("supplierCountry").value.trim(),
+    city: document.getElementById("supplierCity").value.trim(),
+    address: document.getElementById("supplierAddress").value.trim(),
+    vat: document.getElementById("supplierVat").value.trim(),
+    website: document.getElementById("supplierWebsite").value.trim(),
+    category: document.getElementById("supplierCategory").value,
+    status: document.getElementById("supplierStatus").value,
+    terms: document.getElementById("supplierTerms").value.trim(),
+    deliveryDays: document.getElementById("supplierDelivery").value,
+    rating: document.getElementById("supplierRating").value,
+    notes: document.getElementById("supplierNotes").value.trim(),
+    createdAt: previous?.createdAt || new Date().toISOString()
   };
 
   if(supplierId){
-    data.suppliers=data.suppliers.map(s=>s.id===supplierId?supplier:s);
+    data.suppliers = data.suppliers.map(item =>
+      item.id === supplierId ? supplier : item
+    );
   }else{
     data.suppliers.push(supplier);
   }
@@ -1955,102 +2307,367 @@ function saveSupplier(event){
 }
 
 function renderSuppliers(){
-  const query=(document.getElementById("supplierSearch")?.value || "").toLowerCase();
+  const query =
+    (document.getElementById("supplierSearch")?.value || "").toLowerCase();
 
-  const filtered=data.suppliers.filter(s=>
-    [s.name,s.contact,s.country,s.city,s.category,s.email]
-      .join(" ").toLowerCase().includes(query)
+  const filtered = data.suppliers.filter(supplier =>
+    [
+      supplier.name,
+      supplier.contact,
+      supplier.country,
+      supplier.city,
+      supplier.category,
+      supplier.email
+    ].join(" ").toLowerCase().includes(query)
   );
 
-  document.getElementById("supplierList").innerHTML=
+  document.getElementById("supplierList").innerHTML =
     filtered.length
-      ? filtered.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>{
-          const stars="★".repeat(Number(s.rating||0))+
-            "☆".repeat(5-Number(s.rating||0));
+      ? filtered
+          .sort((a,b) => a.name.localeCompare(b.name))
+          .map(supplier => {
+            const stars =
+              "★".repeat(Number(supplier.rating || 0)) +
+              "☆".repeat(5 - Number(supplier.rating || 0));
 
-          const orderCount=data.orders.filter(o=>o.supplierId===s.id).length;
+            const orders = data.orders.filter(
+              order => order.supplierId === supplier.id
+            );
 
-          return `
-            <article class="item">
-              <div class="item-top">
-                <div>
-                  <h3>${esc(s.name)}</h3>
-                  <div class="subtitle">
-                    ${esc(s.category || "Categoria non indicata")} ·
-                    ${esc([s.city,s.country].filter(Boolean).join(", ") || "Località non indicata")}
+            const spend = orders.reduce(
+              (sum,order) =>
+                sum + Number(order.grandTotal ?? order.total ?? 0),
+              0
+            );
+
+            return `
+              <article class="item">
+                <div class="item-top">
+                  <div>
+                    <h3>${esc(supplier.name)}</h3>
+
+                    <div class="subtitle">
+                      ${esc(supplier.category || "Categoria non indicata")} ·
+                      ${esc(
+                        [supplier.city,supplier.country]
+                          .filter(Boolean)
+                          .join(", ") || "Località non indicata"
+                      )}
+                    </div>
+                  </div>
+
+                  <span class="badge ${statusClass(supplier.status)}">
+                    ${esc(supplier.status)}
+                  </span>
+                </div>
+
+                <div class="meta">
+                  <div>
+                    <label>Referente</label>
+                    <strong>${esc(supplier.contact || "—")}</strong>
+                  </div>
+
+                  <div>
+                    <label>Valutazione</label>
+                    <strong>${stars}</strong>
+                  </div>
+
+                  <div>
+                    <label>Ordini</label>
+                    <strong>${orders.length}</strong>
+                  </div>
+
+                  <div>
+                    <label>Acquisti</label>
+                    <strong>${money(spend)}</strong>
                   </div>
                 </div>
 
-                <span class="badge ${statusClass(s.status)}">${esc(s.status)}</span>
-              </div>
+                <div class="actions">
+                  <button class="mini info"
+                    onclick="openSupplierDetail('${supplier.id}')">
+                    Scheda completa
+                  </button>
 
-              <div class="meta">
-                <div>
-                  <label>Referente</label>
-                  <strong>${esc(s.contact || "—")}</strong>
+                  ${supplier.phone ? `
+                    <button class="mini"
+                      onclick="location.href='tel:${esc(supplier.phone)}'">
+                      Chiama
+                    </button>
+                  ` : ""}
+
+                  ${supplier.email ? `
+                    <button class="mini"
+                      onclick="location.href='mailto:${esc(supplier.email)}'">
+                      Email
+                    </button>
+                  ` : ""}
+
+                  <button class="mini primary"
+                    onclick="editSupplier('${supplier.id}')">
+                    Modifica
+                  </button>
+
+                  <button class="mini danger"
+                    onclick="deleteSupplier('${supplier.id}')">
+                    Elimina
+                  </button>
                 </div>
-
-                <div>
-                  <label>Valutazione</label>
-                  <strong>${stars}</strong>
-                </div>
-
-                <div>
-                  <label>Pagamento</label>
-                  <strong>${esc(s.terms || "—")}</strong>
-                </div>
-
-                <div>
-                  <label>Ordini</label>
-                  <strong>${orderCount}</strong>
-                </div>
-              </div>
-
-              <div class="actions">
-                ${s.phone ? `<button class="mini" onclick="location.href='tel:${esc(s.phone)}'">Chiama</button>` : ""}
-                ${s.email ? `<button class="mini" onclick="location.href='mailto:${esc(s.email)}'">Email</button>` : ""}
-                ${s.website ? `<button class="mini" onclick="window.open('${esc(s.website)}','_blank')">Sito</button>` : ""}
-
-                <button class="mini primary" onclick="editSupplier('${s.id}')">
-                  Modifica
-                </button>
-
-                <button class="mini danger" onclick="deleteSupplier('${s.id}')">
-                  Elimina
-                </button>
-              </div>
-            </article>
-          `;
-        }).join("")
+              </article>
+            `;
+          }).join("")
       : empty("Nessun fornitore trovato","Registra il primo fornitore XA.");
 }
 
+function openSupplierDetail(supplierId){
+  currentSupplierDetailId = supplierId;
+  renderSupplierDetail();
+
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById("page-supplier-detail").classList.add("active");
+
+  document.querySelectorAll(".nav").forEach(nav => {
+    nav.classList.remove("active");
+  });
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderSupplierDetail(){
+  const supplier = data.suppliers.find(
+    item => item.id === currentSupplierDetailId
+  );
+
+  if(!supplier) return;
+
+  const orders = data.orders.filter(
+    order => order.supplierId === supplier.id
+  );
+
+  const payments = data.payments.filter(
+    payment => payment.supplierId === supplier.id
+  );
+
+  const products = data.products.filter(
+    product => product.supplierId === supplier.id
+  );
+
+  const deliveries = data.deliveries.filter(delivery => {
+    const order = data.orders.find(item => item.id === delivery.orderId);
+    return order?.supplierId === supplier.id;
+  });
+
+  const spend = orders.reduce(
+    (sum,order) => sum + Number(order.grandTotal ?? order.total ?? 0),
+    0
+  );
+
+  const openPayments = payments
+    .filter(payment => payment.status !== "Pagato")
+    .reduce((sum,payment) => sum + Number(payment.amount || 0),0);
+
+  document.getElementById("supplierDetailContent").innerHTML = `
+    <button class="btn btn-soft" onclick="backToSuppliers()">
+      ← Torna ai fornitori
+    </button>
+
+    <div class="detail-header" style="margin-top:10px">
+      <h2>${esc(supplier.name)}</h2>
+
+      <p>
+        ${esc(supplier.category || "Categoria non indicata")} ·
+        ${esc([supplier.city,supplier.country].filter(Boolean).join(", "))}
+      </p>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-box">
+        <small>Ordini</small>
+        <strong>${orders.length}</strong>
+      </div>
+
+      <div class="detail-box">
+        <small>Acquisti totali</small>
+        <strong>${money(spend)}</strong>
+      </div>
+
+      <div class="detail-box">
+        <small>Da pagare</small>
+        <strong>${money(openPayments)}</strong>
+      </div>
+
+      <div class="detail-box">
+        <small>Prodotti</small>
+        <strong>${products.length}</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Dati del fornitore</h3>
+        <span>ANAGRAFICA</span>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-box">
+          <small>Referente</small>
+          <strong>${esc(supplier.contact || "—")}</strong>
+        </div>
+
+        <div class="detail-box">
+          <small>Telefono</small>
+          <strong>${esc(supplier.phone || "—")}</strong>
+        </div>
+
+        <div class="detail-box">
+          <small>Email</small>
+          <strong>${esc(supplier.email || "—")}</strong>
+        </div>
+
+        <div class="detail-box">
+          <small>Partita IVA</small>
+          <strong>${esc(supplier.vat || "—")}</strong>
+        </div>
+
+        <div class="detail-box">
+          <small>Pagamento</small>
+          <strong>${esc(supplier.terms || "—")}</strong>
+        </div>
+
+        <div class="detail-box">
+          <small>Consegna media</small>
+          <strong>
+            ${supplier.deliveryDays
+              ? esc(supplier.deliveryDays) + " giorni"
+              : "—"}
+          </strong>
+        </div>
+      </div>
+
+      <div class="actions">
+        ${supplier.phone ? `
+          <button class="mini"
+            onclick="location.href='tel:${esc(supplier.phone)}'">
+            Chiama
+          </button>
+        ` : ""}
+
+        ${supplier.email ? `
+          <button class="mini"
+            onclick="location.href='mailto:${esc(supplier.email)}'">
+            Email
+          </button>
+        ` : ""}
+
+        ${supplier.website ? `
+          <button class="mini"
+            onclick="window.open('${esc(supplier.website)}','_blank')">
+            Sito web
+          </button>
+        ` : ""}
+
+        <button class="mini primary"
+          onclick="editSupplier('${supplier.id}')">
+          Modifica scheda
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Storico ordini</h3>
+        <span>${orders.length} ORDINI</span>
+      </div>
+
+      <div class="timeline">
+        ${
+          orders.length
+            ? [...orders]
+                .sort((a,b) => String(b.date).localeCompare(String(a.date)))
+                .map(order => `
+                  <div class="timeline-item">
+                    <strong>
+                      ${esc(order.number)} ·
+                      ${money(order.grandTotal ?? order.total ?? 0)}
+                    </strong>
+
+                    <span>
+                      ${esc(order.date || "Data non indicata")} ·
+                      ${esc(order.status)}
+                    </span>
+                  </div>
+                `).join("")
+            : empty("Nessun ordine","Non risultano ordini per questo fornitore.")
+        }
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Consegne</h3>
+        <span>${deliveries.length} SPEDIZIONI</span>
+      </div>
+
+      <div class="timeline">
+        ${
+          deliveries.length
+            ? deliveries.map(delivery => `
+                <div class="timeline-item">
+                  <strong>
+                    ${esc(orderNumber(delivery.orderId))} ·
+                    ${esc(delivery.status)}
+                  </strong>
+
+                  <span>
+                    ${esc(delivery.carrier || "Corriere non indicato")} ·
+                    ${esc(delivery.tracking || "Tracking non indicato")}
+                  </span>
+                </div>
+              `).join("")
+            : empty("Nessuna consegna","Non risultano spedizioni registrate.")
+        }
+      </div>
+    </div>
+  `;
+}
+
+function backToSuppliers(){
+  const supplierButton = document.querySelectorAll(".nav")[1];
+  goPage("suppliers",supplierButton);
+}
+
 function editSupplier(supplierId){
-  const supplier=data.suppliers.find(s=>s.id===supplierId);
+  const supplier = data.suppliers.find(item => item.id === supplierId);
   if(supplier) openSupplier(supplier);
 }
 
 function deleteSupplier(supplierId){
-  const linked=
-    data.products.some(p=>p.supplierId===supplierId) ||
-    data.orders.some(o=>o.supplierId===supplierId) ||
-    data.payments.some(p=>p.supplierId===supplierId);
+  const linked =
+    data.products.some(product => product.supplierId === supplierId) ||
+    data.orders.some(order => order.supplierId === supplierId) ||
+    data.payments.some(payment => payment.supplierId === supplierId);
 
   if(linked){
-    toast("Fornitore collegato a prodotti, ordini o pagamenti");
+    toast("Fornitore collegato ad altri dati");
     return;
   }
 
   if(!confirm("Eliminare definitivamente questo fornitore?")) return;
 
-  data.suppliers=data.suppliers.filter(s=>s.id!==supplierId);
+  data.suppliers = data.suppliers.filter(
+    supplier => supplier.id !== supplierId
+  );
+
   persist();
   toast("Fornitore eliminato");
 }
 
 /* PRODOTTI */
 
-function openProduct(product=null){
+function openProduct(product = null){
   populateSupplierSelects();
 
   if(!data.suppliers.length){
@@ -2059,20 +2676,25 @@ function openProduct(product=null){
     return;
   }
 
-  document.getElementById("productTitle").textContent=
+  document.getElementById("productTitle").textContent =
     product ? "Modifica prodotto" : "Nuovo prodotto";
 
-  document.getElementById("productId").value=product?.id || "";
-  document.getElementById("productName").value=product?.name || "";
-  document.getElementById("productSupplier").value=product?.supplierId || "";
-  document.getElementById("productCategory").value=product?.category || "Sidro";
-  document.getElementById("productFormat").value=product?.format || "";
-  document.getElementById("productPrice").value=product?.price ?? "";
-  document.getElementById("productMinimum").value=product?.minimum ?? "";
-  document.getElementById("productCode").value=product?.code || "";
-  document.getElementById("productAvailability").value=
+  document.getElementById("productId").value = product?.id || "";
+  document.getElementById("productName").value = product?.name || "";
+  document.getElementById("productSupplier").value =
+    product?.supplierId || "";
+  document.getElementById("productCategory").value =
+    product?.category || "Sidro";
+  document.getElementById("productFormat").value = product?.format || "";
+  document.getElementById("productPrice").value = product?.price ?? "";
+  document.getElementById("productMinimum").value =
+    product?.minimum ?? "";
+  document.getElementById("productShipping").value =
+    product?.shippingEstimate ?? "";
+  document.getElementById("productAvailability").value =
     product?.availability || "Disponibile";
-  document.getElementById("productNotes").value=product?.notes || "";
+  document.getElementById("productCode").value = product?.code || "";
+  document.getElementById("productNotes").value = product?.notes || "";
 
   openModal("productModal");
 }
@@ -2080,25 +2702,30 @@ function openProduct(product=null){
 function saveProduct(event){
   event.preventDefault();
 
-  const productId=document.getElementById("productId").value;
-  const old=data.products.find(p=>p.id===productId);
+  const productId = document.getElementById("productId").value;
+  const previous = data.products.find(product => product.id === productId);
 
-  const product={
-    id:productId || id("product"),
-    name:document.getElementById("productName").value.trim(),
-    supplierId:document.getElementById("productSupplier").value,
-    category:document.getElementById("productCategory").value,
-    format:document.getElementById("productFormat").value.trim(),
-    price:Number(document.getElementById("productPrice").value || 0),
-    minimum:Number(document.getElementById("productMinimum").value || 0),
-    code:document.getElementById("productCode").value.trim(),
-    availability:document.getElementById("productAvailability").value,
-    notes:document.getElementById("productNotes").value.trim(),
-    createdAt:old?.createdAt || new Date().toISOString()
+  const product = {
+    id: productId || createId("product"),
+    name: document.getElementById("productName").value.trim(),
+    supplierId: document.getElementById("productSupplier").value,
+    category: document.getElementById("productCategory").value,
+    format: document.getElementById("productFormat").value.trim(),
+    price: Number(document.getElementById("productPrice").value || 0),
+    minimum: Number(document.getElementById("productMinimum").value || 0),
+    shippingEstimate: Number(
+      document.getElementById("productShipping").value || 0
+    ),
+    availability: document.getElementById("productAvailability").value,
+    code: document.getElementById("productCode").value.trim(),
+    notes: document.getElementById("productNotes").value.trim(),
+    createdAt: previous?.createdAt || new Date().toISOString()
   };
 
   if(productId){
-    data.products=data.products.map(p=>p.id===productId?product:p);
+    data.products = data.products.map(item =>
+      item.id === productId ? product : item
+    );
   }else{
     data.products.push(product);
   }
@@ -2108,76 +2735,98 @@ function saveProduct(event){
   toast(productId ? "Prodotto aggiornato" : "Prodotto creato");
 }
 
-function renderProducts(){
-  const query=(document.getElementById("productSearch")?.value || "").toLowerCase();
+function realUnitCost(product){
+  const minimum = Number(product.minimum || 0);
+  const price = Number(product.price || 0);
+  const shipping = Number(product.shippingEstimate || 0);
 
-  const filtered=data.products.filter(p=>
-    [p.name,p.category,p.format,p.code,supplierName(p.supplierId)]
-      .join(" ").toLowerCase().includes(query)
+  if(minimum <= 0) return price;
+
+  return price + shipping / minimum;
+}
+
+function renderProducts(){
+  const query =
+    (document.getElementById("productSearch")?.value || "").toLowerCase();
+
+  const filtered = data.products.filter(product =>
+    [
+      product.name,
+      product.category,
+      product.format,
+      product.code,
+      supplierName(product.supplierId)
+    ].join(" ").toLowerCase().includes(query)
   );
 
-  document.getElementById("productList").innerHTML=
+  document.getElementById("productList").innerHTML =
     filtered.length
-      ? filtered.sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`
-          <article class="item">
-            <div class="item-top">
-              <div>
-                <h3>${esc(p.name)}</h3>
-                <div class="subtitle">
-                  ${esc(supplierName(p.supplierId))} ·
-                  ${esc(p.category)} · ${esc(p.format || "Formato non indicato")}
+      ? filtered
+          .sort((a,b) => a.name.localeCompare(b.name))
+          .map(product => `
+            <article class="item">
+              <div class="item-top">
+                <div>
+                  <h3>${esc(product.name)}</h3>
+
+                  <div class="subtitle">
+                    ${esc(supplierName(product.supplierId))} ·
+                    ${esc(product.category)} ·
+                    ${esc(product.format || "Formato non indicato")}
+                  </div>
+                </div>
+
+                <span class="badge ${statusClass(product.availability)}">
+                  ${esc(product.availability)}
+                </span>
+              </div>
+
+              <div class="meta">
+                <div>
+                  <label>Prezzo unitario</label>
+                  <strong>${money(product.price)}</strong>
+                </div>
+
+                <div>
+                  <label>Costo reale unitario</label>
+                  <strong>${money(realUnitCost(product))}</strong>
+                </div>
+
+                <div>
+                  <label>Minimo ordine</label>
+                  <strong>${product.minimum || "—"}</strong>
+                </div>
+
+                <div>
+                  <label>Trasporto stimato</label>
+                  <strong>${money(product.shippingEstimate || 0)}</strong>
                 </div>
               </div>
 
-              <span class="badge ${statusClass(p.availability)}">
-                ${esc(p.availability)}
-              </span>
-            </div>
+              <div class="actions">
+                <button class="mini primary"
+                  onclick="editProduct('${product.id}')">
+                  Modifica
+                </button>
 
-            <div class="meta">
-              <div>
-                <label>Prezzo unitario</label>
-                <strong>${money(p.price)}</strong>
+                <button class="mini danger"
+                  onclick="deleteProduct('${product.id}')">
+                  Elimina
+                </button>
               </div>
-
-              <div>
-                <label>Minimo ordine</label>
-                <strong>${p.minimum || "—"}</strong>
-              </div>
-
-              <div>
-                <label>Codice</label>
-                <strong>${esc(p.code || "—")}</strong>
-              </div>
-
-              <div>
-                <label>Fornitore</label>
-                <strong>${esc(supplierName(p.supplierId))}</strong>
-              </div>
-            </div>
-
-            <div class="actions">
-              <button class="mini primary" onclick="editProduct('${p.id}')">
-                Modifica
-              </button>
-
-              <button class="mini danger" onclick="deleteProduct('${p.id}')">
-                Elimina
-              </button>
-            </div>
-          </article>
-        `).join("")
-      : empty("Nessun prodotto trovato","Aggiungi prodotti e prezzi al catalogo.");
+            </article>
+          `).join("")
+      : empty("Nessun prodotto trovato","Aggiungi prodotti al catalogo.");
 }
 
 function editProduct(productId){
-  const product=data.products.find(p=>p.id===productId);
+  const product = data.products.find(item => item.id === productId);
   if(product) openProduct(product);
 }
 
 function deleteProduct(productId){
-  const used=data.orders.some(order=>
-    (order.lines || []).some(line=>line.productId===productId)
+  const used = data.orders.some(order =>
+    (order.lines || []).some(line => line.productId === productId)
   );
 
   if(used){
@@ -2187,14 +2836,17 @@ function deleteProduct(productId){
 
   if(!confirm("Eliminare definitivamente questo prodotto?")) return;
 
-  data.products=data.products.filter(p=>p.id!==productId);
+  data.products = data.products.filter(
+    product => product.id !== productId
+  );
+
   persist();
   toast("Prodotto eliminato");
 }
 
 /* ORDINI */
 
-function openOrder(order=null){
+function openOrder(order = null){
   populateSupplierSelects();
 
   if(!data.suppliers.length){
@@ -2203,29 +2855,46 @@ function openOrder(order=null){
     return;
   }
 
-  document.getElementById("orderTitle").textContent=
+  document.getElementById("orderTitle").textContent =
     order ? "Modifica ordine" : "Nuovo ordine";
 
-  document.getElementById("orderId").value=order?.id || "";
-  document.getElementById("orderNumber").value=
-    order?.number ||
-    `XA-${new Date().getFullYear()}-${String(data.orders.length+1).padStart(3,"0")}`;
+  document.getElementById("orderId").value = order?.id || "";
 
-  document.getElementById("orderSupplier").value=order?.supplierId || "";
-  document.getElementById("orderDate").value=order?.date || today();
-  document.getElementById("orderDeliveryDate").value=order?.deliveryDate || "";
-  document.getElementById("orderStatus").value=order?.status || "Bozza";
-  document.getElementById("orderPaymentStatus").value=
+  document.getElementById("orderNumber").value =
+    order?.number ||
+    `XA-${new Date().getFullYear()}-${String(data.orders.length + 1).padStart(3,"0")}`;
+
+  document.getElementById("orderSupplier").value =
+    order?.supplierId || "";
+
+  document.getElementById("orderDate").value =
+    order?.date || today();
+
+  document.getElementById("orderDeliveryDate").value =
+    order?.deliveryDate || "";
+
+  document.getElementById("orderStatus").value =
+    order?.status || "Bozza";
+
+  document.getElementById("orderPaymentStatus").value =
     order?.paymentStatus || "Da pagare";
 
-  document.getElementById("orderDiscount").value=order?.discountPercent ?? 0;
-  document.getElementById("orderShipping").value=order?.shipping ?? 0;
-  document.getElementById("orderNotes").value=order?.notes || "";
-  document.getElementById("createPayment").checked=!order;
-  document.getElementById("orderPaymentDue").value=
+  document.getElementById("orderDiscount").value =
+    order?.discountPercent ?? 0;
+
+  document.getElementById("orderShipping").value =
+    order?.shipping ?? 0;
+
+  document.getElementById("orderNotes").value =
+    order?.notes || "";
+
+  document.getElementById("createPayment").checked = !order;
+  document.getElementById("createDelivery").checked = !order;
+
+  document.getElementById("orderPaymentDue").value =
     order?.paymentDue || addDays(today(),30);
 
-  currentOrderLines=clone(order?.lines || []);
+  currentOrderLines = clone(order?.lines || []);
 
   if(!currentOrderLines.length){
     currentOrderLines.push(newOrderLine());
@@ -2238,7 +2907,7 @@ function openOrder(order=null){
 
 function newOrderLine(){
   return {
-    id:id("line"),
+    id:createId("line"),
     productId:"",
     description:"",
     quantity:1,
@@ -2248,22 +2917,28 @@ function newOrderLine(){
 }
 
 function supplierChanged(){
-  const supplierId=document.getElementById("orderSupplier").value;
-  const supplier=data.suppliers.find(s=>s.id===supplierId);
+  const supplierId = document.getElementById("orderSupplier").value;
+
+  const supplier = data.suppliers.find(
+    item => item.id === supplierId
+  );
 
   if(supplier?.deliveryDays){
-    document.getElementById("orderDeliveryDate").value=
-      addDays(document.getElementById("orderDate").value || today(),supplier.deliveryDays);
+    document.getElementById("orderDeliveryDate").value =
+      addDays(
+        document.getElementById("orderDate").value || today(),
+        supplier.deliveryDays
+      );
   }
 
   renderOrderLines();
 }
 
 function productsForSelectedSupplier(){
-  const supplierId=document.getElementById("orderSupplier").value;
+  const supplierId = document.getElementById("orderSupplier").value;
 
   return supplierId
-    ? data.products.filter(p=>p.supplierId===supplierId)
+    ? data.products.filter(product => product.supplierId === supplierId)
     : data.products;
 }
 
@@ -2273,32 +2948,35 @@ function addOrderLine(){
 }
 
 function removeOrderLine(lineId){
-  if(currentOrderLines.length===1){
+  if(currentOrderLines.length === 1){
     toast("L’ordine deve avere almeno una riga");
     return;
   }
 
-  currentOrderLines=currentOrderLines.filter(line=>line.id!==lineId);
+  currentOrderLines = currentOrderLines.filter(
+    line => line.id !== lineId
+  );
+
   renderOrderLines();
   calculateOrder();
 }
 
 function updateLine(lineId,field,value){
-  const line=currentOrderLines.find(l=>l.id===lineId);
+  const line = currentOrderLines.find(item => item.id === lineId);
   if(!line) return;
 
   if(["quantity","unitPrice","vatRate"].includes(field)){
-    line[field]=Number(value || 0);
+    line[field] = Number(value || 0);
   }else{
-    line[field]=value;
+    line[field] = value;
   }
 
-  if(field==="productId"){
-    const product=data.products.find(p=>p.id===value);
+  if(field === "productId"){
+    const product = data.products.find(item => item.id === value);
 
     if(product){
-      line.description=product.name;
-      line.unitPrice=Number(product.price || 0);
+      line.description = product.name;
+      line.unitPrice = Number(product.price || 0);
     }
   }
 
@@ -2307,23 +2985,28 @@ function updateLine(lineId,field,value){
 }
 
 function renderOrderLines(){
-  const products=productsForSelectedSupplier();
+  const products = productsForSelectedSupplier();
 
-  document.getElementById("orderLines").innerHTML=
-    currentOrderLines.map((line,index)=>{
-      const lineNet=Number(line.quantity||0)*Number(line.unitPrice||0);
-      const lineVat=lineNet*Number(line.vatRate||0)/100;
+  document.getElementById("orderLines").innerHTML =
+    currentOrderLines.map((line,index) => {
+      const net =
+        Number(line.quantity || 0) * Number(line.unitPrice || 0);
+
+      const vat =
+        net * Number(line.vatRate || 0) / 100;
 
       return `
         <div class="order-line">
           <div class="line-grid">
             <div class="field">
-              <label>Prodotto ${index+1}</label>
+              <label>Prodotto ${index + 1}</label>
+
               <select onchange="updateLine('${line.id}','productId',this.value)">
                 <option value="">Seleziona prodotto</option>
-                ${products.map(product=>`
+
+                ${products.map(product => `
                   <option value="${product.id}"
-                    ${product.id===line.productId ? "selected" : ""}>
+                    ${product.id === line.productId ? "selected" : ""}>
                     ${esc(product.name)} – ${money(product.price)}
                   </option>
                 `).join("")}
@@ -2331,11 +3014,14 @@ function renderOrderLines(){
             </div>
 
             <button type="button" class="btn btn-danger"
-              onclick="removeOrderLine('${line.id}')">×</button>
+              onclick="removeOrderLine('${line.id}')">
+              ×
+            </button>
           </div>
 
           <div class="field" style="margin-top:7px">
             <label>Descrizione</label>
+
             <input value="${esc(line.description || "")}"
               oninput="updateLine('${line.id}','description',this.value)">
           </div>
@@ -2343,6 +3029,7 @@ function renderOrderLines(){
           <div class="line-grid-3">
             <div class="field">
               <label>Quantità</label>
+
               <input type="number" min="0" step="0.01"
                 value="${line.quantity}"
                 onchange="updateLine('${line.id}','quantity',this.value)">
@@ -2350,6 +3037,7 @@ function renderOrderLines(){
 
             <div class="field">
               <label>Prezzo unitario</label>
+
               <input type="number" min="0" step="0.01"
                 value="${line.unitPrice}"
                 onchange="updateLine('${line.id}','unitPrice',this.value)">
@@ -2357,10 +3045,11 @@ function renderOrderLines(){
 
             <div class="field">
               <label>IVA %</label>
+
               <select onchange="updateLine('${line.id}','vatRate',this.value)">
-                ${[0,4,5,10,22].map(rate=>`
+                ${[0,4,5,10,22].map(rate => `
                   <option value="${rate}"
-                    ${Number(line.vatRate)===rate ? "selected" : ""}>
+                    ${Number(line.vatRate) === rate ? "selected" : ""}>
                     ${rate}%
                   </option>
                 `).join("")}
@@ -2369,8 +3058,8 @@ function renderOrderLines(){
           </div>
 
           <div class="line-total">
-            <span>Imponibile: ${money(lineNet)}</span>
-            <span>IVA: ${money(lineVat)}</span>
+            <span>Imponibile: ${money(net)}</span>
+            <span>IVA: ${money(vat)}</span>
           </div>
         </div>
       `;
@@ -2378,39 +3067,44 @@ function renderOrderLines(){
 }
 
 function calculateOrder(){
-  const subtotal=currentOrderLines.reduce((sum,line)=>
-    sum+Number(line.quantity||0)*Number(line.unitPrice||0),0
+  const subtotal = currentOrderLines.reduce(
+    (sum,line) =>
+      sum + Number(line.quantity || 0) * Number(line.unitPrice || 0),
+    0
   );
 
-  const discountPercent=Number(
+  const discountPercent = Number(
     document.getElementById("orderDiscount")?.value || 0
   );
 
-  const discountAmount=subtotal*discountPercent/100;
-  const discountedSubtotal=subtotal-discountAmount;
+  const discountAmount = subtotal * discountPercent / 100;
+  const discountedSubtotal = subtotal - discountAmount;
 
-  let vatTotal=0;
+  let vatTotal = 0;
 
-  currentOrderLines.forEach(line=>{
-    const net=Number(line.quantity||0)*Number(line.unitPrice||0);
-    const discountedNet=subtotal>0
-      ? net-(discountAmount*(net/subtotal))
+  currentOrderLines.forEach(line => {
+    const net =
+      Number(line.quantity || 0) * Number(line.unitPrice || 0);
+
+    const discountedNet = subtotal > 0
+      ? net - discountAmount * (net / subtotal)
       : net;
 
-    vatTotal+=discountedNet*Number(line.vatRate||0)/100;
+    vatTotal +=
+      discountedNet * Number(line.vatRate || 0) / 100;
   });
 
-  const shipping=Number(
+  const shipping = Number(
     document.getElementById("orderShipping")?.value || 0
   );
 
-  const total=discountedSubtotal+vatTotal+shipping;
+  const total = discountedSubtotal + vatTotal + shipping;
 
-  document.getElementById("summarySubtotal").textContent=money(subtotal);
-  document.getElementById("summaryDiscount").textContent=money(discountAmount);
-  document.getElementById("summaryVat").textContent=money(vatTotal);
-  document.getElementById("summaryShipping").textContent=money(shipping);
-  document.getElementById("summaryTotal").textContent=money(total);
+  document.getElementById("summarySubtotal").textContent = money(subtotal);
+  document.getElementById("summaryDiscount").textContent = money(discountAmount);
+  document.getElementById("summaryVat").textContent = money(vatTotal);
+  document.getElementById("summaryShipping").textContent = money(shipping);
+  document.getElementById("summaryTotal").textContent = money(total);
 
   return {
     subtotal,
@@ -2425,64 +3119,65 @@ function calculateOrder(){
 function saveOrder(event){
   event.preventDefault();
 
-  const orderId=document.getElementById("orderId").value;
-  const supplierId=document.getElementById("orderSupplier").value;
+  const orderId = document.getElementById("orderId").value;
+  const supplierId = document.getElementById("orderSupplier").value;
 
-  if(!supplierId){
-    toast("Seleziona il fornitore");
-    return;
-  }
-
-  const validLines=currentOrderLines.filter(line=>
-    line.description.trim() &&
-    Number(line.quantity)>0
+  const validLines = currentOrderLines.filter(line =>
+    line.description.trim() && Number(line.quantity) > 0
   );
 
   if(!validLines.length){
-    toast("Inserisci almeno un prodotto nell’ordine");
+    toast("Inserisci almeno un prodotto");
     return;
   }
 
-  const totals=calculateOrder();
-  const old=data.orders.find(o=>o.id===orderId);
+  const totals = calculateOrder();
 
-  const order={
-    id:orderId || id("order"),
-    number:document.getElementById("orderNumber").value.trim(),
+  const previous = data.orders.find(order => order.id === orderId);
+
+  const order = {
+    id: orderId || createId("order"),
+    number: document.getElementById("orderNumber").value.trim(),
     supplierId,
-    date:document.getElementById("orderDate").value,
-    deliveryDate:document.getElementById("orderDeliveryDate").value,
-    status:document.getElementById("orderStatus").value,
-    paymentStatus:document.getElementById("orderPaymentStatus").value,
-    lines:clone(validLines),
-    subtotal:totals.subtotal,
-    discountPercent:totals.discountPercent,
-    discountAmount:totals.discountAmount,
-    vatTotal:totals.vatTotal,
-    shipping:totals.shipping,
-    grandTotal:totals.total,
-    paymentDue:document.getElementById("orderPaymentDue").value,
-    notes:document.getElementById("orderNotes").value.trim(),
-    createdAt:old?.createdAt || new Date().toISOString()
+    date: document.getElementById("orderDate").value,
+    deliveryDate: document.getElementById("orderDeliveryDate").value,
+    status: document.getElementById("orderStatus").value,
+    paymentStatus: document.getElementById("orderPaymentStatus").value,
+    lines: clone(validLines),
+    subtotal: totals.subtotal,
+    discountPercent: totals.discountPercent,
+    discountAmount: totals.discountAmount,
+    vatTotal: totals.vatTotal,
+    shipping: totals.shipping,
+    grandTotal: totals.total,
+    paymentDue: document.getElementById("orderPaymentDue").value,
+    notes: document.getElementById("orderNotes").value.trim(),
+    createdAt: previous?.createdAt || new Date().toISOString()
   };
 
   if(orderId){
-    data.orders=data.orders.map(o=>o.id===orderId?order:o);
+    data.orders = data.orders.map(item =>
+      item.id === orderId ? order : item
+    );
   }else{
     data.orders.push(order);
   }
 
-  const createPayment=
+  const createPayment =
     document.getElementById("createPayment").checked &&
     !orderId &&
-    order.paymentStatus!=="Pagato";
+    order.paymentStatus !== "Pagato";
+
+  const createDelivery =
+    document.getElementById("createDelivery").checked &&
+    !orderId;
 
   if(createPayment){
     data.payments.push({
-      id:id("payment"),
+      id:createId("payment"),
       supplierId:order.supplierId,
       orderId:order.id,
-      reference:"Ordine "+order.number,
+      reference:"Ordine " + order.number,
       amount:order.grandTotal,
       dueDate:order.paymentDue,
       status:"Da pagare",
@@ -2492,23 +3187,41 @@ function saveOrder(event){
     });
   }
 
+  if(createDelivery){
+    data.deliveries.push({
+      id:createId("delivery"),
+      orderId:order.id,
+      carrier:"",
+      tracking:"",
+      trackingUrl:"",
+      shipDate:"",
+      expectedDate:order.deliveryDate,
+      actualDate:"",
+      cost:order.shipping,
+      status:"In preparazione",
+      notes:"Consegna creata automaticamente dall’ordine.",
+      createdAt:new Date().toISOString()
+    });
+  }
+
   closeModal("orderModal");
   persist();
-  toast(createPayment ? "Ordine e pagamento creati" : "Ordine salvato");
+  toast("Ordine salvato e collegamenti creati");
 }
 
-function orderCard(order,actions=true){
-  const total=Number(order.grandTotal ?? order.total ?? 0);
-  const lines=order.lines || [];
+function orderCard(order, actions = true){
+  const total = Number(order.grandTotal ?? order.total ?? 0);
+  const lines = order.lines || [];
 
   return `
     <article class="item">
       <div class="item-top">
         <div>
           <h3>${esc(order.number)}</h3>
+
           <div class="subtitle">
             ${esc(supplierName(order.supplierId))} ·
-            ${lines.length} ${lines.length===1 ? "prodotto" : "prodotti"}
+            ${lines.length} ${lines.length === 1 ? "prodotto" : "prodotti"}
           </div>
         </div>
 
@@ -2541,15 +3254,23 @@ function orderCard(order,actions=true){
 
       ${actions ? `
         <div class="actions">
-          <button class="mini" onclick="advanceOrder('${order.id}')">
+          <button class="mini"
+            onclick="advanceOrder('${order.id}')">
             Avanza stato
           </button>
 
-          <button class="mini primary" onclick="editOrder('${order.id}')">
+          <button class="mini info"
+            onclick="openDeliveryForOrder('${order.id}')">
+            Consegna
+          </button>
+
+          <button class="mini primary"
+            onclick="editOrder('${order.id}')">
             Modifica
           </button>
 
-          <button class="mini danger" onclick="deleteOrder('${order.id}')">
+          <button class="mini danger"
+            onclick="deleteOrder('${order.id}')">
             Elimina
           </button>
         </div>
@@ -2559,76 +3280,354 @@ function orderCard(order,actions=true){
 }
 
 function renderOrders(){
-  const query=(document.getElementById("orderSearch")?.value || "").toLowerCase();
+  const query =
+    (document.getElementById("orderSearch")?.value || "").toLowerCase();
 
-  const filtered=data.orders.filter(order=>
+  const filtered = data.orders.filter(order =>
     [
       order.number,
       order.status,
       order.paymentStatus,
       supplierName(order.supplierId),
-      ...(order.lines || []).map(line=>line.description)
+      ...(order.lines || []).map(line => line.description)
     ].join(" ").toLowerCase().includes(query)
   );
 
-  document.getElementById("orderList").innerHTML=
+  document.getElementById("orderList").innerHTML =
     filtered.length
       ? [...filtered]
-          .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
-          .map(order=>orderCard(order,true)).join("")
+          .sort((a,b) => String(b.date).localeCompare(String(a.date)))
+          .map(order => orderCard(order,true))
+          .join("")
       : empty("Nessun ordine trovato","Crea il primo ordine professionale.");
 }
 
 function editOrder(orderId){
-  const order=data.orders.find(o=>o.id===orderId);
+  const order = data.orders.find(item => item.id === orderId);
   if(order) openOrder(order);
 }
 
 function advanceOrder(orderId){
-  const states=["Bozza","Inviato","Confermato","In viaggio","Consegnato"];
-  const order=data.orders.find(o=>o.id===orderId);
+  const states = [
+    "Bozza",
+    "Inviato",
+    "Confermato",
+    "In viaggio",
+    "Consegnato"
+  ];
 
-  if(!order || order.status==="Annullato") return;
+  const order = data.orders.find(item => item.id === orderId);
+  if(!order || order.status === "Annullato") return;
 
-  const index=states.indexOf(order.status);
-  order.status=states[Math.min(index+1,states.length-1)];
+  const index = states.indexOf(order.status);
+  order.status = states[Math.min(index + 1, states.length - 1)];
 
   persist();
-  toast("Stato ordine: "+order.status);
+  toast("Stato ordine: " + order.status);
 }
 
 function deleteOrder(orderId){
-  if(!confirm("Eliminare definitivamente questo ordine?")) return;
+  if(!confirm("Eliminare ordine, pagamento e consegna collegati?")) return;
 
-  data.orders=data.orders.filter(o=>o.id!==orderId);
-  data.payments=data.payments.filter(p=>p.orderId!==orderId);
+  data.orders = data.orders.filter(order => order.id !== orderId);
+  data.payments = data.payments.filter(payment => payment.orderId !== orderId);
+  data.deliveries = data.deliveries.filter(
+    delivery => delivery.orderId !== orderId
+  );
 
   persist();
-  toast("Ordine e pagamento collegato eliminati");
+  toast("Ordine e collegamenti eliminati");
+}
+
+/* CONSEGNE */
+
+function openDelivery(delivery = null){
+  populateOrderSelect();
+
+  if(!data.orders.length){
+    toast("Prima crea almeno un ordine");
+    return;
+  }
+
+  document.getElementById("deliveryTitle").textContent =
+    delivery ? "Modifica consegna" : "Nuova consegna";
+
+  document.getElementById("deliveryId").value = delivery?.id || "";
+  document.getElementById("deliveryOrder").value = delivery?.orderId || "";
+  document.getElementById("deliveryCarrier").value = delivery?.carrier || "";
+  document.getElementById("deliveryTracking").value = delivery?.tracking || "";
+  document.getElementById("deliveryTrackingUrl").value =
+    delivery?.trackingUrl || "";
+  document.getElementById("deliveryShipDate").value =
+    delivery?.shipDate || "";
+  document.getElementById("deliveryExpectedDate").value =
+    delivery?.expectedDate || "";
+  document.getElementById("deliveryActualDate").value =
+    delivery?.actualDate || "";
+  document.getElementById("deliveryCost").value = delivery?.cost ?? "";
+  document.getElementById("deliveryStatus").value =
+    delivery?.status || "In preparazione";
+  document.getElementById("deliveryNotes").value = delivery?.notes || "";
+
+  openModal("deliveryModal");
+}
+
+function openDeliveryForOrder(orderId){
+  const existing = data.deliveries.find(
+    delivery => delivery.orderId === orderId
+  );
+
+  if(existing){
+    openDelivery(existing);
+    return;
+  }
+
+  openDelivery();
+
+  document.getElementById("deliveryOrder").value = orderId;
+  deliveryOrderChanged();
+}
+
+function deliveryOrderChanged(){
+  const orderId = document.getElementById("deliveryOrder").value;
+  const order = data.orders.find(item => item.id === orderId);
+
+  if(!order) return;
+
+  document.getElementById("deliveryExpectedDate").value =
+    order.deliveryDate || "";
+
+  document.getElementById("deliveryCost").value =
+    order.shipping ?? "";
+}
+
+function saveDelivery(event){
+  event.preventDefault();
+
+  const deliveryId = document.getElementById("deliveryId").value;
+  const previous = data.deliveries.find(
+    delivery => delivery.id === deliveryId
+  );
+
+  const delivery = {
+    id: deliveryId || createId("delivery"),
+    orderId: document.getElementById("deliveryOrder").value,
+    carrier: document.getElementById("deliveryCarrier").value.trim(),
+    tracking: document.getElementById("deliveryTracking").value.trim(),
+    trackingUrl: document.getElementById("deliveryTrackingUrl").value.trim(),
+    shipDate: document.getElementById("deliveryShipDate").value,
+    expectedDate: document.getElementById("deliveryExpectedDate").value,
+    actualDate: document.getElementById("deliveryActualDate").value,
+    cost: Number(document.getElementById("deliveryCost").value || 0),
+    status: document.getElementById("deliveryStatus").value,
+    notes: document.getElementById("deliveryNotes").value.trim(),
+    createdAt: previous?.createdAt || new Date().toISOString()
+  };
+
+  if(delivery.status === "Consegnato" && !delivery.actualDate){
+    delivery.actualDate = today();
+  }
+
+  if(deliveryId){
+    data.deliveries = data.deliveries.map(item =>
+      item.id === deliveryId ? delivery : item
+    );
+  }else{
+    const duplicate = data.deliveries.some(
+      item => item.orderId === delivery.orderId
+    );
+
+    if(duplicate){
+      toast("Esiste già una consegna per questo ordine");
+      return;
+    }
+
+    data.deliveries.push(delivery);
+  }
+
+  const order = data.orders.find(item => item.id === delivery.orderId);
+
+  if(order){
+    if(delivery.status === "Consegnato"){
+      order.status = "Consegnato";
+    }else if(["Ritirato","In transito","In dogana"].includes(delivery.status)){
+      order.status = "In viaggio";
+    }
+  }
+
+  closeModal("deliveryModal");
+  persist();
+  toast(deliveryId ? "Consegna aggiornata" : "Consegna creata");
+}
+
+function renderDeliveries(){
+  const query =
+    (document.getElementById("deliverySearch")?.value || "").toLowerCase();
+
+  const now = today();
+
+  const filtered = data.deliveries.filter(delivery =>
+    [
+      orderNumber(delivery.orderId),
+      delivery.carrier,
+      delivery.tracking,
+      delivery.status
+    ].join(" ").toLowerCase().includes(query)
+  );
+
+  document.getElementById("deliveryList").innerHTML =
+    filtered.length
+      ? [...filtered]
+          .sort((a,b) =>
+            String(a.expectedDate).localeCompare(String(b.expectedDate))
+          )
+          .map(delivery => {
+            const order = data.orders.find(
+              item => item.id === delivery.orderId
+            );
+
+            const late =
+              delivery.status !== "Consegnato" &&
+              delivery.expectedDate &&
+              delivery.expectedDate < now;
+
+            return `
+              <article class="item">
+                <div class="item-top">
+                  <div>
+                    <h3>${esc(orderNumber(delivery.orderId))}</h3>
+
+                    <div class="subtitle">
+                      ${esc(supplierName(order?.supplierId))} ·
+                      ${esc(delivery.carrier || "Corriere non indicato")}
+                    </div>
+                  </div>
+
+                  <span class="badge ${late ? "bad" : statusClass(delivery.status)}">
+                    ${late ? "In ritardo" : esc(delivery.status)}
+                  </span>
+                </div>
+
+                <div class="meta">
+                  <div>
+                    <label>Tracking</label>
+                    <strong>${esc(delivery.tracking || "—")}</strong>
+                  </div>
+
+                  <div>
+                    <label>Consegna prevista</label>
+                    <strong>${esc(delivery.expectedDate || "—")}</strong>
+                  </div>
+
+                  <div>
+                    <label>Data effettiva</label>
+                    <strong>${esc(delivery.actualDate || "—")}</strong>
+                  </div>
+
+                  <div>
+                    <label>Costo trasporto</label>
+                    <strong>${money(delivery.cost)}</strong>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  ${delivery.trackingUrl ? `
+                    <button class="mini info"
+                      onclick="window.open('${esc(delivery.trackingUrl)}','_blank')">
+                      Apri tracking
+                    </button>
+                  ` : ""}
+
+                  ${delivery.status !== "Consegnato" ? `
+                    <button class="mini green"
+                      onclick="markDelivered('${delivery.id}')">
+                      Consegnato
+                    </button>
+                  ` : ""}
+
+                  <button class="mini primary"
+                    onclick="editDelivery('${delivery.id}')">
+                    Modifica
+                  </button>
+
+                  <button class="mini danger"
+                    onclick="deleteDelivery('${delivery.id}')">
+                    Elimina
+                  </button>
+                </div>
+              </article>
+            `;
+          }).join("")
+      : empty("Nessuna consegna trovata","Crea o collega una consegna a un ordine.");
+}
+
+function editDelivery(deliveryId){
+  const delivery = data.deliveries.find(
+    item => item.id === deliveryId
+  );
+
+  if(delivery) openDelivery(delivery);
+}
+
+function markDelivered(deliveryId){
+  const delivery = data.deliveries.find(
+    item => item.id === deliveryId
+  );
+
+  if(!delivery) return;
+
+  delivery.status = "Consegnato";
+  delivery.actualDate = today();
+
+  const order = data.orders.find(
+    item => item.id === delivery.orderId
+  );
+
+  if(order) order.status = "Consegnato";
+
+  persist();
+  toast("Consegna completata");
+}
+
+function deleteDelivery(deliveryId){
+  if(!confirm("Eliminare questa consegna?")) return;
+
+  data.deliveries = data.deliveries.filter(
+    delivery => delivery.id !== deliveryId
+  );
+
+  persist();
+  toast("Consegna eliminata");
 }
 
 /* PAGAMENTI */
 
-function openPayment(payment=null){
+function openPayment(payment = null){
   populateSupplierSelects();
 
   if(!data.suppliers.length){
     toast("Prima registra almeno un fornitore");
-    openSupplier();
     return;
   }
 
-  document.getElementById("paymentTitle").textContent=
+  document.getElementById("paymentTitle").textContent =
     payment ? "Modifica pagamento" : "Nuovo pagamento";
 
-  document.getElementById("paymentId").value=payment?.id || "";
-  document.getElementById("paymentSupplier").value=payment?.supplierId || "";
-  document.getElementById("paymentReference").value=payment?.reference || "";
-  document.getElementById("paymentAmount").value=payment?.amount ?? "";
-  document.getElementById("paymentDue").value=payment?.dueDate || "";
-  document.getElementById("paymentStatus").value=payment?.status || "Da pagare";
-  document.getElementById("paymentMethod").value=payment?.method || "Bonifico";
-  document.getElementById("paymentNotes").value=payment?.notes || "";
+  document.getElementById("paymentId").value = payment?.id || "";
+  document.getElementById("paymentSupplier").value =
+    payment?.supplierId || "";
+  document.getElementById("paymentReference").value =
+    payment?.reference || "";
+  document.getElementById("paymentAmount").value =
+    payment?.amount ?? "";
+  document.getElementById("paymentDue").value =
+    payment?.dueDate || "";
+  document.getElementById("paymentStatus").value =
+    payment?.status || "Da pagare";
+  document.getElementById("paymentMethod").value =
+    payment?.method || "Bonifico";
+  document.getElementById("paymentNotes").value =
+    payment?.notes || "";
 
   openModal("paymentModal");
 }
@@ -2636,34 +3635,41 @@ function openPayment(payment=null){
 function savePayment(event){
   event.preventDefault();
 
-  const paymentId=document.getElementById("paymentId").value;
-  const old=data.payments.find(p=>p.id===paymentId);
+  const paymentId = document.getElementById("paymentId").value;
 
-  const payment={
-    id:paymentId || id("payment"),
-    supplierId:document.getElementById("paymentSupplier").value,
-    orderId:old?.orderId || "",
-    reference:document.getElementById("paymentReference").value.trim(),
-    amount:Number(document.getElementById("paymentAmount").value || 0),
-    dueDate:document.getElementById("paymentDue").value,
-    status:document.getElementById("paymentStatus").value,
-    method:document.getElementById("paymentMethod").value,
-    notes:document.getElementById("paymentNotes").value.trim(),
-    createdAt:old?.createdAt || new Date().toISOString()
+  const previous = data.payments.find(
+    payment => payment.id === paymentId
+  );
+
+  const payment = {
+    id: paymentId || createId("payment"),
+    supplierId: document.getElementById("paymentSupplier").value,
+    orderId: previous?.orderId || "",
+    reference: document.getElementById("paymentReference").value.trim(),
+    amount: Number(document.getElementById("paymentAmount").value || 0),
+    dueDate: document.getElementById("paymentDue").value,
+    status: document.getElementById("paymentStatus").value,
+    method: document.getElementById("paymentMethod").value,
+    notes: document.getElementById("paymentNotes").value.trim(),
+    createdAt: previous?.createdAt || new Date().toISOString()
   };
 
   if(paymentId){
-    data.payments=data.payments.map(p=>p.id===paymentId?payment:p);
+    data.payments = data.payments.map(item =>
+      item.id === paymentId ? payment : item
+    );
   }else{
     data.payments.push(payment);
   }
 
   if(payment.orderId){
-    const order=data.orders.find(o=>o.id===payment.orderId);
+    const order = data.orders.find(
+      item => item.id === payment.orderId
+    );
 
     if(order){
-      order.paymentStatus=
-        payment.status==="Pagato" ? "Pagato" : "Da pagare";
+      order.paymentStatus =
+        payment.status === "Pagato" ? "Pagato" : "Da pagare";
     }
   }
 
@@ -2673,67 +3679,78 @@ function savePayment(event){
 }
 
 function renderPayments(){
-  const query=(document.getElementById("paymentSearch")?.value || "").toLowerCase();
+  const query =
+    (document.getElementById("paymentSearch")?.value || "").toLowerCase();
 
-  const filtered=data.payments.filter(p=>
-    [p.reference,p.status,p.method,supplierName(p.supplierId)]
-      .join(" ").toLowerCase().includes(query)
+  const filtered = data.payments.filter(payment =>
+    [
+      payment.reference,
+      payment.status,
+      payment.method,
+      supplierName(payment.supplierId)
+    ].join(" ").toLowerCase().includes(query)
   );
 
-  document.getElementById("paymentList").innerHTML=
+  document.getElementById("paymentList").innerHTML =
     filtered.length
       ? [...filtered]
-          .sort((a,b)=>String(a.dueDate).localeCompare(String(b.dueDate)))
-          .map(p=>`
+          .sort((a,b) =>
+            String(a.dueDate).localeCompare(String(b.dueDate))
+          )
+          .map(payment => `
             <article class="item">
               <div class="item-top">
                 <div>
-                  <h3>${esc(p.reference || "Pagamento XA")}</h3>
+                  <h3>${esc(payment.reference || "Pagamento XA")}</h3>
+
                   <div class="subtitle">
-                    ${esc(supplierName(p.supplierId))}
-                    ${p.orderId ? " · Collegato a ordine" : ""}
+                    ${esc(supplierName(payment.supplierId))}
+                    ${payment.orderId ? " · Collegato a ordine" : ""}
                   </div>
                 </div>
 
-                <span class="badge ${statusClass(p.status)}">
-                  ${esc(p.status)}
+                <span class="badge ${statusClass(payment.status)}">
+                  ${esc(payment.status)}
                 </span>
               </div>
 
               <div class="meta">
                 <div>
                   <label>Importo</label>
-                  <strong>${money(p.amount)}</strong>
+                  <strong>${money(payment.amount)}</strong>
                 </div>
 
                 <div>
                   <label>Scadenza</label>
-                  <strong>${esc(p.dueDate || "—")}</strong>
+                  <strong>${esc(payment.dueDate || "—")}</strong>
                 </div>
 
                 <div>
                   <label>Metodo</label>
-                  <strong>${esc(p.method || "—")}</strong>
+                  <strong>${esc(payment.method || "—")}</strong>
                 </div>
 
                 <div>
                   <label>Fornitore</label>
-                  <strong>${esc(supplierName(p.supplierId))}</strong>
+                  <strong>${esc(supplierName(payment.supplierId))}</strong>
                 </div>
               </div>
 
               <div class="actions">
-                ${p.status!=="Pagato" ? `
-                  <button class="mini green" onclick="markPaid('${p.id}')">
+                ${payment.status !== "Pagato" ? `
+                  <button class="mini green"
+                    onclick="markPaid('${payment.id}')">
                     Segna pagato
                   </button>
                 ` : ""}
 
-                <button class="mini primary" onclick="editPayment('${p.id}')">
+                <button class="mini primary"
+                  onclick="editPayment('${payment.id}')">
                   Modifica
                 </button>
 
-                <button class="mini danger" onclick="deletePayment('${p.id}')">
+                <button class="mini danger"
+                  onclick="deletePayment('${payment.id}')">
                   Elimina
                 </button>
               </div>
@@ -2743,19 +3760,28 @@ function renderPayments(){
 }
 
 function editPayment(paymentId){
-  const payment=data.payments.find(p=>p.id===paymentId);
+  const payment = data.payments.find(
+    item => item.id === paymentId
+  );
+
   if(payment) openPayment(payment);
 }
 
 function markPaid(paymentId){
-  const payment=data.payments.find(p=>p.id===paymentId);
+  const payment = data.payments.find(
+    item => item.id === paymentId
+  );
+
   if(!payment) return;
 
-  payment.status="Pagato";
+  payment.status = "Pagato";
 
   if(payment.orderId){
-    const order=data.orders.find(o=>o.id===payment.orderId);
-    if(order) order.paymentStatus="Pagato";
+    const order = data.orders.find(
+      item => item.id === payment.orderId
+    );
+
+    if(order) order.paymentStatus = "Pagato";
   }
 
   persist();
@@ -2765,7 +3791,10 @@ function markPaid(paymentId){
 function deletePayment(paymentId){
   if(!confirm("Eliminare definitivamente questo pagamento?")) return;
 
-  data.payments=data.payments.filter(p=>p.id!==paymentId);
+  data.payments = data.payments.filter(
+    payment => payment.id !== paymentId
+  );
+
   persist();
   toast("Pagamento eliminato");
 }
@@ -2773,90 +3802,141 @@ function deletePayment(paymentId){
 /* ANALISI */
 
 function renderAnalysis(){
-  const orders=data.orders.filter(o=>o.status!=="Annullato");
-
-  const spend=orders.reduce((sum,o)=>
-    sum+Number(o.grandTotal ?? o.total ?? 0),0
+  const orders = data.orders.filter(
+    order => order.status !== "Annullato"
   );
 
-  const average=orders.length ? spend/orders.length : 0;
+  const spend = orders.reduce(
+    (sum,order) =>
+      sum + Number(order.grandTotal ?? order.total ?? 0),
+    0
+  );
 
-  const counts={};
+  const average = orders.length ? spend / orders.length : 0;
 
-  orders.forEach(order=>{
-    counts[order.supplierId]=(counts[order.supplierId] || 0)+1;
+  const counts = {};
+
+  orders.forEach(order => {
+    counts[order.supplierId] =
+      (counts[order.supplierId] || 0) + 1;
   });
 
-  const topId=Object.entries(counts)
-    .sort((a,b)=>b[1]-a[1])[0]?.[0];
+  const topSupplierId = Object.entries(counts)
+    .sort((a,b) => b[1] - a[1])[0]?.[0];
 
-  const due=data.payments
-    .filter(p=>p.status!=="Pagato")
-    .reduce((sum,p)=>sum+Number(p.amount||0),0);
+  const due = data.payments
+    .filter(payment => payment.status !== "Pagato")
+    .reduce(
+      (sum,payment) => sum + Number(payment.amount || 0),
+      0
+    );
 
-  document.getElementById("analysisSpend").textContent=money(spend);
-  document.getElementById("analysisAverage").textContent=money(average);
-  document.getElementById("analysisSupplier").textContent=
-    topId ? supplierName(topId) : "—";
-  document.getElementById("analysisPayments").textContent=money(due);
+  document.getElementById("analysisSpend").textContent = money(spend);
+  document.getElementById("analysisAverage").textContent = money(average);
+
+  document.getElementById("analysisSupplier").textContent =
+    topSupplierId ? supplierName(topSupplierId) : "—";
+
+  document.getElementById("analysisPayments").textContent = money(due);
 }
 
 function renderComparison(){
-  const query=(document.getElementById("comparisonSearch")?.value || "").toLowerCase();
+  const query =
+    (document.getElementById("comparisonSearch")?.value || "").toLowerCase();
 
-  const products=data.products
-    .filter(p=>p.name.toLowerCase().includes(query))
-    .sort((a,b)=>{
-      const nameCompare=a.name.localeCompare(b.name);
-      return nameCompare || Number(a.price)-Number(b.price);
+  const products = data.products
+    .filter(product => product.name.toLowerCase().includes(query))
+    .sort((a,b) => {
+      const nameCompare = a.name.localeCompare(b.name);
+
+      return nameCompare ||
+        realUnitCost(a) - realUnitCost(b);
     });
 
-  document.getElementById("comparisonBody").innerHTML=
+  const cheapestByName = {};
+
+  products.forEach(product => {
+    const key = product.name.trim().toLowerCase();
+    const cost = realUnitCost(product);
+
+    if(
+      cheapestByName[key] === undefined ||
+      cost < cheapestByName[key]
+    ){
+      cheapestByName[key] = cost;
+    }
+  });
+
+  document.getElementById("comparisonBody").innerHTML =
     products.length
-      ? products.map(p=>`
-          <tr>
-            <td><strong>${esc(p.name)}</strong></td>
-            <td>${esc(supplierName(p.supplierId))}</td>
-            <td>${money(p.price)}</td>
-            <td>${p.minimum || "—"}</td>
-            <td>${esc(p.format || "—")}</td>
-          </tr>
-        `).join("")
-      : `<tr><td colspan="5">Nessun prodotto da confrontare.</td></tr>`;
+      ? products.map(product => {
+          const supplier = data.suppliers.find(
+            item => item.id === product.supplierId
+          );
+
+          const realCost = realUnitCost(product);
+
+          const best =
+            realCost === cheapestByName[product.name.trim().toLowerCase()];
+
+          return `
+            <tr class="${best ? "best-row" : ""}">
+              <td>
+                <strong>${esc(product.name)}</strong>
+                ${best ? " ✓" : ""}
+              </td>
+
+              <td>${esc(supplierName(product.supplierId))}</td>
+              <td>${money(product.price)}</td>
+              <td>${product.minimum || "—"}</td>
+              <td>${money(product.shippingEstimate || 0)}</td>
+              <td><strong>${money(realCost)}</strong></td>
+
+              <td>
+                ${supplier?.deliveryDays
+                  ? esc(supplier.deliveryDays) + " giorni"
+                  : "—"}
+              </td>
+            </tr>
+          `;
+        }).join("")
+      : `<tr><td colspan="7">Nessun prodotto da confrontare.</td></tr>`;
 }
 
-/* IMPOSTAZIONI E BACKUP */
+/* IMPOSTAZIONI */
 
 function loadSettingsForm(){
-  document.getElementById("companyName").value=
+  document.getElementById("companyName").value =
     data.settings.company || "XA Fermented Redrinks";
 
-  document.getElementById("currency").value=
+  document.getElementById("currency").value =
     data.settings.currency || "EUR";
 }
 
 function saveSettings(){
-  data.settings.company=
+  data.settings.company =
     document.getElementById("companyName").value.trim() ||
     "XA Fermented Redrinks";
 
-  data.settings.currency=document.getElementById("currency").value;
+  data.settings.currency =
+    document.getElementById("currency").value;
 
   persist();
   toast("Impostazioni salvate");
 }
 
 function exportBackup(){
-  const blob=new Blob(
+  const blob = new Blob(
     [JSON.stringify(data,null,2)],
     {type:"application/json"}
   );
 
-  const url=URL.createObjectURL(blob);
-  const link=document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
 
-  link.href=url;
-  link.download="xa-supply-backup-"+today()+".json";
+  link.href = url;
+  link.download = "xa-supply-backup-" + today() + ".json";
+
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -2866,14 +3946,14 @@ function exportBackup(){
 }
 
 function importBackup(event){
-  const file=event.target.files?.[0];
+  const file = event.target.files?.[0];
   if(!file) return;
 
-  const reader=new FileReader();
+  const reader = new FileReader();
 
-  reader.onload=()=>{
+  reader.onload = () => {
     try{
-      const imported=JSON.parse(reader.result);
+      const imported = JSON.parse(reader.result);
 
       if(
         !Array.isArray(imported.suppliers) ||
@@ -2884,14 +3964,7 @@ function importBackup(event){
         throw new Error("Backup non valido");
       }
 
-      data={
-        ...clone(blankData),
-        ...imported,
-        settings:{
-          ...blankData.settings,
-          ...(imported.settings || {})
-        }
-      };
+      data = normalizeData(imported);
 
       persist();
       loadSettingsForm();
@@ -2900,22 +3973,23 @@ function importBackup(event){
       alert("Il file non è un backup XA valido.");
     }
 
-    event.target.value="";
+    event.target.value = "";
   };
 
   reader.readAsText(file);
 }
 
 function resetData(){
-  const answer=prompt("Per cancellare tutto scrivi: CANCELLA XA");
+  const answer = prompt("Per cancellare tutto scrivi: CANCELLA XA");
 
-  if(answer!=="CANCELLA XA"){
+  if(answer !== "CANCELLA XA"){
     toast("Cancellazione annullata");
     return;
   }
 
-  data=clone(blankData);
+  data = clone(blankData);
   localStorage.removeItem(KEY);
+
   persist();
   loadSettingsForm();
   toast("Archivio cancellato");
@@ -2923,13 +3997,19 @@ function resetData(){
 
 function renderAll(){
   populateSupplierSelects();
+  populateOrderSelect();
   renderDashboard();
   renderSuppliers();
   renderProducts();
   renderOrders();
+  renderDeliveries();
   renderPayments();
   renderAnalysis();
   renderComparison();
+
+  if(currentSupplierDetailId){
+    renderSupplierDetail();
+  }
 }
 
 loadSettingsForm();
