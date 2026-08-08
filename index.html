@@ -3,26 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#5f1929">
-<title>XA Supply Command V2</title>
+<meta name="theme-color" content="#541826">
+
+<title>XA Supply Command V3</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
-  --wine:#5f1929;
-  --wine2:#381018;
-  --wine3:#8b2941;
-  --cream:#f4ecdd;
-  --ivory:#fffaf1;
-  --gold:#b48c49;
-  --gold2:#e0c994;
-  --ink:#291d1f;
-  --muted:#796d69;
-  --green:#327355;
-  --blue:#35657d;
-  --orange:#af672b;
-  --red:#a32f3d;
-  --line:rgba(95,25,41,.13);
-  --shadow:0 12px 28px rgba(52,20,27,.10);
+  --wine:#641b2e;
+  --wine-dark:#321017;
+  --wine-light:#8d3048;
+  --cream:#f4ead8;
+  --paper:#fffaf0;
+  --gold:#b58b48;
+  --gold-light:#e7d3a4;
+  --ink:#2a2020;
+  --muted:#7c716b;
+  --green:#347457;
+  --red:#a93645;
+  --orange:#ae6b2f;
+  --blue:#376b80;
+  --line:rgba(88,35,44,.14);
+  --shadow:0 10px 28px rgba(52,20,27,.10);
 }
 
 *{
@@ -30,103 +33,179 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
   min-height:100vh;
-  padding-bottom:92px;
-  color:var(--ink);
   font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
   background:
-    radial-gradient(circle at 8% 0,rgba(180,140,73,.18),transparent 31%),
-    linear-gradient(180deg,#faf4e8,#eee2cf);
+    radial-gradient(circle at 8% 0,rgba(181,139,72,.18),transparent 29%),
+    linear-gradient(180deg,#faf4e8,#ede0ca);
 }
 
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-a{color:inherit}
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* LOGIN */
+
+.login-screen{
+  min-height:100vh;
+  padding:26px 17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 80% 10%,rgba(208,166,93,.22),transparent 32%),
+    linear-gradient(150deg,#291015,#5f192c 60%,#7f2b40);
+}
+
+.login-box{
+  width:min(100%,430px);
+  padding:27px 20px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:30px;
+  background:rgba(255,250,240,.97);
+  box-shadow:0 30px 70px rgba(0,0,0,.32);
+}
+
+.login-logo{
+  width:76px;
+  height:76px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 18px;
+  border:2px solid var(--wine);
+  border-radius:22px;
+  color:var(--wine);
+  font:900 35px Georgia,serif;
+  letter-spacing:-5px;
+}
+
+.login-box h1{
+  margin:0;
+  color:var(--wine-dark);
+  text-align:center;
+  font:900 29px Georgia,serif;
+}
+
+.login-box .claim{
+  margin:9px 0 25px;
+  color:var(--muted);
+  text-align:center;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.3px;
+  text-transform:uppercase;
+}
+
+.login-status{
+  min-height:20px;
+  margin:11px 0;
+  color:var(--red);
+  text-align:center;
+  font-size:10px;
+  font-weight:800;
+}
+
+/* APP */
 
 .app{
-  width:min(100%,980px);
+  width:min(100%,1050px);
   margin:auto;
+  padding-bottom:95px;
 }
 
 .top{
   position:sticky;
   top:0;
   z-index:50;
-  padding:10px 12px;
-  background:rgba(247,239,225,.96);
-  backdrop-filter:blur(18px);
+  padding:9px 11px;
   border-bottom:1px solid var(--line);
+  background:rgba(247,239,225,.95);
+  backdrop-filter:blur(18px);
 }
 
 .brand{
+  min-height:70px;
   display:flex;
   align-items:center;
-  gap:12px;
-  min-height:72px;
-  padding:11px 13px;
-  border-radius:23px;
+  gap:11px;
+  padding:10px 12px;
+  border-radius:22px;
   color:white;
   background:
-    radial-gradient(circle at 88% 15%,rgba(224,201,148,.24),transparent 30%),
-    linear-gradient(135deg,var(--wine2),var(--wine));
-  box-shadow:0 10px 24px rgba(56,16,24,.25);
+    radial-gradient(circle at 88% 12%,rgba(231,211,164,.25),transparent 30%),
+    linear-gradient(135deg,var(--wine-dark),var(--wine));
+  box-shadow:0 9px 22px rgba(57,17,27,.24);
 }
 
 .logo{
-  width:54px;
-  height:54px;
+  width:52px;
+  height:52px;
   flex:0 0 auto;
   display:grid;
   place-items:center;
-  border:2px solid var(--gold2);
-  border-radius:17px;
-  color:var(--gold2);
+  border:2px solid var(--gold-light);
+  border-radius:16px;
+  color:var(--gold-light);
   font:900 25px Georgia,serif;
   letter-spacing:-3px;
 }
 
-.brandcopy{
+.brand-text{
   min-width:0;
   flex:1;
 }
 
-.brandcopy h1{
-  margin:0;
-  font:900 18px Georgia,serif;
-  letter-spacing:.7px;
+.brand-text strong{
+  display:block;
+  font:900 16px Georgia,serif;
+  letter-spacing:.5px;
 }
 
-.brandcopy p{
-  margin:5px 0 0;
-  color:#eadabc;
-  font-size:8px;
+.brand-text small{
+  display:block;
+  margin-top:4px;
+  color:#ead9bb;
+  font-size:7px;
   font-weight:900;
-  letter-spacing:1.3px;
-  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
-.version{
-  padding:7px 9px;
-  border:1px solid rgba(224,201,148,.6);
+.online{
+  padding:6px 8px;
+  border:1px solid rgba(255,255,255,.25);
   border-radius:999px;
-  color:#f8e9c8;
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
   white-space:nowrap;
 }
 
-main{padding:12px}
+main{
+  padding:12px;
+}
 
 .page{
   display:none;
-  animation:fade .18s ease;
 }
 
-.page.active{display:block}
+.page.active{
+  display:block;
+  animation:fade .18s ease;
+}
 
 @keyframes fade{
   from{opacity:0;transform:translateY(4px)}
@@ -136,35 +215,35 @@ main{padding:12px}
 .hero{
   position:relative;
   overflow:hidden;
-  padding:23px 19px;
+  padding:23px 18px;
   border-radius:28px;
   color:white;
   background:
-    radial-gradient(circle at 85% 10%,rgba(224,201,148,.29),transparent 30%),
-    linear-gradient(145deg,#351018,#6e2035 64%,#943a4e);
+    radial-gradient(circle at 83% 10%,rgba(231,211,164,.28),transparent 30%),
+    linear-gradient(145deg,#351018,#6f2035 65%,#963c51);
   box-shadow:var(--shadow);
 }
 
 .hero:after{
   content:"XA";
   position:absolute;
-  right:-18px;
-  bottom:-49px;
+  right:-20px;
+  bottom:-55px;
   color:rgba(255,255,255,.055);
-  font:900 145px Georgia,serif;
-  letter-spacing:-17px;
+  font:900 150px Georgia,serif;
+  letter-spacing:-18px;
 }
 
 .hero-tag{
   position:relative;
   z-index:2;
   display:inline-block;
-  padding:6px 10px;
+  padding:6px 9px;
   border:1px solid rgba(255,255,255,.23);
   border-radius:999px;
+  color:#f1dbaf;
   background:rgba(255,255,255,.07);
-  color:#f3dfbb;
-  font-size:9px;
+  font-size:8px;
   font-weight:900;
   letter-spacing:1px;
 }
@@ -172,18 +251,18 @@ main{padding:12px}
 .hero h2{
   position:relative;
   z-index:2;
-  margin:15px 0 8px;
-  max-width:590px;
-  font:900 clamp(28px,7vw,43px)/1 Georgia,serif;
+  max-width:610px;
+  margin:14px 0 8px;
+  font:900 clamp(27px,7vw,44px)/1 Georgia,serif;
 }
 
 .hero p{
   position:relative;
   z-index:2;
-  max-width:570px;
+  max-width:600px;
   margin:0;
-  color:#eadbca;
-  font-size:12px;
+  color:#eadacd;
+  font-size:11px;
   line-height:1.5;
 }
 
@@ -192,46 +271,73 @@ main{padding:12px}
   z-index:2;
   display:flex;
   flex-wrap:wrap;
-  gap:8px;
-  margin-top:18px;
+  gap:7px;
+  margin-top:17px;
 }
 
 .btn{
   min-height:42px;
-  border:0;
-  border-radius:14px;
   padding:10px 14px;
-  font-size:10px;
+  border:0;
+  border-radius:13px;
+  font-size:9px;
   font-weight:900;
 }
 
-.btn-primary{color:white;background:linear-gradient(135deg,var(--wine),var(--wine3))}
-.btn-gold{color:#352016;background:linear-gradient(135deg,#ecd6a4,var(--gold))}
-.btn-dark{color:white;background:#332326}
-.btn-soft{color:var(--wine);border:1px solid #ddcaa9;background:#f3e5cd}
-.btn-green{color:white;background:var(--green)}
-.btn-danger{color:white;background:var(--red)}
-.btn-block{width:100%}
+.btn-primary{
+  color:white;
+  background:linear-gradient(135deg,var(--wine),var(--wine-light));
+}
+
+.btn-gold{
+  color:#392418;
+  background:linear-gradient(135deg,#eedcae,var(--gold));
+}
+
+.btn-dark{
+  color:white;
+  background:#362428;
+}
+
+.btn-green{
+  color:white;
+  background:var(--green);
+}
+
+.btn-red{
+  color:white;
+  background:var(--red);
+}
+
+.btn-soft{
+  color:var(--wine);
+  border:1px solid #dcc8a7;
+  background:#f0e1c7;
+}
+
+.btn-block{
+  width:100%;
+}
 
 .stats{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:9px;
-  margin:11px 0;
+  gap:8px;
+  margin:10px 0;
 }
 
 .stat{
-  min-height:95px;
+  min-height:94px;
   padding:13px;
   border:1px solid var(--line);
   border-radius:19px;
-  background:rgba(255,250,241,.92);
-  box-shadow:0 7px 18px rgba(50,21,26,.06);
+  background:rgba(255,250,241,.93);
+  box-shadow:0 7px 17px rgba(50,21,26,.055);
 }
 
 .stat small{
   color:var(--muted);
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
   letter-spacing:.7px;
   text-transform:uppercase;
@@ -240,7 +346,7 @@ main{padding:12px}
 .stat strong{
   display:block;
   margin-top:7px;
-  color:var(--wine2);
+  color:var(--wine-dark);
   font:900 23px Georgia,serif;
   overflow-wrap:anywhere;
 }
@@ -249,72 +355,68 @@ main{padding:12px}
   display:block;
   margin-top:4px;
   color:var(--muted);
-  font-size:9px;
+  font-size:8px;
 }
 
 .card{
-  margin-top:11px;
-  padding:15px;
+  margin-top:10px;
+  padding:14px;
   border:1px solid var(--line);
-  border-radius:21px;
-  background:rgba(255,250,241,.92);
-  box-shadow:0 8px 20px rgba(50,21,26,.07);
+  border-radius:20px;
+  background:rgba(255,250,241,.93);
+  box-shadow:0 7px 18px rgba(50,21,26,.06);
 }
 
 .card-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
-  margin-bottom:11px;
+  gap:8px;
+  margin-bottom:10px;
 }
 
 .card-head h3{
   margin:0;
-  color:var(--wine2);
-  font:900 17px Georgia,serif;
+  color:var(--wine-dark);
+  font:900 16px Georgia,serif;
 }
 
-.card-head span{
+.card-head small{
   color:var(--muted);
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
   letter-spacing:.7px;
 }
 
-.title-row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:end;
-  margin:6px 2px 13px;
+.page-title{
+  margin:5px 2px 13px;
 }
 
-.title-row h2{
+.page-title h2{
   margin:0;
-  color:var(--wine2);
+  color:var(--wine-dark);
   font:900 25px Georgia,serif;
 }
 
-.title-row p{
+.page-title p{
   margin:4px 0 0;
   color:var(--muted);
-  font-size:11px;
+  font-size:10px;
 }
 
 .quick{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:8px;
+  gap:7px;
 }
 
 .quick button{
-  min-height:78px;
-  padding:12px;
-  border:1px solid #dfceb0;
-  border-radius:17px;
-  text-align:left;
+  min-height:75px;
+  padding:11px;
+  border:1px solid #ddcbaa;
+  border-radius:16px;
   color:var(--ink);
+  text-align:left;
   background:linear-gradient(145deg,#fffaf0,#eee0c8);
 }
 
@@ -322,140 +424,154 @@ main{padding:12px}
   display:block;
   margin-bottom:5px;
   color:var(--wine);
-  font-size:12px;
+  font-size:11px;
 }
 
 .quick small{
   color:var(--muted);
-  font-size:9px;
+  font-size:8px;
   line-height:1.35;
 }
-
-.alerts{
-  display:grid;
-  gap:8px;
-}
-
-.alert{
-  padding:11px 12px;
-  border-radius:14px;
-  font-size:10px;
-  font-weight:800;
-  line-height:1.4;
-}
-
-.alert-red{color:#6e1d27;background:#f0d7dc;border:1px solid #e3b9c1}
-.alert-orange{color:#70401d;background:#f2dfc8;border:1px solid #e6c59f}
-.alert-green{color:#20523b;background:#dceddf;border:1px solid #badbc8}
 
 .toolbar{
   display:grid;
   grid-template-columns:1fr auto;
-  gap:8px;
-  margin-bottom:10px;
+  gap:7px;
+  margin-bottom:9px;
 }
 
-.search,.field input,.field select,.field textarea{
+.search,
+.field input,
+.field select,
+.field textarea{
   width:100%;
-  border:1px solid #d8c6a7;
-  border-radius:13px;
+  border:1px solid #d8c4a4;
+  border-radius:12px;
   color:var(--ink);
   background:#fffdf8;
   outline:none;
 }
 
 .search{
-  height:44px;
-  padding:0 13px;
+  height:43px;
+  padding:0 12px;
 }
 
-.field input,.field select{
-  height:44px;
-  padding:0 11px;
-}
-
-.field textarea{
-  min-height:82px;
-  padding:11px;
-  resize:vertical;
+.field{
+  min-width:0;
 }
 
 .field label{
   display:block;
   margin:0 0 5px 2px;
-  color:var(--wine2);
-  font-size:9px;
+  color:var(--wine-dark);
+  font-size:8px;
   font-weight:900;
   letter-spacing:.6px;
   text-transform:uppercase;
 }
 
+.field input,
+.field select{
+  height:43px;
+  padding:0 10px;
+}
+
+.field textarea{
+  min-height:82px;
+  padding:10px;
+  resize:vertical;
+}
+
+.form{
+  display:grid;
+  gap:10px;
+}
+
+.cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
 .list{
   display:grid;
-  gap:9px;
+  gap:8px;
 }
 
 .item{
-  padding:13px;
+  padding:12px;
   border:1px solid var(--line);
-  border-radius:18px;
+  border-radius:17px;
   background:#fffaf1;
-  box-shadow:0 6px 15px rgba(50,21,26,.055);
 }
 
 .item-top{
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
-  gap:9px;
+  gap:8px;
 }
 
 .item h3{
   margin:0;
-  color:var(--wine2);
-  font:900 16px Georgia,serif;
+  color:var(--wine-dark);
+  font:900 15px Georgia,serif;
 }
 
 .subtitle{
   margin-top:4px;
   color:var(--muted);
-  font-size:10px;
+  font-size:9px;
   line-height:1.35;
 }
 
 .badge{
   flex:0 0 auto;
-  padding:6px 8px;
+  padding:5px 7px;
   border-radius:999px;
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
-  letter-spacing:.4px;
-  text-transform:uppercase;
 }
 
-.good{color:#20513b;background:#dceee4}
-.warn{color:#6c4a1c;background:#f3e3b7}
-.info{color:#22566e;background:#dbeaf1}
-.bad{color:#75232f;background:#f1d6dc}
+.good{
+  color:#23523d;
+  background:#dceddf;
+}
+
+.warn{
+  color:#6a441d;
+  background:#f2dfbd;
+}
+
+.bad{
+  color:#74242f;
+  background:#efd7dc;
+}
+
+.info{
+  color:#24546a;
+  background:#dceaf0;
+}
 
 .meta{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:6px;
-  margin-top:10px;
+  gap:5px;
+  margin-top:9px;
 }
 
 .meta div{
-  min-height:48px;
-  padding:8px;
-  border-radius:12px;
-  background:#f2e5d1;
+  min-height:46px;
+  padding:7px;
+  border-radius:11px;
+  background:#f1e4d0;
 }
 
 .meta label{
   display:block;
   color:var(--muted);
-  font-size:7px;
+  font-size:6px;
   font-weight:900;
   letter-spacing:.6px;
   text-transform:uppercase;
@@ -464,140 +580,104 @@ main{padding:12px}
 .meta strong{
   display:block;
   margin-top:4px;
-  font-size:10px;
+  font-size:9px;
   overflow-wrap:anywhere;
 }
 
 .actions{
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
-  margin-top:10px;
+  gap:5px;
+  margin-top:9px;
 }
 
 .mini{
-  min-height:33px;
+  min-height:31px;
+  padding:6px 9px;
   border:0;
-  border-radius:10px;
-  padding:7px 10px;
+  border-radius:9px;
   color:var(--wine);
-  background:#eadbc1;
-  font-size:9px;
+  background:#e9d9bd;
+  font-size:8px;
   font-weight:900;
 }
 
-.mini.primary{color:white;background:var(--wine)}
-.mini.green{color:white;background:var(--green)}
-.mini.blue{color:white;background:var(--blue)}
-.mini.danger{color:white;background:var(--red)}
+.mini.primary{
+  color:white;
+  background:var(--wine);
+}
+
+.mini.green{
+  color:white;
+  background:var(--green);
+}
+
+.mini.red{
+  color:white;
+  background:var(--red);
+}
 
 .empty{
-  padding:27px 13px;
-  border:1px dashed #cdb99b;
-  border-radius:18px;
+  padding:25px 12px;
+  border:1px dashed #cdb89a;
+  border-radius:17px;
   color:var(--muted);
   text-align:center;
-  background:rgba(255,255,255,.4);
-  font-size:11px;
+  font-size:10px;
 }
 
 .empty strong{
   display:block;
-  margin-bottom:6px;
+  margin-bottom:5px;
   color:var(--wine);
-  font:900 17px Georgia,serif;
+  font:900 16px Georgia,serif;
 }
 
-.cols{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
+.alert{
+  margin-bottom:6px;
+  padding:10px;
+  border-radius:12px;
+  font-size:9px;
+  font-weight:800;
+  line-height:1.4;
 }
 
-.form{
-  display:grid;
-  gap:11px;
+.alert.good{
+  border:1px solid #bed8c7;
 }
 
-.form-actions{
-  display:flex;
-  gap:8px;
-  margin-top:4px;
+.alert.bad{
+  border:1px solid #e1bbc1;
 }
 
-.form-actions .btn{flex:1}
-
-.analysis{
-  display:grid;
-  gap:9px;
+.alert.warn{
+  border:1px solid #e5c79f;
 }
 
-.analysis-box{
-  padding:15px;
-  border-radius:18px;
-  color:white;
-  background:linear-gradient(145deg,#48141f,#74243a);
+.table-wrap{
+  overflow-x:auto;
 }
-
-.analysis-box:nth-child(even){
-  background:linear-gradient(145deg,#57401e,#947139);
-}
-
-.analysis-box small{
-  font-size:8px;
-  font-weight:900;
-  letter-spacing:.7px;
-  text-transform:uppercase;
-  opacity:.76;
-}
-
-.analysis-box strong{
-  display:block;
-  margin-top:6px;
-  font:900 23px Georgia,serif;
-  overflow-wrap:anywhere;
-}
-
-.stockbar{
-  height:9px;
-  overflow:hidden;
-  margin-top:8px;
-  border-radius:999px;
-  background:#e5d6bd;
-}
-
-.stockbar > span{
-  display:block;
-  height:100%;
-  border-radius:inherit;
-  background:linear-gradient(90deg,var(--wine),var(--gold));
-}
-
-.tablewrap{overflow-x:auto}
 
 table{
   width:100%;
-  min-width:700px;
+  min-width:680px;
   border-collapse:collapse;
-  font-size:10px;
+  font-size:9px;
 }
 
 th,td{
-  padding:10px 8px;
-  border-bottom:1px solid #e1d0b5;
+  padding:9px 7px;
+  border-bottom:1px solid #dfcfb5;
   text-align:left;
 }
 
 th{
   color:var(--wine);
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
-  letter-spacing:.6px;
+  letter-spacing:.5px;
   text-transform:uppercase;
 }
-
-.low-row{background:#f3dfe2}
-.best-row{background:#e0eee5}
 
 .modal-bg{
   position:fixed;
@@ -606,20 +686,22 @@ th{
   display:none;
   align-items:flex-end;
   justify-content:center;
-  padding:12px;
-  background:rgba(34,14,18,.64);
+  padding:10px;
+  background:rgba(34,13,18,.66);
   backdrop-filter:blur(5px);
 }
 
-.modal-bg.show{display:flex}
+.modal-bg.show{
+  display:flex;
+}
 
 .modal{
-  width:min(100%,820px);
+  width:min(100%,760px);
   max-height:94vh;
   overflow:auto;
-  border-radius:27px 27px 18px 18px;
+  border-radius:25px 25px 17px 17px;
   background:var(--cream);
-  box-shadow:0 25px 65px rgba(0,0,0,.35);
+  box-shadow:0 26px 65px rgba(0,0,0,.35);
 }
 
 .modal-head{
@@ -630,96 +712,56 @@ th{
   align-items:center;
   justify-content:space-between;
   gap:10px;
-  padding:15px 16px;
+  padding:14px 15px;
   border-bottom:1px solid var(--line);
-  background:rgba(244,236,221,.97);
-  backdrop-filter:blur(13px);
+  background:rgba(244,234,216,.97);
 }
 
 .modal-head h3{
   margin:0;
-  color:var(--wine2);
-  font:900 20px Georgia,serif;
+  color:var(--wine-dark);
+  font:900 19px Georgia,serif;
 }
 
 .close{
-  width:38px;
-  height:38px;
+  width:36px;
+  height:36px;
   border:0;
-  border-radius:12px;
+  border-radius:11px;
   color:white;
   background:var(--wine);
-  font-size:19px;
+  font-size:18px;
 }
 
-.modal-body{padding:15px}
+.modal-body{
+  padding:14px;
+}
+
+.form-actions{
+  display:flex;
+  gap:7px;
+}
+
+.form-actions button{
+  flex:1;
+}
 
 .order-lines{
   display:grid;
-  gap:9px;
+  gap:8px;
 }
 
 .order-line{
-  padding:11px;
-  border:1px solid #dac7a8;
-  border-radius:15px;
-  background:#fffaf1;
-}
-
-.line-grid{
-  display:grid;
-  grid-template-columns:1fr 72px;
-  gap:7px;
-}
-
-.line-grid-3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-  margin-top:7px;
-}
-
-.summary{
-  margin-top:10px;
-  padding:13px;
-  border-radius:17px;
-  color:white;
-  background:linear-gradient(135deg,var(--wine2),var(--wine));
-}
-
-.summary-row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:5px 0;
-  font-size:10px;
-}
-
-.summary-row.total{
-  margin-top:5px;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,.25);
-  color:#f4dca8;
-  font-size:15px;
-  font-weight:900;
-}
-
-.check-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:11px;
-  border:1px solid #dac7a8;
+  padding:10px;
+  border:1px solid #dac6a5;
   border-radius:14px;
   background:#fffaf1;
-  font-size:10px;
-  font-weight:800;
 }
 
-.check-row input{
-  width:18px;
-  height:18px;
-  accent-color:var(--wine);
+.line-row{
+  display:grid;
+  grid-template-columns:1fr 78px;
+  gap:7px;
 }
 
 .bottom{
@@ -727,88 +769,57 @@ th{
   left:50%;
   bottom:0;
   z-index:60;
-  width:min(100%,980px);
+  width:min(100%,1050px);
   transform:translateX(-50%);
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:3px;
-  padding:7px 5px max(8px,env(safe-area-inset-bottom));
+  gap:2px;
+  padding:6px 4px max(7px,env(safe-area-inset-bottom));
   border-top:1px solid var(--line);
-  background:rgba(255,250,240,.97);
-  backdrop-filter:blur(18px);
-  box-shadow:0 -10px 25px rgba(50,21,26,.11);
+  background:rgba(255,250,241,.97);
+  backdrop-filter:blur(17px);
+  box-shadow:0 -9px 24px rgba(50,21,26,.1);
 }
 
 .nav{
   min-width:0;
   padding:6px 1px;
   border:0;
-  border-radius:11px;
-  color:#806e69;
+  border-radius:10px;
+  color:#80706b;
   background:transparent;
-  font-size:7px;
+  font-size:6px;
   font-weight:900;
 }
 
 .nav b{
   display:block;
   margin-bottom:3px;
-  font-size:16px;
-  line-height:1;
+  font-size:15px;
 }
 
 .nav.active{
   color:white;
-  background:linear-gradient(135deg,var(--wine2),var(--wine));
-}
-
-.more{
-  position:fixed;
-  right:12px;
-  bottom:82px;
-  z-index:80;
-  display:none;
-  width:210px;
-  padding:8px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:#fffaf0;
-  box-shadow:0 16px 36px rgba(44,18,23,.24);
-}
-
-.more.show{
-  display:grid;
-  gap:6px;
-}
-
-.more button{
-  padding:11px;
-  border:0;
-  border-radius:12px;
-  color:var(--wine2);
-  text-align:left;
-  background:#f0e2ca;
-  font-size:10px;
-  font-weight:900;
+  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
 }
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:94px;
-  z-index:150;
+  bottom:91px;
+  z-index:200;
   width:calc(100% - 28px);
   max-width:500px;
-  padding:12px;
-  border-radius:15px;
+  padding:11px;
+  border-radius:13px;
   color:white;
-  background:#332326;
+  background:#342326;
   text-align:center;
-  font-size:10px;
+  font-size:9px;
   font-weight:900;
   opacity:0;
-  transform:translate(-50%,100px);
-  transition:.22s;
+  transform:translate(-50%,80px);
+  transition:.2s;
 }
 
 .toast.show{
@@ -816,43 +827,36 @@ th{
   transform:translate(-50%,0);
 }
 
-.print-only{display:none}
+.sync-box{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--muted);
+  font-size:8px;
+}
+
+.sync-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green);
+}
 
 @media(min-width:700px){
-  .stats{grid-template-columns:repeat(4,1fr)}
-  .quick{grid-template-columns:repeat(4,1fr)}
-  .analysis{grid-template-columns:repeat(2,1fr)}
-  .modal-bg{align-items:center}
-  .modal{border-radius:27px}
-}
-
-@media(max-width:470px){
-  .brandcopy h1{font-size:15px}
-  .brandcopy p{font-size:7px}
-  .version{font-size:7px}
-  .line-grid-3{grid-template-columns:1fr 1fr}
-}
-
-@media print{
-  body{
-    background:white;
-    padding:0;
+  .stats{
+    grid-template-columns:repeat(4,1fr);
   }
 
-  .top,.bottom,.more,.no-print{
-    display:none !important;
+  .quick{
+    grid-template-columns:repeat(4,1fr);
   }
 
-  .page{
-    display:none !important;
+  .modal-bg{
+    align-items:center;
   }
 
-  #printArea{
-    display:block !important;
-  }
-
-  .print-only{
-    display:block;
+  .modal{
+    border-radius:25px;
   }
 }
 </style>
@@ -860,444 +864,455 @@ th{
 
 <body>
 
-<div class="app">
+<!-- LOGIN -->
 
-<header class="top">
-  <div class="brand">
-    <div class="logo">XA</div>
+<section class="login-screen" id="loginScreen">
 
-    <div class="brandcopy">
-      <h1>XA SUPPLY COMMAND</h1>
-      <p>Procurement · Inventory · Supplier Control</p>
+  <div class="login-box">
+
+    <div class="login-logo">XA</div>
+
+    <h1>Supply Command</h1>
+
+    <div class="claim">
+      Fermented Redrinks · Online Operations
     </div>
 
-    <div class="version">V2.0</div>
+    <form class="form" id="loginForm">
+
+      <div class="field">
+        <label>Email</label>
+        <input
+          id="loginEmail"
+          type="email"
+          autocomplete="username"
+          required
+          placeholder="Email XA">
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input
+          id="loginPassword"
+          type="password"
+          autocomplete="current-password"
+          required
+          placeholder="Password">
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit">
+        ENTRA IN XA
+      </button>
+
+    </form>
+
+    <div class="login-status" id="loginStatus"></div>
+
   </div>
+
+</section>
+
+<!-- APP -->
+
+<div class="app hidden" id="app">
+
+<header class="top">
+
+  <div class="brand">
+
+    <div class="logo">XA</div>
+
+    <div class="brand-text">
+      <strong>XA SUPPLY COMMAND</strong>
+      <small>SUPABASE ONLINE · PROCUREMENT SYSTEM</small>
+    </div>
+
+    <div class="online" id="onlineBadge">
+      ● ONLINE
+    </div>
+
+  </div>
+
 </header>
 
 <main>
 
+<!-- HOME -->
+
 <section class="page active" id="page-home">
 
   <div class="hero">
-    <span class="hero-tag">● XA SUPPLY OPERATIONS</span>
 
-    <h2>Acquisti e magazzino in un solo sistema</h2>
+    <span class="hero-tag">● XA CLOUD OPERATIONS</span>
+
+    <h2>Supply Command V3</h2>
 
     <p>
-      Fornitori, ordini, prezzi, scorte, consegne, fatture e pagamenti
-      collegati in un unico flusso operativo.
+      Fornitori, prodotti, ordini, magazzino, consegne,
+      fatture e pagamenti sincronizzati online con Supabase.
     </p>
 
     <div class="hero-actions">
-      <button class="btn btn-gold" onclick="openOrder()">+ ORDINE</button>
-      <button class="btn btn-dark" onclick="openSupplier()">+ FORNITORE</button>
-      <button class="btn btn-primary" onclick="openMovement()">+ MOVIMENTO</button>
+
+      <button class="btn btn-gold" onclick="openSupplier()">
+        + FORNITORE
+      </button>
+
+      <button class="btn btn-dark" onclick="openProduct()">
+        + PRODOTTO
+      </button>
+
+      <button class="btn btn-primary" onclick="openOrder()">
+        + ORDINE
+      </button>
+
     </div>
+
   </div>
 
   <div class="stats">
+
     <div class="stat">
       <small>Fornitori</small>
       <strong id="kpiSuppliers">0</strong>
-      <span>aziende registrate</span>
+      <span>archivio online</span>
+    </div>
+
+    <div class="stat">
+      <small>Prodotti</small>
+      <strong id="kpiProducts">0</strong>
+      <span>catalogo acquisti</span>
     </div>
 
     <div class="stat">
       <small>Ordini aperti</small>
       <strong id="kpiOrders">0</strong>
-      <span>acquisti da completare</span>
-    </div>
-
-    <div class="stat">
-      <small>Valore magazzino</small>
-      <strong id="kpiStock">€ 0</strong>
-      <span>costo medio inventario</span>
+      <span>da completare</span>
     </div>
 
     <div class="stat">
       <small>Da pagare</small>
-      <strong id="kpiPay">€ 0</strong>
-      <span>scadenze aperte</span>
+      <strong id="kpiPayments">€ 0</strong>
+      <span>fatture aperte</span>
     </div>
+
   </div>
 
   <div class="card">
+
     <div class="card-head">
       <h3>Centro avvisi</h3>
-      <span>XA MONITOR</span>
+      <small>XA MONITOR</small>
     </div>
 
-    <div id="alerts" class="alerts"></div>
+    <div id="alerts"></div>
+
   </div>
 
   <div class="card">
+
     <div class="card-head">
       <h3>Operazioni rapide</h3>
-      <span>COMMAND</span>
+      <small>COMMAND</small>
     </div>
 
     <div class="quick">
+
       <button onclick="openSupplier()">
-        <strong>🏢 Fornitore</strong>
-        <small>Nuova azienda e condizioni</small>
+        <strong>🏢 Nuovo fornitore</strong>
+        <small>Anagrafica e condizioni</small>
       </button>
 
       <button onclick="openProduct()">
-        <strong>📦 Articolo</strong>
-        <small>Catalogo e scorta minima</small>
+        <strong>📦 Nuovo prodotto</strong>
+        <small>Prezzo, MOQ e stock</small>
       </button>
 
       <button onclick="openOrder()">
-        <strong>🛒 Ordine</strong>
+        <strong>🛒 Nuovo ordine</strong>
         <small>Acquisto multiprodotto</small>
       </button>
 
-      <button onclick="openInvoice()">
-        <strong>🧾 Fattura</strong>
-        <small>Documento e scadenza</small>
+      <button onclick="goPage('analysis')">
+        <strong>📊 Buy Engine</strong>
+        <small>Confronta costi e fornitori</small>
       </button>
+
     </div>
+
   </div>
 
   <div class="card">
+
     <div class="card-head">
-      <h3>Ordini recenti</h3>
-      <span id="recentOrderCount">0 ORDINI</span>
+      <h3>Ultimi ordini</h3>
+
+      <div class="sync-box">
+        <span class="sync-dot"></span>
+        SUPABASE
+      </div>
     </div>
 
     <div class="list" id="recentOrders"></div>
+
   </div>
 
 </section>
 
+<!-- FORNITORI -->
+
 <section class="page" id="page-suppliers">
-  <div class="title-row">
-    <div>
-      <h2>Fornitori</h2>
-      <p>Prezzi, affidabilità, ordini e condizioni</p>
-    </div>
+
+  <div class="page-title">
+    <h2>Fornitori</h2>
+    <p>Anagrafica, affidabilità e condizioni di acquisto</p>
   </div>
 
   <div class="toolbar">
-    <input class="search" id="supplierSearch"
-      placeholder="Cerca fornitore, paese o categoria"
+
+    <input
+      class="search"
+      id="supplierSearch"
+      placeholder="Cerca fornitore..."
       oninput="renderSuppliers()">
 
     <button class="btn btn-primary" onclick="openSupplier()">+</button>
+
   </div>
 
   <div class="list" id="supplierList"></div>
+
 </section>
 
+<!-- PRODOTTI -->
+
 <section class="page" id="page-products">
-  <div class="title-row">
-    <div>
-      <h2>Catalogo</h2>
-      <p>Prodotti, prezzi, scorte e riordino</p>
-    </div>
+
+  <div class="page-title">
+    <h2>Catalogo</h2>
+    <p>Prodotti, prezzi, MOQ e scorte</p>
   </div>
 
   <div class="toolbar">
-    <input class="search" id="productSearch"
-      placeholder="Cerca prodotto, codice o fornitore"
+
+    <input
+      class="search"
+      id="productSearch"
+      placeholder="Cerca prodotto..."
       oninput="renderProducts()">
 
     <button class="btn btn-primary" onclick="openProduct()">+</button>
+
   </div>
 
   <div class="list" id="productList"></div>
+
 </section>
 
+<!-- ORDINI -->
+
 <section class="page" id="page-orders">
-  <div class="title-row">
-    <div>
-      <h2>Ordini</h2>
-      <p>Ordini di acquisto professionali</p>
-    </div>
+
+  <div class="page-title">
+    <h2>Ordini</h2>
+    <p>Ordini di acquisto collegati ai fornitori</p>
   </div>
 
   <div class="toolbar">
-    <input class="search" id="orderSearch"
-      placeholder="Cerca ordine, fornitore o prodotto"
+
+    <input
+      class="search"
+      id="orderSearch"
+      placeholder="Cerca ordine..."
       oninput="renderOrders()">
 
     <button class="btn btn-primary" onclick="openOrder()">+</button>
+
   </div>
 
   <div class="list" id="orderList"></div>
+
 </section>
 
+<!-- MAGAZZINO -->
+
 <section class="page" id="page-stock">
-  <div class="title-row">
-    <div>
-      <h2>Magazzino</h2>
-      <p>Scorte, carichi, scarichi e livelli minimi</p>
-    </div>
+
+  <div class="page-title">
+    <h2>Magazzino</h2>
+    <p>Giacenze e scorte minime</p>
   </div>
 
   <div class="stats">
+
     <div class="stat">
       <small>Articoli</small>
       <strong id="stockArticles">0</strong>
-      <span>prodotti gestiti</span>
     </div>
 
     <div class="stat">
       <small>Sotto minimo</small>
       <strong id="stockLow">0</strong>
-      <span>richiedono riordino</span>
     </div>
 
     <div class="stat">
-      <small>Unità totali</small>
+      <small>Unità</small>
       <strong id="stockUnits">0</strong>
-      <span>quantità registrata</span>
     </div>
 
     <div class="stat">
       <small>Valore</small>
       <strong id="stockValue">€ 0</strong>
-      <span>valore acquisto</span>
     </div>
+
   </div>
 
   <div class="card">
+
     <div class="card-head">
       <h3>Inventario</h3>
-      <button class="mini primary" onclick="openMovement()">+ Movimento</button>
+      <small>LIVE STOCK</small>
     </div>
 
-    <div class="tablewrap">
+    <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Prodotto</th>
             <th>Fornitore</th>
             <th>Stock</th>
             <th>Minimo</th>
-            <th>Valore</th>
+            <th>Prezzo</th>
             <th>Stato</th>
           </tr>
         </thead>
 
         <tbody id="stockTable"></tbody>
+
       </table>
+
     </div>
+
+  </div>
+
+</section>
+
+<!-- DOCUMENTI -->
+
+<section class="page" id="page-documents">
+
+  <div class="page-title">
+    <h2>Documenti</h2>
+    <p>Consegne, fatture e pagamenti</p>
   </div>
 
   <div class="card">
+
     <div class="card-head">
-      <h3>Ultimi movimenti</h3>
-      <span>STORICO</span>
+      <h3>Consegne</h3>
+      <small id="deliveryCount">0</small>
     </div>
 
-    <div class="list" id="movementList"></div>
-  </div>
-</section>
+    <div class="list" id="deliveryList"></div>
 
-<section class="page" id="page-deliveries">
-  <div class="title-row">
-    <div>
-      <h2>Consegne</h2>
-      <p>Tracking e ricevimento merci</p>
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Fatture fornitori</h3>
+      <small id="invoiceCount">0</small>
     </div>
+
+    <div class="list" id="invoiceList"></div>
+
   </div>
 
-  <div class="toolbar">
-    <input class="search" id="deliverySearch"
-      placeholder="Cerca ordine, corriere o tracking"
-      oninput="renderDeliveries()">
-
-    <button class="btn btn-primary" onclick="openDelivery()">+</button>
-  </div>
-
-  <div class="list" id="deliveryList"></div>
 </section>
 
-<section class="page" id="page-invoices">
-  <div class="title-row">
-    <div>
-      <h2>Fatture</h2>
-      <p>Documenti fornitori e scadenze</p>
-    </div>
-  </div>
-
-  <div class="toolbar">
-    <input class="search" id="invoiceSearch"
-      placeholder="Cerca fattura o fornitore"
-      oninput="renderInvoices()">
-
-    <button class="btn btn-primary" onclick="openInvoice()">+</button>
-  </div>
-
-  <div class="list" id="invoiceList"></div>
-</section>
+<!-- ANALISI -->
 
 <section class="page" id="page-analysis">
 
-  <div class="title-row">
-    <div>
-      <h2>Analisi</h2>
-      <p>Costi, fornitori e andamento acquisti</p>
-    </div>
-  </div>
-
-  <div class="analysis">
-    <div class="analysis-box">
-      <small>Acquisti totali</small>
-      <strong id="anaSpend">€ 0</strong>
-    </div>
-
-    <div class="analysis-box">
-      <small>Ordine medio</small>
-      <strong id="anaAverage">€ 0</strong>
-    </div>
-
-    <div class="analysis-box">
-      <small>Miglior fornitore</small>
-      <strong id="anaSupplier">—</strong>
-    </div>
-
-    <div class="analysis-box">
-      <small>Fatture aperte</small>
-      <strong id="anaInvoices">€ 0</strong>
-    </div>
+  <div class="page-title">
+    <h2>XA Buy Engine</h2>
+    <p>Analisi prezzi e fornitori</p>
   </div>
 
   <div class="card">
-    <div class="card-head">
-      <h3>Ranking fornitori</h3>
-      <span>XA SUPPLIER SCORE</span>
-    </div>
-
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Fornitore</th>
-            <th>Ordini</th>
-            <th>Spesa</th>
-            <th>Rating</th>
-            <th>Consegna</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-
-        <tbody id="supplierRanking"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-head">
-      <h3>Confronto prezzi</h3>
-      <span>COSTO REALE</span>
-    </div>
 
     <div class="field">
-      <label>Prodotto</label>
-      <input id="compareSearch"
-        placeholder="Scrivi bottiglia, tappo, succo..."
-        oninput="renderComparison()">
+      <label>Cerca prodotto</label>
+
+      <input
+        id="compareSearch"
+        placeholder="Es. bottiglia 75 cl"
+        oninput="renderBuyEngine()">
     </div>
 
-    <div class="tablewrap">
+  </div>
+
+  <div class="card">
+
+    <div class="card-head">
+      <h3>Confronto acquisti</h3>
+      <small>COSTO REALE</small>
+    </div>
+
+    <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Prodotto</th>
             <th>Fornitore</th>
             <th>Prezzo</th>
-            <th>Minimo</th>
+            <th>MOQ</th>
             <th>Trasporto</th>
             <th>Costo reale</th>
           </tr>
         </thead>
 
-        <tbody id="comparisonTable"></tbody>
+        <tbody id="buyTable"></tbody>
+
       </table>
+
     </div>
+
   </div>
 
 </section>
 
-<section class="page" id="page-settings">
+<!-- ACCOUNT -->
 
-  <div class="title-row">
-    <div>
-      <h2>Impostazioni</h2>
-      <p>Backup, esportazione e configurazione</p>
-    </div>
+<section class="page" id="page-account">
+
+  <div class="page-title">
+    <h2>Account XA</h2>
+    <p>Sessione Supabase</p>
   </div>
 
   <div class="card">
-    <div class="form">
-      <div class="field">
-        <label>Azienda</label>
-        <input id="companyName">
-      </div>
 
-      <div class="field">
-        <label>Valuta</label>
-        <select id="currency">
-          <option value="EUR">EUR – Euro</option>
-          <option value="HUF">HUF – Fiorino</option>
-          <option value="GBP">GBP – Sterlina</option>
-          <option value="USD">USD – Dollaro</option>
-        </select>
-      </div>
-
-      <button class="btn btn-primary btn-block" onclick="saveSettings()">
-        SALVA IMPOSTAZIONI
-      </button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-head">
-      <h3>Esportazione dati</h3>
-      <span>V2 DATA CENTER</span>
+    <div class="field">
+      <label>Utente collegato</label>
+      <input id="accountEmail" readonly>
     </div>
 
-    <div class="quick">
-      <button onclick="exportBackup()">
-        <strong>💾 Backup JSON</strong>
-        <small>Archivio completo XA</small>
-      </button>
+    <div style="height:10px"></div>
 
-      <button onclick="exportOrdersCSV()">
-        <strong>📊 Ordini CSV</strong>
-        <small>Apribile con Excel</small>
-      </button>
-
-      <button onclick="exportStockCSV()">
-        <strong>📦 Magazzino CSV</strong>
-        <small>Inventario esportabile</small>
-      </button>
-
-      <button onclick="document.getElementById('backupFile').click()">
-        <strong>↥ Importa backup</strong>
-        <small>Ripristina archivio</small>
-      </button>
-    </div>
-
-    <input type="file" hidden id="backupFile" accept=".json"
-      onchange="importBackup(event)">
-  </div>
-
-  <div class="card">
-    <button class="btn btn-danger btn-block" onclick="resetData()">
-      CANCELLA ARCHIVIO XA
+    <button class="btn btn-red btn-block" onclick="logout()">
+      ESCI DA XA
     </button>
+
   </div>
 
 </section>
-
-<section class="page print-only" id="printArea"></section>
 
 </main>
-</div>
 
 <nav class="bottom">
 
@@ -1306,11 +1321,11 @@ th{
 </button>
 
 <button class="nav" onclick="goPage('suppliers',this)">
-  <b>🏢</b>FORNITORI
+  <b>🏢</b>FORN.
 </button>
 
 <button class="nav" onclick="goPage('products',this)">
-  <b>📦</b>CATALOGO
+  <b>📦</b>PROD.
 </button>
 
 <button class="nav" onclick="goPage('orders',this)">
@@ -1318,712 +1333,435 @@ th{
 </button>
 
 <button class="nav" onclick="goPage('stock',this)">
-  <b>▦</b>MAGAZZINO
+  <b>▦</b>STOCK
 </button>
 
-<button class="nav" onclick="goPage('deliveries',this)">
-  <b>🚚</b>CONSEGNE
+<button class="nav" onclick="goPage('analysis',this)">
+  <b>◈</b>BUY
 </button>
 
-<button class="nav" onclick="toggleMore()">
-  <b>☰</b>ALTRO
+<button class="nav" onclick="goPage('account',this)">
+  <b>●</b>XA
 </button>
 
 </nav>
 
-<div class="more" id="moreMenu">
-  <button onclick="openMore('invoices')">🧾 Fatture</button>
-  <button onclick="openMore('analysis')">📊 Analisi fornitori</button>
-  <button onclick="openMore('settings')">⚙️ Impostazioni</button>
 </div>
 
-<!-- FORNITORE -->
+<!-- MODAL FORNITORE -->
 
 <div class="modal-bg" id="supplierModal">
+
 <div class="modal">
 
-<div class="modal-head">
-  <h3 id="supplierModalTitle">Nuovo fornitore</h3>
-  <button class="close" onclick="closeModal('supplierModal')">×</button>
-</div>
-
-<div class="modal-body">
-
-<form class="form" onsubmit="saveSupplier(event)">
-
-<input type="hidden" id="supplierId">
-
-<div class="cols">
-  <div class="field">
-    <label>Ragione sociale *</label>
-    <input id="supplierName" required>
+  <div class="modal-head">
+    <h3 id="supplierModalTitle">Nuovo fornitore</h3>
+    <button class="close" onclick="closeModal('supplierModal')">×</button>
   </div>
 
-  <div class="field">
-    <label>Referente</label>
-    <input id="supplierContact">
+  <div class="modal-body">
+
+    <form class="form" id="supplierForm">
+
+      <input type="hidden" id="supplierId">
+
+      <div class="field">
+        <label>Nome *</label>
+        <input id="supplierName" required>
+      </div>
+
+      <div class="field">
+        <label>Ragione sociale</label>
+        <input id="supplierCompany">
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Categoria</label>
+          <input id="supplierCategory">
+        </div>
+
+        <div class="field">
+          <label>Paese</label>
+          <input id="supplierCountry">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Città</label>
+          <input id="supplierCity">
+        </div>
+
+        <div class="field">
+          <label>Referente</label>
+          <input id="supplierContact">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Telefono</label>
+          <input id="supplierPhone">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="supplierEmail" type="email">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Partita IVA</label>
+          <input id="supplierVat">
+        </div>
+
+        <div class="field">
+          <label>Pagamento</label>
+          <input id="supplierPayment" placeholder="30 giorni">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Consegna media giorni</label>
+          <input id="supplierDelivery" type="number" min="0">
+        </div>
+
+        <div class="field">
+          <label>Affidabilità 1-10</label>
+          <input id="supplierRating" type="number" min="1" max="10" value="5">
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Note</label>
+        <textarea id="supplierNotes"></textarea>
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn btn-soft"
+          onclick="closeModal('supplierModal')">
+          ANNULLA
+        </button>
+
+        <button class="btn btn-primary">
+          SALVA
+        </button>
+
+      </div>
+
+    </form>
+
   </div>
+
 </div>
 
-<div class="cols">
-  <div class="field">
-    <label>Telefono</label>
-    <input id="supplierPhone">
-  </div>
-
-  <div class="field">
-    <label>Email</label>
-    <input id="supplierEmail" type="email">
-  </div>
 </div>
 
-<div class="cols">
-  <div class="field">
-    <label>Paese</label>
-    <input id="supplierCountry">
-  </div>
-
-  <div class="field">
-    <label>Città</label>
-    <input id="supplierCity">
-  </div>
-</div>
-
-<div class="field">
-  <label>Indirizzo</label>
-  <input id="supplierAddress">
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Partita IVA</label>
-    <input id="supplierVat">
-  </div>
-
-  <div class="field">
-    <label>Sito</label>
-    <input id="supplierWebsite" placeholder="https://">
-  </div>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Categoria</label>
-    <select id="supplierCategory">
-      <option>Sidro</option>
-      <option>Succhi e mosti</option>
-      <option>Bottiglie</option>
-      <option>Tappi</option>
-      <option>Etichette</option>
-      <option>Ingredienti</option>
-      <option>Attrezzature</option>
-      <option>Logistica</option>
-      <option>Altro</option>
-    </select>
-  </div>
-
-  <div class="field">
-    <label>Rating</label>
-    <select id="supplierRating">
-      <option value="5">★★★★★</option>
-      <option value="4">★★★★☆</option>
-      <option value="3">★★★☆☆</option>
-      <option value="2">★★☆☆☆</option>
-      <option value="1">★☆☆☆☆</option>
-    </select>
-  </div>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Pagamento</label>
-    <input id="supplierTerms" placeholder="30 giorni">
-  </div>
-
-  <div class="field">
-    <label>Consegna media</label>
-    <input id="supplierDelivery" type="number" min="0" placeholder="giorni">
-  </div>
-</div>
-
-<div class="field">
-  <label>Note</label>
-  <textarea id="supplierNotes"></textarea>
-</div>
-
-<div class="form-actions">
-  <button type="button" class="btn btn-soft"
-    onclick="closeModal('supplierModal')">ANNULLA</button>
-
-  <button class="btn btn-primary">SALVA</button>
-</div>
-
-</form>
-</div>
-</div>
-</div>
-
-<!-- PRODOTTO -->
+<!-- MODAL PRODOTTO -->
 
 <div class="modal-bg" id="productModal">
+
 <div class="modal">
 
-<div class="modal-head">
-  <h3 id="productModalTitle">Nuovo prodotto</h3>
-  <button class="close" onclick="closeModal('productModal')">×</button>
-</div>
-
-<div class="modal-body">
-
-<form class="form" onsubmit="saveProduct(event)">
-
-<input type="hidden" id="productId">
-
-<div class="field">
-  <label>Nome prodotto *</label>
-  <input id="productName" required>
-</div>
-
-<div class="field">
-  <label>Fornitore *</label>
-  <select id="productSupplier" required></select>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Categoria</label>
-    <input id="productCategory">
+  <div class="modal-head">
+    <h3 id="productModalTitle">Nuovo prodotto</h3>
+    <button class="close" onclick="closeModal('productModal')">×</button>
   </div>
 
-  <div class="field">
-    <label>Codice articolo</label>
-    <input id="productCode">
+  <div class="modal-body">
+
+    <form class="form" id="productForm">
+
+      <input type="hidden" id="productId">
+
+      <div class="field">
+        <label>Prodotto *</label>
+        <input id="productName" required>
+      </div>
+
+      <div class="field">
+        <label>Fornitore *</label>
+        <select id="productSupplier" required></select>
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Categoria</label>
+          <input id="productCategory">
+        </div>
+
+        <div class="field">
+          <label>Codice</label>
+          <input id="productCode">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Formato</label>
+          <input id="productFormat">
+        </div>
+
+        <div class="field">
+          <label>Unità misura</label>
+          <input id="productUnit" placeholder="pz / kg / L">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Prezzo unitario</label>
+          <input id="productPrice" type="number" step="0.0001" min="0">
+        </div>
+
+        <div class="field">
+          <label>IVA %</label>
+          <input id="productVat" type="number" step="0.01" value="22">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Minimo ordine</label>
+          <input id="productMinimum" type="number" step="0.01" min="0">
+        </div>
+
+        <div class="field">
+          <label>Trasporto</label>
+          <input id="productShipping" type="number" step="0.01" min="0">
+        </div>
+
+      </div>
+
+      <div class="cols">
+
+        <div class="field">
+          <label>Stock attuale</label>
+          <input id="productStock" type="number" step="0.001">
+        </div>
+
+        <div class="field">
+          <label>Stock minimo</label>
+          <input id="productMinStock" type="number" step="0.001">
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Note</label>
+        <textarea id="productNotes"></textarea>
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn btn-soft"
+          onclick="closeModal('productModal')">
+          ANNULLA
+        </button>
+
+        <button class="btn btn-primary">
+          SALVA
+        </button>
+
+      </div>
+
+    </form>
+
   </div>
+
 </div>
 
-<div class="cols">
-  <div class="field">
-    <label>Formato</label>
-    <input id="productFormat" placeholder="75 cl / kg / pezzo">
-  </div>
-
-  <div class="field">
-    <label>Unità misura</label>
-    <select id="productUnit">
-      <option>pz</option>
-      <option>kg</option>
-      <option>g</option>
-      <option>L</option>
-      <option>ml</option>
-      <option>cartone</option>
-      <option>pallet</option>
-    </select>
-  </div>
 </div>
 
-<div class="cols">
-  <div class="field">
-    <label>Prezzo unitario</label>
-    <input id="productPrice" type="number" min="0" step="0.01">
-  </div>
-
-  <div class="field">
-    <label>Minimo ordine</label>
-    <input id="productMinimum" type="number" min="0" step="0.01">
-  </div>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Scorta iniziale</label>
-    <input id="productStock" type="number" step="0.01">
-  </div>
-
-  <div class="field">
-    <label>Scorta minima</label>
-    <input id="productMinStock" type="number" min="0" step="0.01">
-  </div>
-</div>
-
-<div class="field">
-  <label>Trasporto stimato ordine</label>
-  <input id="productShipping" type="number" min="0" step="0.01">
-</div>
-
-<div class="field">
-  <label>Note</label>
-  <textarea id="productNotes"></textarea>
-</div>
-
-<div class="form-actions">
-  <button type="button" class="btn btn-soft"
-    onclick="closeModal('productModal')">ANNULLA</button>
-
-  <button class="btn btn-primary">SALVA</button>
-</div>
-
-</form>
-</div>
-</div>
-</div>
-
-<!-- MOVIMENTO -->
-
-<div class="modal-bg" id="movementModal">
-<div class="modal">
-
-<div class="modal-head">
-  <h3>Movimento magazzino</h3>
-  <button class="close" onclick="closeModal('movementModal')">×</button>
-</div>
-
-<div class="modal-body">
-
-<form class="form" onsubmit="saveMovement(event)">
-
-<div class="field">
-  <label>Prodotto *</label>
-  <select id="movementProduct" required></select>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Tipo</label>
-    <select id="movementType">
-      <option value="IN">CARICO</option>
-      <option value="OUT">SCARICO</option>
-      <option value="ADJ">RETTIFICA</option>
-    </select>
-  </div>
-
-  <div class="field">
-    <label>Quantità *</label>
-    <input id="movementQty" type="number" step="0.01" required>
-  </div>
-</div>
-
-<div class="field">
-  <label>Motivo</label>
-  <input id="movementReason"
-    placeholder="Consegna, produzione, campione, rettifica...">
-</div>
-
-<div class="field">
-  <label>Data</label>
-  <input id="movementDate" type="date">
-</div>
-
-<div class="form-actions">
-  <button type="button" class="btn btn-soft"
-    onclick="closeModal('movementModal')">ANNULLA</button>
-
-  <button class="btn btn-primary">REGISTRA</button>
-</div>
-
-</form>
-</div>
-</div>
-</div>
-
-<!-- ORDINE -->
+<!-- MODAL ORDINE -->
 
 <div class="modal-bg" id="orderModal">
+
 <div class="modal">
 
-<div class="modal-head">
-  <h3 id="orderModalTitle">Nuovo ordine</h3>
-  <button class="close" onclick="closeModal('orderModal')">×</button>
-</div>
-
-<div class="modal-body">
-
-<form class="form" onsubmit="saveOrder(event)">
-
-<input type="hidden" id="orderId">
-
-<div class="cols">
-  <div class="field">
-    <label>Numero ordine</label>
-    <input id="orderNumber" required>
+  <div class="modal-head">
+    <h3>Nuovo ordine</h3>
+    <button class="close" onclick="closeModal('orderModal')">×</button>
   </div>
 
-  <div class="field">
-    <label>Fornitore</label>
-    <select id="orderSupplier"
-      onchange="orderSupplierChanged()" required></select>
-  </div>
-</div>
+  <div class="modal-body">
 
-<div class="cols">
-  <div class="field">
-    <label>Data ordine</label>
-    <input id="orderDate" type="date">
-  </div>
+    <form class="form" id="orderForm">
 
-  <div class="field">
-    <label>Consegna prevista</label>
-    <input id="orderDeliveryDate" type="date">
-  </div>
-</div>
+      <div class="cols">
 
-<div class="cols">
-  <div class="field">
-    <label>Stato</label>
-    <select id="orderStatus">
-      <option>Bozza</option>
-      <option>Inviato</option>
-      <option>Confermato</option>
-      <option>In viaggio</option>
-      <option>Consegnato</option>
-      <option>Annullato</option>
-    </select>
-  </div>
+        <div class="field">
+          <label>Numero ordine</label>
+          <input id="orderNumber" required>
+        </div>
 
-  <div class="field">
-    <label>Pagamento</label>
-    <select id="orderPayment">
-      <option>Da pagare</option>
-      <option>Parziale</option>
-      <option>Pagato</option>
-    </select>
-  </div>
-</div>
+        <div class="field">
+          <label>Fornitore</label>
+          <select
+            id="orderSupplier"
+            required
+            onchange="renderOrderLines()">
+          </select>
+        </div>
 
-<div class="card" style="margin-top:0">
-  <div class="card-head">
-    <h3>Righe ordine</h3>
+      </div>
 
-    <button type="button" class="mini primary"
-      onclick="addOrderLine()">+ PRODOTTO</button>
-  </div>
+      <div class="cols">
 
-  <div class="order-lines" id="orderLines"></div>
-</div>
+        <div class="field">
+          <label>Data ordine</label>
+          <input id="orderDate" type="date">
+        </div>
 
-<div class="cols">
-  <div class="field">
-    <label>Sconto %</label>
-    <input id="orderDiscount"
-      type="number" min="0" max="100" step="0.01"
-      value="0" oninput="calculateOrder()">
-  </div>
+        <div class="field">
+          <label>Consegna prevista</label>
+          <input id="orderDelivery" type="date">
+        </div>
 
-  <div class="field">
-    <label>Trasporto</label>
-    <input id="orderShipping"
-      type="number" min="0" step="0.01"
-      value="0" oninput="calculateOrder()">
-  </div>
-</div>
+      </div>
 
-<div class="summary">
-  <div class="summary-row">
-    <span>Imponibile</span>
-    <strong id="sumNet">€ 0</strong>
-  </div>
+      <div class="field">
+        <label>Stato</label>
 
-  <div class="summary-row">
-    <span>Sconto</span>
-    <strong id="sumDiscount">€ 0</strong>
-  </div>
+        <select id="orderStatus">
+          <option value="BOZZA">BOZZA</option>
+          <option value="INVIATO">INVIATO</option>
+          <option value="CONFERMATO">CONFERMATO</option>
+          <option value="IN_VIAGGIO">IN VIAGGIO</option>
+          <option value="CONSEGNATO">CONSEGNATO</option>
+          <option value="ANNULLATO">ANNULLATO</option>
+        </select>
+      </div>
 
-  <div class="summary-row">
-    <span>IVA</span>
-    <strong id="sumVat">€ 0</strong>
-  </div>
+      <div class="card" style="margin-top:0">
 
-  <div class="summary-row">
-    <span>Trasporto</span>
-    <strong id="sumShipping">€ 0</strong>
-  </div>
+        <div class="card-head">
+          <h3>Prodotti ordine</h3>
+          <button
+            type="button"
+            class="mini primary"
+            onclick="addOrderLine()">
+            + RIGA
+          </button>
+        </div>
 
-  <div class="summary-row total">
-    <span>TOTALE</span>
-    <strong id="sumTotal">€ 0</strong>
-  </div>
-</div>
+        <div class="order-lines" id="orderLines"></div>
 
-<label class="check-row">
-  <input id="orderCreateDelivery" type="checkbox" checked>
-  Crea automaticamente la consegna
-</label>
+      </div>
 
-<div class="field">
-  <label>Note</label>
-  <textarea id="orderNotes"></textarea>
-</div>
+      <div class="cols">
 
-<div class="form-actions">
-  <button type="button" class="btn btn-soft"
-    onclick="closeModal('orderModal')">ANNULLA</button>
+        <div class="field">
+          <label>Trasporto</label>
+          <input id="orderShipping" type="number" step="0.01" value="0">
+        </div>
 
-  <button class="btn btn-primary">SALVA ORDINE</button>
-</div>
+        <div class="field">
+          <label>Note</label>
+          <input id="orderNotes">
+        </div>
 
-</form>
-</div>
-</div>
-</div>
+      </div>
 
-<!-- CONSEGNA -->
+      <div class="form-actions">
 
-<div class="modal-bg" id="deliveryModal">
-<div class="modal">
+        <button
+          type="button"
+          class="btn btn-soft"
+          onclick="closeModal('orderModal')">
+          ANNULLA
+        </button>
 
-<div class="modal-head">
-  <h3>Consegna</h3>
-  <button class="close" onclick="closeModal('deliveryModal')">×</button>
-</div>
+        <button class="btn btn-primary">
+          SALVA ORDINE
+        </button>
 
-<div class="modal-body">
+      </div>
 
-<form class="form" onsubmit="saveDelivery(event)">
+    </form>
 
-<input id="deliveryId" type="hidden">
-
-<div class="field">
-  <label>Ordine</label>
-  <select id="deliveryOrder" required></select>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Corriere</label>
-    <input id="deliveryCarrier">
   </div>
 
-  <div class="field">
-    <label>Tracking</label>
-    <input id="deliveryTracking">
-  </div>
 </div>
 
-<div class="field">
-  <label>Link tracking</label>
-  <input id="deliveryUrl" placeholder="https://">
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Data prevista</label>
-    <input id="deliveryExpected" type="date">
-  </div>
-
-  <div class="field">
-    <label>Data ricevuta</label>
-    <input id="deliveryActual" type="date">
-  </div>
-</div>
-
-<div class="field">
-  <label>Stato</label>
-  <select id="deliveryStatus">
-    <option>In preparazione</option>
-    <option>Ritirato</option>
-    <option>In transito</option>
-    <option>In dogana</option>
-    <option>Consegnato</option>
-    <option>Problema</option>
-  </select>
-</div>
-
-<div class="field">
-  <label>Note</label>
-  <textarea id="deliveryNotes"></textarea>
-</div>
-
-<div class="form-actions">
-  <button type="button" class="btn btn-soft"
-    onclick="closeModal('deliveryModal')">ANNULLA</button>
-
-  <button class="btn btn-primary">SALVA</button>
-</div>
-
-</form>
-</div>
-</div>
-</div>
-
-<!-- FATTURA -->
-
-<div class="modal-bg" id="invoiceModal">
-<div class="modal">
-
-<div class="modal-head">
-  <h3>Fattura fornitore</h3>
-  <button class="close" onclick="closeModal('invoiceModal')">×</button>
-</div>
-
-<div class="modal-body">
-
-<form class="form" onsubmit="saveInvoice(event)">
-
-<input type="hidden" id="invoiceId">
-
-<div class="cols">
-  <div class="field">
-    <label>Numero fattura *</label>
-    <input id="invoiceNumber" required>
-  </div>
-
-  <div class="field">
-    <label>Fornitore *</label>
-    <select id="invoiceSupplier" required></select>
-  </div>
-</div>
-
-<div class="field">
-  <label>Ordine collegato</label>
-  <select id="invoiceOrder"></select>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Data fattura</label>
-    <input id="invoiceDate" type="date">
-  </div>
-
-  <div class="field">
-    <label>Scadenza</label>
-    <input id="invoiceDue" type="date">
-  </div>
-</div>
-
-<div class="cols">
-  <div class="field">
-    <label>Importo</label>
-    <input id="invoiceAmount" type="number" min="0" step="0.01">
-  </div>
-
-  <div class="field">
-    <label>Stato</label>
-    <select id="invoiceStatus">
-      <option>Da pagare</option>
-      <option>Pagata</option>
-      <option>Contestata</option>
-    </select>
-  </div>
-</div>
-
-<div class="field">
-  <label>Note</label>
-  <textarea id="invoiceNotes"></textarea>
-</div>
-
-<div class="form-actions">
-  <button type="button" class="btn btn-soft"
-    onclick="closeModal('invoiceModal')">ANNULLA</button>
-
-  <button class="btn btn-primary">SALVA FATTURA</button>
-</div>
-
-</form>
-</div>
-</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 
-const KEY="xaSupplyCommandV2";
+/* =========================================================
+   XA SUPPLY COMMAND V3
+   SUPABASE
+========================================================= */
 
-const EMPTY={
-  suppliers:[],
-  products:[],
-  orders:[],
-  deliveries:[],
-  invoices:[],
-  movements:[],
-  settings:{
-    company:"XA Fermented Redrinks",
-    currency:"EUR"
+const SUPABASE_URL =
+  "https://dmvdmkfwmvmgggvwqnkz.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_yIP9daDD0ICiisUysO74cA_UOhQGNNP";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true
+    }
   }
-};
+);
 
-let data=loadData();
-let orderLines=[];
+/* =========================================================
+   STATE
+========================================================= */
 
-function clone(v){
-  return JSON.parse(JSON.stringify(v));
-}
+let suppliers=[];
+let products=[];
+let orders=[];
+let orderRows=[];
+let deliveries=[];
+let invoices=[];
+let payments=[];
+let stock=[];
+let orderDraftLines=[];
 
-function normalize(d){
-  return{
-    suppliers:Array.isArray(d.suppliers)?d.suppliers:[],
-    products:Array.isArray(d.products)
-      ?d.products.map(p=>({
-        stock:0,
-        minStock:0,
-        unit:"pz",
-        shippingEstimate:0,
-        ...p
-      }))
-      :[],
-    orders:Array.isArray(d.orders)?d.orders:[],
-    deliveries:Array.isArray(d.deliveries)?d.deliveries:[],
-    invoices:Array.isArray(d.invoices)?d.invoices:[],
-    movements:Array.isArray(d.movements)?d.movements:[],
-    settings:{
-      ...EMPTY.settings,
-      ...(d.settings||{})
-    }
-  };
-}
+/* =========================================================
+   UTILS
+========================================================= */
 
-function loadData(){
-
-  try{
-
-    const v2=localStorage.getItem(KEY);
-
-    if(v2){
-      return normalize(JSON.parse(v2));
-    }
-
-    const older=
-      localStorage.getItem("xaSupplyCommandV12") ||
-      localStorage.getItem("xaSupplyCommandV11") ||
-      localStorage.getItem("xaSupplyCommandV1");
-
-    if(older){
-      const old=normalize(JSON.parse(older));
-
-      if(Array.isArray(old.payments)){
-
-        old.payments.forEach((p,i)=>{
-          old.invoices.push({
-            id:"migrated_invoice_"+i,
-            number:p.reference||("Pagamento "+(i+1)),
-            supplierId:p.supplierId||"",
-            orderId:p.orderId||"",
-            date:p.createdAt?.slice(0,10)||"",
-            dueDate:p.dueDate||"",
-            amount:Number(p.amount||0),
-            status:p.status==="Pagato"?"Pagata":"Da pagare",
-            notes:"Importato dalla versione precedente"
-          });
-        });
-
-      }
-
-      return old;
-    }
-
-  }catch(e){
-    console.error(e);
-  }
-
-  return clone(EMPTY);
-}
-
-function save(){
-  localStorage.setItem(KEY,JSON.stringify(data));
-  renderAll();
-}
-
-function uid(prefix){
-  return prefix+"_"+Date.now()+"_"+Math.random().toString(16).slice(2);
+function esc(v=""){
+  return String(v)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
 function today(){
@@ -2031,49 +1769,44 @@ function today(){
 }
 
 function money(v){
-
-  return new Intl.NumberFormat("it-IT",{
-    style:"currency",
-    currency:data.settings.currency||"EUR"
-  }).format(Number(v||0));
-
+  return new Intl.NumberFormat(
+    "it-IT",
+    {
+      style:"currency",
+      currency:"EUR"
+    }
+  ).format(Number(v||0));
 }
 
-function esc(v=""){
+function toast(message){
 
-  return String(v)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  const t=document.getElementById("toast");
 
-}
+  t.textContent=message;
+  t.classList.add("show");
 
-function toast(msg){
+  clearTimeout(window.toastTimer);
 
-  const box=document.getElementById("toast");
-
-  box.textContent=msg;
-  box.classList.add("show");
-
-  clearTimeout(toast.timer);
-
-  toast.timer=setTimeout(()=>{
-    box.classList.remove("show");
+  window.toastTimer=setTimeout(()=>{
+    t.classList.remove("show");
   },2200);
-
 }
 
 function empty(title,text){
-
   return `
     <div class="empty">
       <strong>${title}</strong>
       ${text}
     </div>
   `;
+}
 
+function supplierName(id){
+  return suppliers.find(s=>String(s.id)===String(id))?.nome || "—";
+}
+
+function productName(id){
+  return products.find(p=>String(p.id)===String(id))?.nome || "—";
 }
 
 function openModal(id){
@@ -2084,1268 +1817,837 @@ function closeModal(id){
   document.getElementById(id).classList.remove("show");
 }
 
-document.querySelectorAll(".modal-bg").forEach(bg=>{
-  bg.addEventListener("click",e=>{
-    if(e.target===bg) bg.classList.remove("show");
-  });
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function checkSession(){
+
+  const {
+    data:{session}
+  } = await db.auth.getSession();
+
+  if(session){
+    showApp(session);
+    await loadAll();
+  }else{
+    showLogin();
+  }
+}
+
+function showLogin(){
+
+  loginScreen.classList.remove("hidden");
+  app.classList.add("hidden");
+}
+
+function showApp(session){
+
+  loginScreen.classList.add("hidden");
+  app.classList.remove("hidden");
+
+  accountEmail.value=
+    session?.user?.email || "";
+}
+
+loginForm.addEventListener("submit",async e=>{
+
+  e.preventDefault();
+
+  loginStatus.textContent="Connessione...";
+
+  const {data,error}=
+    await db.auth.signInWithPassword({
+      email:loginEmail.value.trim(),
+      password:loginPassword.value
+    });
+
+  if(error){
+
+    loginStatus.textContent=
+      "Accesso non riuscito. Controlla email e password.";
+
+    return;
+  }
+
+  loginStatus.textContent="";
+
+  showApp(data.session);
+
+  await loadAll();
+
+  toast("XA Supply Command Online");
 });
 
-function goPage(name,btn){
+async function logout(){
 
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
+  await db.auth.signOut();
 
-  document.getElementById("page-"+name).classList.add("active");
+  suppliers=[];
+  products=[];
+  orders=[];
+  orderRows=[];
+  deliveries=[];
+  invoices=[];
+  payments=[];
+  stock=[];
 
-  document.querySelectorAll(".nav").forEach(n=>{
-    n.classList.remove("active");
-  });
+  showLogin();
 
-  if(btn) btn.classList.add("active");
+  loginPassword.value="";
 
-  document.getElementById("moreMenu").classList.remove("show");
+  toast("Sessione chiusa");
+}
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+async function safeLoad(table,orderColumn="created_at"){
+
+  const {data,error}=
+    await db
+      .from(table)
+      .select("*")
+      .order(orderColumn,{ascending:false});
+
+  if(error){
+
+    console.error(table,error);
+
+    return [];
+  }
+
+  return data || [];
+}
+
+async function loadAll(){
+
+  onlineBadge.textContent="● SYNC";
+
+  const results=
+    await Promise.all([
+      safeLoad("fornitori"),
+      safeLoad("prodotti"),
+      safeLoad("ordini"),
+      safeLoad("righe_ordine"),
+      safeLoad("consegne"),
+      safeLoad("fatture_fornitori"),
+      safeLoad("pagamenti_fornitori"),
+      safeLoad("magazzino")
+    ]);
+
+  suppliers=results[0];
+  products=results[1];
+  orders=results[2];
+  orderRows=results[3];
+  deliveries=results[4];
+  invoices=results[5];
+  payments=results[6];
+  stock=results[7];
+
+  onlineBadge.textContent="● ONLINE";
+
+  renderAll();
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+function goPage(name,button){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  document
+    .getElementById("page-"+name)
+    .classList.add("active");
+
+  document.querySelectorAll(".nav")
+    .forEach(n=>n.classList.remove("active"));
+
+  if(button){
+    button.classList.add("active");
+  }
 
   if(name==="analysis"){
-    renderAnalysis();
+    renderBuyEngine();
   }
 
-  if(name==="stock"){
-    renderStock();
-  }
-
-  window.scrollTo({top:0,behavior:"smooth"});
-
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
-function toggleMore(){
-  document.getElementById("moreMenu").classList.toggle("show");
-}
-
-function openMore(name){
-  goPage(name,null);
-}
-
-function supplierName(id){
-  return data.suppliers.find(s=>s.id===id)?.name||"—";
-}
-
-function orderName(id){
-  return data.orders.find(o=>o.id===id)?.number||"—";
-}
-
-function statusClass(status){
-
-  if(["Attivo","Consegnato","Pagata"].includes(status)) return "good";
-
-  if([
-    "Confermato",
-    "In viaggio",
-    "In transito",
-    "Ritirato",
-    "In dogana"
-  ].includes(status)) return "info";
-
-  if([
-    "Bozza",
-    "Inviato",
-    "Da pagare",
-    "In preparazione"
-  ].includes(status)) return "warn";
-
-  return "bad";
-}
-
-function supplierOptions(){
-
-  return `
-    <option value="">Seleziona fornitore</option>
-    ${data.suppliers.map(s=>
-      `<option value="${s.id}">${esc(s.name)}</option>`
-    ).join("")}
-  `;
-
-}
-
-function orderOptions(){
-
-  return `
-    <option value="">Seleziona ordine</option>
-    ${data.orders.map(o=>
-      `<option value="${o.id}">
-        ${esc(o.number)} – ${esc(supplierName(o.supplierId))}
-      </option>`
-    ).join("")}
-  `;
-
-}
-
-function productOptions(){
-
-  return `
-    <option value="">Seleziona prodotto</option>
-    ${data.products.map(p=>
-      `<option value="${p.id}">
-        ${esc(p.name)}
-      </option>`
-    ).join("")}
-  `;
-
-}
-
-/* DASHBOARD */
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 function renderDashboard(){
 
-  const openOrders=data.orders.filter(o=>
-    !["Consegnato","Annullato"].includes(o.status)
-  );
+  kpiSuppliers.textContent=suppliers.length;
+  kpiProducts.textContent=products.length;
 
-  const stockValue=data.products.reduce((s,p)=>
-    s+Number(p.stock||0)*Number(p.price||0),0
-  );
+  const openOrders=
+    orders.filter(o=>
+      !["CONSEGNATO","ANNULLATO"].includes(o.stato)
+    );
 
-  const openInvoices=data.invoices.filter(i=>
-    i.status!=="Pagata"
-  );
-
-  const openAmount=openInvoices.reduce((s,i)=>
-    s+Number(i.amount||0),0
-  );
-
-  kpiSuppliers.textContent=data.suppliers.length;
   kpiOrders.textContent=openOrders.length;
-  kpiStock.textContent=money(stockValue);
-  kpiPay.textContent=money(openAmount);
 
-  recentOrderCount.textContent=data.orders.length+" ORDINI";
-
-  const recent=[...data.orders]
-    .sort((a,b)=>
-      String(b.createdAt||b.date).localeCompare(
-        String(a.createdAt||a.date)
+  const toPay=
+    invoices
+      .filter(i=>
+        !["PAGATA","ANNULLATA"].includes(i.stato)
       )
-    )
-    .slice(0,3);
+      .reduce((sum,i)=>sum+Number(i.totale||0),0);
+
+  kpiPayments.textContent=money(toPay);
+
+  const recent=
+    [...orders]
+      .sort((a,b)=>
+        String(b.created_at)
+          .localeCompare(String(a.created_at))
+      )
+      .slice(0,4);
 
   recentOrders.innerHTML=
     recent.length
-      ?recent.map(o=>orderCard(o,false)).join("")
+      ?recent.map(orderCard).join("")
       :empty(
         "Nessun ordine",
-        "Crea il primo ordine di acquisto XA."
+        "Crea il primo ordine XA."
       );
 
   renderAlerts();
-
 }
 
 function renderAlerts(){
 
-  const alerts=[];
-  const now=today();
+  const list=[];
 
-  const low=data.products.filter(p=>
-    Number(p.stock||0)<=Number(p.minStock||0) &&
-    Number(p.minStock||0)>0
-  );
+  const lowProducts=
+    products.filter(p=>
+      Number(p.stock_minimo||0)>0 &&
+      Number(p.stock_attuale||0)<=
+      Number(p.stock_minimo||0)
+    );
 
-  const late=data.deliveries.filter(d=>
-    d.status!=="Consegnato" &&
-    d.expectedDate &&
-    d.expectedDate<now
-  );
+  const lateDeliveries=
+    deliveries.filter(d=>
+      d.stato!=="CONSEGNATO" &&
+      d.data_prevista &&
+      d.data_prevista<today()
+    );
 
-  const overdue=data.invoices.filter(i=>
-    i.status!=="Pagata" &&
-    i.dueDate &&
-    i.dueDate<now
-  );
+  const overdueInvoices=
+    invoices.filter(i=>
+      !["PAGATA","ANNULLATA"].includes(i.stato) &&
+      i.data_scadenza &&
+      i.data_scadenza<today()
+    );
 
-  if(low.length){
-    alerts.push(`
-      <div class="alert alert-red">
-        📦 ${low.length} articoli sono alla scorta minima o sotto il minimo.
+  if(lowProducts.length){
+    list.push(`
+      <div class="alert bad">
+        📦 ${lowProducts.length}
+        articoli sono alla scorta minima.
       </div>
     `);
   }
 
-  if(late.length){
-    alerts.push(`
-      <div class="alert alert-red">
-        🚚 ${late.length} consegne risultano in ritardo.
+  if(lateDeliveries.length){
+    list.push(`
+      <div class="alert bad">
+        🚚 ${lateDeliveries.length}
+        consegne risultano oltre la data prevista.
       </div>
     `);
   }
 
-  if(overdue.length){
-    alerts.push(`
-      <div class="alert alert-orange">
-        🧾 ${overdue.length} fatture hanno superato la scadenza.
+  if(overdueInvoices.length){
+    list.push(`
+      <div class="alert warn">
+        🧾 ${overdueInvoices.length}
+        fatture risultano scadute.
       </div>
     `);
   }
 
-  if(!alerts.length){
-    alerts.push(`
-      <div class="alert alert-green">
-        ✓ Sistema regolare. Nessun avviso urgente.
+  if(!list.length){
+    list.push(`
+      <div class="alert good">
+        ✓ Sistema regolare.
+        Nessun avviso urgente.
       </div>
     `);
   }
 
-  document.getElementById("alerts").innerHTML=alerts.join("");
-
+  alerts.innerHTML=list.join("");
 }
 
-/* FORNITORI */
+/* =========================================================
+   FORNITORI
+========================================================= */
+
+function supplierOptions(selected=""){
+
+  return `
+    <option value="">Seleziona fornitore</option>
+    ${suppliers.map(s=>`
+      <option
+        value="${s.id}"
+        ${String(s.id)===String(selected)?"selected":""}>
+        ${esc(s.nome)}
+      </option>
+    `).join("")}
+  `;
+}
 
 function openSupplier(s=null){
 
   supplierModalTitle.textContent=
-    s?"Modifica fornitore":"Nuovo fornitore";
+    s ? "Modifica fornitore" : "Nuovo fornitore";
 
-  supplierId.value=s?.id||"";
-  supplierName.value=s?.name||"";
-  supplierContact.value=s?.contact||"";
-  supplierPhone.value=s?.phone||"";
-  supplierEmail.value=s?.email||"";
-  supplierCountry.value=s?.country||"";
-  supplierCity.value=s?.city||"";
-  supplierAddress.value=s?.address||"";
-  supplierVat.value=s?.vat||"";
-  supplierWebsite.value=s?.website||"";
-  supplierCategory.value=s?.category||"Sidro";
-  supplierRating.value=s?.rating||"5";
-  supplierTerms.value=s?.terms||"";
-  supplierDelivery.value=s?.deliveryDays||"";
-  supplierNotes.value=s?.notes||"";
+  supplierId.value=s?.id || "";
+  supplierName.value=s?.nome || "";
+  supplierCompany.value=s?.ragione_sociale || "";
+  supplierCategory.value=s?.categoria || "";
+  supplierCountry.value=s?.paese || "";
+  supplierCity.value=s?.citta || "";
+  supplierContact.value=s?.referente || "";
+  supplierPhone.value=s?.telefono || "";
+  supplierEmail.value=s?.email || "";
+  supplierVat.value=s?.partita_iva || "";
+  supplierPayment.value=s?.pagamento || "";
+  supplierDelivery.value=s?.giorni_consegna || "";
+  supplierRating.value=s?.affidabilita || 5;
+  supplierNotes.value=s?.note || "";
 
   openModal("supplierModal");
-
 }
 
-function saveSupplier(e){
+supplierForm.addEventListener("submit",async e=>{
 
   e.preventDefault();
 
-  const idv=supplierId.value;
-  const old=data.suppliers.find(s=>s.id===idv);
+  const id=supplierId.value;
 
-  const supplier={
-    id:idv||uid("sup"),
-    name:supplierName.value.trim(),
-    contact:supplierContact.value.trim(),
-    phone:supplierPhone.value.trim(),
-    email:supplierEmail.value.trim(),
-    country:supplierCountry.value.trim(),
-    city:supplierCity.value.trim(),
-    address:supplierAddress.value.trim(),
-    vat:supplierVat.value.trim(),
-    website:supplierWebsite.value.trim(),
-    category:supplierCategory.value,
-    rating:Number(supplierRating.value||5),
-    terms:supplierTerms.value.trim(),
-    deliveryDays:Number(supplierDelivery.value||0),
-    notes:supplierNotes.value.trim(),
-    createdAt:old?.createdAt||new Date().toISOString()
+  const record={
+    nome:supplierName.value.trim(),
+    ragione_sociale:supplierCompany.value.trim() || null,
+    categoria:supplierCategory.value.trim() || null,
+    paese:supplierCountry.value.trim() || null,
+    citta:supplierCity.value.trim() || null,
+    referente:supplierContact.value.trim() || null,
+    telefono:supplierPhone.value.trim() || null,
+    email:supplierEmail.value.trim() || null,
+    partita_iva:supplierVat.value.trim() || null,
+    pagamento:supplierPayment.value.trim() || null,
+    giorni_consegna:Number(supplierDelivery.value||0),
+    affidabilita:Number(supplierRating.value||5),
+    note:supplierNotes.value.trim() || null,
+    stato:"ATTIVO"
   };
 
-  if(idv){
+  let error;
 
-    data.suppliers=data.suppliers.map(s=>
-      s.id===idv?supplier:s
-    );
+  if(id){
+
+    ({error}=
+      await db
+        .from("fornitori")
+        .update(record)
+        .eq("id",id));
 
   }else{
 
-    data.suppliers.push(supplier);
+    ({error}=
+      await db
+        .from("fornitori")
+        .insert(record));
+  }
 
+  if(error){
+
+    console.error(error);
+    toast("Errore salvataggio fornitore");
+
+    return;
   }
 
   closeModal("supplierModal");
-  save();
 
-  toast(idv?"Fornitore aggiornato":"Fornitore creato");
+  await loadAll();
 
-}
-
-function supplierScore(s){
-
-  const rating=Number(s.rating||0);
-  const delivery=Number(s.deliveryDays||0);
-
-  const deliveryScore=
-    delivery<=3?5:
-    delivery<=7?4:
-    delivery<=14?3:
-    delivery<=30?2:1;
-
-  return ((rating+deliveryScore)/2).toFixed(1);
-
-}
+  toast(
+    id
+      ?"Fornitore aggiornato"
+      :"Fornitore creato"
+  );
+});
 
 function renderSuppliers(){
 
-  const q=(supplierSearch?.value||"").toLowerCase();
+  const q=
+    (supplierSearch?.value||"")
+      .toLowerCase();
 
-  const list=data.suppliers.filter(s=>
-    [
-      s.name,
-      s.country,
-      s.city,
-      s.category,
-      s.contact
-    ].join(" ").toLowerCase().includes(q)
-  );
+  const list=
+    suppliers.filter(s=>
+      [
+        s.nome,
+        s.ragione_sociale,
+        s.categoria,
+        s.paese,
+        s.citta
+      ]
+      .join(" ")
+      .toLowerCase()
+      .includes(q)
+    );
 
   supplierList.innerHTML=
     list.length
-      ?list.map(s=>{
+      ?list.map(s=>`
 
-        const orders=data.orders.filter(o=>
-          o.supplierId===s.id
-        );
+        <article class="item">
 
-        const spend=orders.reduce((sum,o)=>
-          sum+Number(o.total||o.grandTotal||0),0
-        );
+          <div class="item-top">
 
-        return `
-          <article class="item">
+            <div>
+              <h3>${esc(s.nome)}</h3>
 
-            <div class="item-top">
-
-              <div>
-                <h3>${esc(s.name)}</h3>
-
-                <div class="subtitle">
-                  ${esc(s.category||"Fornitore")} ·
-                  ${esc([s.city,s.country].filter(Boolean).join(", ")||"—")}
-                </div>
+              <div class="subtitle">
+                ${esc(s.categoria||"Fornitore")}
+                ·
+                ${esc(
+                  [s.citta,s.paese]
+                    .filter(Boolean)
+                    .join(", ") || "—"
+                )}
               </div>
-
-              <span class="badge good">
-                SCORE ${supplierScore(s)}
-              </span>
-
             </div>
 
-            <div class="meta">
+            <span class="badge good">
+              ${Number(s.affidabilita||0)}/10
+            </span>
 
-              <div>
-                <label>Ordini</label>
-                <strong>${orders.length}</strong>
-              </div>
+          </div>
 
-              <div>
-                <label>Acquisti</label>
-                <strong>${money(spend)}</strong>
-              </div>
+          <div class="meta">
 
-              <div>
-                <label>Rating</label>
-                <strong>${"★".repeat(Number(s.rating||0))}</strong>
-              </div>
-
-              <div>
-                <label>Consegna media</label>
-                <strong>
-                  ${s.deliveryDays?s.deliveryDays+" gg":"—"}
-                </strong>
-              </div>
-
+            <div>
+              <label>Referente</label>
+              <strong>${esc(s.referente||"—")}</strong>
             </div>
 
-            <div class="actions">
-
-              ${s.phone?`
-                <button class="mini"
-                  onclick="location.href='tel:${esc(s.phone)}'">
-                  CHIAMA
-                </button>
-              `:""}
-
-              ${s.email?`
-                <button class="mini"
-                  onclick="location.href='mailto:${esc(s.email)}'">
-                  EMAIL
-                </button>
-              `:""}
-
-              <button class="mini primary"
-                onclick="editSupplier('${s.id}')">
-                MODIFICA
-              </button>
-
-              <button class="mini danger"
-                onclick="deleteSupplier('${s.id}')">
-                ELIMINA
-              </button>
-
+            <div>
+              <label>Pagamento</label>
+              <strong>${esc(s.pagamento||"—")}</strong>
             </div>
 
-          </article>
-        `;
+            <div>
+              <label>Consegna</label>
+              <strong>
+                ${s.giorni_consegna||0} gg
+              </strong>
+            </div>
 
-      }).join("")
-      :empty("Nessun fornitore","Registra il primo fornitore XA.");
+            <div>
+              <label>Prodotti</label>
+              <strong>
+                ${
+                  products.filter(p=>
+                    String(p.fornitore_id)===
+                    String(s.id)
+                  ).length
+                }
+              </strong>
+            </div>
 
+          </div>
+
+          <div class="actions">
+
+            ${
+              s.telefono
+                ?`
+                  <button
+                    class="mini"
+                    onclick="location.href='tel:${esc(s.telefono)}'">
+                    CHIAMA
+                  </button>
+                `
+                :""
+            }
+
+            <button
+              class="mini primary"
+              onclick="editSupplier('${s.id}')">
+              MODIFICA
+            </button>
+
+            <button
+              class="mini red"
+              onclick="deleteSupplier('${s.id}')">
+              ELIMINA
+            </button>
+
+          </div>
+
+        </article>
+
+      `).join("")
+      :empty(
+        "Nessun fornitore",
+        "Inserisci il primo fornitore XA."
+      );
 }
 
 function editSupplier(id){
 
-  const s=data.suppliers.find(x=>x.id===id);
+  const s=
+    suppliers.find(x=>
+      String(x.id)===String(id)
+    );
 
-  if(s) openSupplier(s);
-
+  if(s){
+    openSupplier(s);
+  }
 }
 
-function deleteSupplier(id){
+async function deleteSupplier(id){
 
-  const used=
-    data.products.some(p=>p.supplierId===id) ||
-    data.orders.some(o=>o.supplierId===id);
-
-  if(used){
-    toast("Fornitore collegato a prodotti o ordini");
+  if(
+    !confirm(
+      "Eliminare questo fornitore?"
+    )
+  ){
     return;
   }
 
-  if(!confirm("Eliminare questo fornitore?")) return;
+  const {error}=
+    await db
+      .from("fornitori")
+      .delete()
+      .eq("id",id);
 
-  data.suppliers=data.suppliers.filter(s=>s.id!==id);
+  if(error){
 
-  save();
+    console.error(error);
+
+    toast(
+      "Impossibile eliminare: controlla i dati collegati"
+    );
+
+    return;
+  }
+
+  await loadAll();
+
   toast("Fornitore eliminato");
-
 }
 
-/* PRODOTTI */
+/* =========================================================
+   PRODOTTI
+========================================================= */
 
 function openProduct(p=null){
 
-  if(!data.suppliers.length){
+  if(!suppliers.length){
+
     toast("Crea prima un fornitore");
+
     return;
   }
 
-  productSupplier.innerHTML=supplierOptions();
-
   productModalTitle.textContent=
-    p?"Modifica prodotto":"Nuovo prodotto";
+    p ? "Modifica prodotto" : "Nuovo prodotto";
 
-  productId.value=p?.id||"";
-  productName.value=p?.name||"";
-  productSupplier.value=p?.supplierId||"";
-  productCategory.value=p?.category||"";
-  productCode.value=p?.code||"";
-  productFormat.value=p?.format||"";
-  productUnit.value=p?.unit||"pz";
-  productPrice.value=p?.price??"";
-  productMinimum.value=p?.minimum??"";
-  productStock.value=p?.stock??0;
-  productMinStock.value=p?.minStock??0;
-  productShipping.value=p?.shippingEstimate??0;
-  productNotes.value=p?.notes||"";
+  productSupplier.innerHTML=
+    supplierOptions(p?.fornitore_id);
+
+  productId.value=p?.id || "";
+  productName.value=p?.nome || "";
+  productCategory.value=p?.categoria || "";
+  productCode.value=p?.codice_prodotto || "";
+  productFormat.value=p?.formato || "";
+  productUnit.value=p?.unita_misura || "";
+  productPrice.value=p?.prezzo_unitario ?? "";
+  productVat.value=p?.iva ?? 22;
+  productMinimum.value=p?.minimo_ordine ?? "";
+  productShipping.value=p?.costo_trasporto ?? "";
+  productStock.value=p?.stock_attuale ?? 0;
+  productMinStock.value=p?.stock_minimo ?? 0;
+  productNotes.value=p?.note || "";
 
   openModal("productModal");
-
 }
 
-function saveProduct(e){
+productForm.addEventListener("submit",async e=>{
 
   e.preventDefault();
 
-  const idv=productId.value;
-  const old=data.products.find(p=>p.id===idv);
+  const id=productId.value;
 
-  const previousStock=Number(old?.stock||0);
-  const newStock=Number(productStock.value||0);
-
-  const p={
-    id:idv||uid("prod"),
-    name:productName.value.trim(),
-    supplierId:productSupplier.value,
-    category:productCategory.value.trim(),
-    code:productCode.value.trim(),
-    format:productFormat.value.trim(),
-    unit:productUnit.value,
-    price:Number(productPrice.value||0),
-    minimum:Number(productMinimum.value||0),
-    stock:newStock,
-    minStock:Number(productMinStock.value||0),
-    shippingEstimate:Number(productShipping.value||0),
-    notes:productNotes.value.trim(),
-    createdAt:old?.createdAt||new Date().toISOString()
+  const record={
+    fornitore_id:Number(productSupplier.value),
+    nome:productName.value.trim(),
+    categoria:productCategory.value.trim() || null,
+    codice_prodotto:productCode.value.trim() || null,
+    formato:productFormat.value.trim() || null,
+    unita_misura:productUnit.value.trim() || null,
+    prezzo_unitario:Number(productPrice.value||0),
+    iva:Number(productVat.value||0),
+    minimo_ordine:Number(productMinimum.value||0),
+    costo_trasporto:Number(productShipping.value||0),
+    stock_attuale:Number(productStock.value||0),
+    stock_minimo:Number(productMinStock.value||0),
+    note:productNotes.value.trim() || null,
+    stato:"ATTIVO"
   };
 
-  if(idv){
+  let error;
 
-    data.products=data.products.map(x=>
-      x.id===idv?p:x
-    );
+  if(id){
 
-    if(previousStock!==newStock){
-
-      data.movements.push({
-        id:uid("mov"),
-        productId:p.id,
-        type:"ADJ",
-        qty:newStock,
-        previous:previousStock,
-        reason:"Rettifica da scheda prodotto",
-        date:today(),
-        createdAt:new Date().toISOString()
-      });
-
-    }
+    ({error}=
+      await db
+        .from("prodotti")
+        .update(record)
+        .eq("id",id));
 
   }else{
 
-    data.products.push(p);
+    ({error}=
+      await db
+        .from("prodotti")
+        .insert(record));
+  }
 
-    if(newStock!==0){
+  if(error){
 
-      data.movements.push({
-        id:uid("mov"),
-        productId:p.id,
-        type:"IN",
-        qty:newStock,
-        reason:"Scorta iniziale",
-        date:today(),
-        createdAt:new Date().toISOString()
-      });
+    console.error(error);
+    toast("Errore salvataggio prodotto");
 
-    }
-
+    return;
   }
 
   closeModal("productModal");
-  save();
 
-  toast(idv?"Prodotto aggiornato":"Prodotto creato");
+  await loadAll();
 
-}
+  toast(
+    id
+      ?"Prodotto aggiornato"
+      :"Prodotto creato"
+  );
+});
 
 function realCost(p){
 
-  const min=Number(p.minimum||0);
-  const ship=Number(p.shippingEstimate||0);
+  const price=
+    Number(p.prezzo_unitario||0);
 
-  if(min<=0) return Number(p.price||0);
+  const moq=
+    Number(p.minimo_ordine||0);
 
-  return Number(p.price||0)+(ship/min);
+  const shipping=
+    Number(p.costo_trasporto||0);
 
+  if(moq<=0){
+    return price;
+  }
+
+  return price + shipping/moq;
 }
 
 function renderProducts(){
 
-  const q=(productSearch?.value||"").toLowerCase();
+  const q=
+    (productSearch?.value||"")
+      .toLowerCase();
 
-  const list=data.products.filter(p=>
-    [
-      p.name,
-      p.code,
-      p.category,
-      supplierName(p.supplierId)
-    ].join(" ").toLowerCase().includes(q)
-  );
+  const list=
+    products.filter(p=>
+      [
+        p.nome,
+        p.categoria,
+        p.codice_prodotto,
+        supplierName(p.fornitore_id)
+      ]
+      .join(" ")
+      .toLowerCase()
+      .includes(q)
+    );
 
   productList.innerHTML=
     list.length
       ?list.map(p=>{
 
         const low=
-          Number(p.minStock||0)>0 &&
-          Number(p.stock||0)<=Number(p.minStock||0);
-
-        const target=Math.max(
-          Number(p.minStock||0)*2,
-          Number(p.stock||0),
-          1
-        );
-
-        const percent=Math.min(
-          100,
-          (Number(p.stock||0)/target)*100
-        );
+          Number(p.stock_minimo||0)>0 &&
+          Number(p.stock_attuale||0)<=
+          Number(p.stock_minimo||0);
 
         return `
-          <article class="item">
 
-            <div class="item-top">
+        <article class="item">
 
-              <div>
-                <h3>${esc(p.name)}</h3>
+          <div class="item-top">
 
-                <div class="subtitle">
-                  ${esc(supplierName(p.supplierId))} ·
-                  ${esc(p.format||p.unit||"")}
-                </div>
-              </div>
+            <div>
 
-              <span class="badge ${low?"bad":"good"}">
-                ${low?"RIORDINO":"OK"}
-              </span>
+              <h3>${esc(p.nome)}</h3>
 
-            </div>
-
-            <div class="meta">
-
-              <div>
-                <label>Prezzo</label>
-                <strong>${money(p.price)}</strong>
-              </div>
-
-              <div>
-                <label>Costo reale</label>
-                <strong>${money(realCost(p))}</strong>
-              </div>
-
-              <div>
-                <label>Stock</label>
-                <strong>${p.stock||0} ${esc(p.unit||"")}</strong>
-              </div>
-
-              <div>
-                <label>Scorta minima</label>
-                <strong>${p.minStock||0}</strong>
+              <div class="subtitle">
+                ${esc(supplierName(p.fornitore_id))}
+                ·
+                ${esc(p.formato||p.unita_misura||"")}
               </div>
 
             </div>
 
-            <div class="stockbar">
-              <span style="width:${percent}%"></span>
+            <span class="badge ${low?"bad":"good"}">
+              ${low?"RIORDINO":"OK"}
+            </span>
+
+          </div>
+
+          <div class="meta">
+
+            <div>
+              <label>Prezzo</label>
+              <strong>${money(p.prezzo_unitario)}</strong>
             </div>
 
-            <div class="actions">
-
-              <button class="mini green"
-                onclick="openMovementFor('${p.id}')">
-                MOVIMENTO
-              </button>
-
-              <button class="mini primary"
-                onclick="editProduct('${p.id}')">
-                MODIFICA
-              </button>
-
-              <button class="mini danger"
-                onclick="deleteProduct('${p.id}')">
-                ELIMINA
-              </button>
-
+            <div>
+              <label>Costo reale</label>
+              <strong>${money(realCost(p))}</strong>
             </div>
 
-          </article>
+            <div>
+              <label>Stock</label>
+              <strong>
+                ${p.stock_attuale||0}
+                ${esc(p.unita_misura||"")}
+              </strong>
+            </div>
+
+            <div>
+              <label>MOQ</label>
+              <strong>${p.minimo_ordine||0}</strong>
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="mini primary"
+              onclick="editProduct('${p.id}')">
+              MODIFICA
+            </button>
+
+            <button
+              class="mini red"
+              onclick="deleteProduct('${p.id}')">
+              ELIMINA
+            </button>
+
+          </div>
+
+        </article>
+
         `;
 
       }).join("")
-      :empty("Nessun prodotto","Inserisci il primo articolo nel catalogo.");
-
+      :empty(
+        "Nessun prodotto",
+        "Inserisci il primo prodotto."
+      );
 }
 
 function editProduct(id){
 
-  const p=data.products.find(x=>x.id===id);
-
-  if(p) openProduct(p);
-
-}
-
-function deleteProduct(id){
-
-  if(
-    data.orders.some(o=>
-      (o.lines||[]).some(l=>l.productId===id)
-    )
-  ){
-    toast("Prodotto utilizzato in ordini esistenti");
-    return;
-  }
-
-  if(!confirm("Eliminare questo prodotto?")) return;
-
-  data.products=data.products.filter(p=>p.id!==id);
-  data.movements=data.movements.filter(m=>m.productId!==id);
-
-  save();
-
-}
-
-/* MAGAZZINO */
-
-function openMovement(){
-
-  if(!data.products.length){
-    toast("Inserisci prima un prodotto");
-    return;
-  }
-
-  movementProduct.innerHTML=productOptions();
-  movementProduct.value="";
-  movementType.value="IN";
-  movementQty.value="";
-  movementReason.value="";
-  movementDate.value=today();
-
-  openModal("movementModal");
-
-}
-
-function openMovementFor(id){
-
-  openMovement();
-  movementProduct.value=id;
-
-}
-
-function saveMovement(e){
-
-  e.preventDefault();
-
-  const p=data.products.find(x=>
-    x.id===movementProduct.value
-  );
-
-  if(!p) return;
-
-  const type=movementType.value;
-  const qty=Number(movementQty.value||0);
-
-  const previous=Number(p.stock||0);
-
-  if(type==="IN"){
-    p.stock=previous+qty;
-  }
-
-  if(type==="OUT"){
-    p.stock=previous-qty;
-  }
-
-  if(type==="ADJ"){
-    p.stock=qty;
-  }
-
-  data.movements.push({
-    id:uid("mov"),
-    productId:p.id,
-    type,
-    qty,
-    previous,
-    result:p.stock,
-    reason:movementReason.value.trim(),
-    date:movementDate.value||today(),
-    createdAt:new Date().toISOString()
-  });
-
-  closeModal("movementModal");
-  save();
-
-  toast("Movimento registrato");
-
-}
-
-function renderStock(){
-
-  const low=data.products.filter(p=>
-    Number(p.minStock||0)>0 &&
-    Number(p.stock||0)<=Number(p.minStock||0)
-  );
-
-  const units=data.products.reduce((s,p)=>
-    s+Number(p.stock||0),0
-  );
-
-  const value=data.products.reduce((s,p)=>
-    s+Number(p.stock||0)*Number(p.price||0),0
-  );
-
-  stockArticles.textContent=data.products.length;
-  stockLow.textContent=low.length;
-  stockUnits.textContent=units.toFixed(2);
-  stockValue.textContent=money(value);
-
-  stockTable.innerHTML=
-    data.products.length
-      ?data.products.map(p=>{
-
-        const isLow=
-          Number(p.minStock||0)>0 &&
-          Number(p.stock||0)<=Number(p.minStock||0);
-
-        return `
-          <tr class="${isLow?"low-row":""}">
-            <td><strong>${esc(p.name)}</strong></td>
-            <td>${esc(supplierName(p.supplierId))}</td>
-            <td>${p.stock||0} ${esc(p.unit||"")}</td>
-            <td>${p.minStock||0}</td>
-            <td>${money(Number(p.stock||0)*Number(p.price||0))}</td>
-            <td>${isLow?"RIORDINO":"OK"}</td>
-          </tr>
-        `;
-
-      }).join("")
-      :`<tr><td colspan="6">Nessun prodotto.</td></tr>`;
-
-  const moves=[...data.movements]
-    .sort((a,b)=>
-      String(b.createdAt).localeCompare(String(a.createdAt))
-    )
-    .slice(0,20);
-
-  movementList.innerHTML=
-    moves.length
-      ?moves.map(m=>{
-
-        const p=data.products.find(x=>x.id===m.productId);
-
-        return `
-          <article class="item">
-
-            <div class="item-top">
-
-              <div>
-                <h3>${esc(p?.name||"Prodotto eliminato")}</h3>
-
-                <div class="subtitle">
-                  ${esc(m.date||"")} ·
-                  ${esc(m.reason||"Movimento magazzino")}
-                </div>
-              </div>
-
-              <span class="badge ${
-                m.type==="OUT"?"bad":
-                m.type==="IN"?"good":"warn"
-              }">
-                ${
-                  m.type==="IN"?"CARICO":
-                  m.type==="OUT"?"SCARICO":"RETTIFICA"
-                }
-              </span>
-
-            </div>
-
-            <div class="meta">
-              <div>
-                <label>Quantità</label>
-                <strong>${m.qty}</strong>
-              </div>
-
-              <div>
-                <label>Stock finale</label>
-                <strong>${m.result??"—"}</strong>
-              </div>
-            </div>
-
-          </article>
-        `;
-
-      }).join("")
-      :empty("Nessun movimento","Il magazzino non ha ancora movimenti.");
-
-}
-
-/* ORDINI */
-
-function newLine(){
-
-  return{
-    id:uid("line"),
-    productId:"",
-    description:"",
-    qty:1,
-    price:0,
-    vat:22
-  };
-
-}
-
-function openOrder(o=null){
-
-  if(!data.suppliers.length){
-    toast("Crea prima un fornitore");
-    return;
-  }
-
-  orderSupplier.innerHTML=supplierOptions();
-
-  orderModalTitle.textContent=
-    o?"Modifica ordine":"Nuovo ordine";
-
-  orderId.value=o?.id||"";
-
-  orderNumber.value=
-    o?.number ||
-    `XA-${new Date().getFullYear()}-${String(data.orders.length+1).padStart(4,"0")}`;
-
-  orderSupplier.value=o?.supplierId||"";
-  orderDate.value=o?.date||today();
-  orderDeliveryDate.value=o?.deliveryDate||"";
-  orderStatus.value=o?.status||"Bozza";
-  orderPayment.value=o?.paymentStatus||"Da pagare";
-  orderDiscount.value=o?.discount||0;
-  orderShipping.value=o?.shipping||0;
-  orderNotes.value=o?.notes||"";
-  orderCreateDelivery.checked=!o;
-
-  orderLines=clone(o?.lines||[]);
-
-  if(!orderLines.length){
-    orderLines=[newLine()];
-  }
-
-  renderOrderLines();
-  calculateOrder();
-
-  openModal("orderModal");
-
-}
-
-function orderSupplierChanged(){
-
-  const s=data.suppliers.find(x=>
-    x.id===orderSupplier.value
-  );
-
-  if(s?.deliveryDays){
-
-    const d=new Date(
-      (orderDate.value||today())+"T12:00:00"
+  const p=
+    products.find(x=>
+      String(x.id)===String(id)
     );
 
-    d.setDate(d.getDate()+Number(s.deliveryDays));
-
-    orderDeliveryDate.value=
-      d.toISOString().slice(0,10);
-
+  if(p){
+    openProduct(p);
   }
-
-  renderOrderLines();
-
 }
 
-function availableProducts(){
+async function deleteProduct(id){
 
-  const sid=orderSupplier.value;
-
-  return sid
-    ?data.products.filter(p=>p.supplierId===sid)
-    :data.products;
-
-}
-
-function addOrderLine(){
-
-  orderLines.push(newLine());
-  renderOrderLines();
-
-}
-
-function removeOrderLine(id){
-
-  if(orderLines.length===1){
-    toast("Deve restare almeno una riga");
+  if(!confirm("Eliminare questo prodotto?")){
     return;
   }
 
-  orderLines=orderLines.filter(l=>l.id!==id);
+  const {error}=
+    await db
+      .from("prodotti")
+      .delete()
+      .eq("id",id);
 
-  renderOrderLines();
-  calculateOrder();
+  if(error){
 
-}
+    console.error(error);
 
-function updateOrderLine(id,field,value){
-
-  const line=orderLines.find(l=>l.id===id);
-
-  if(!line) return;
-
-  if(["qty","price","vat"].includes(field)){
-    line[field]=Number(value||0);
-  }else{
-    line[field]=value;
-  }
-
-  if(field==="productId"){
-
-    const p=data.products.find(x=>x.id===value);
-
-    if(p){
-      line.description=p.name;
-      line.price=Number(p.price||0);
-    }
-
-  }
-
-  renderOrderLines();
-  calculateOrder();
-
-}
-
-function renderOrderLines(){
-
-  const products=availableProducts();
-
-  orderLinesElement=document.getElementById("orderLines");
-
-  orderLinesElement.innerHTML=
-    orderLines.map((line,i)=>`
-
-      <div class="order-line">
-
-        <div class="line-grid">
-
-          <div class="field">
-            <label>Prodotto ${i+1}</label>
-
-            <select onchange="
-              updateOrderLine(
-                '${line.id}',
-                'productId',
-                this.value
-              )
-            ">
-
-              <option value="">Seleziona prodotto</option>
-
-              ${products.map(p=>`
-                <option value="${p.id}"
-                  ${p.id===line.productId?"selected":""}>
-                  ${esc(p.name)} – ${money(p.price)}
-                </option>
-              `).join("")}
-
-            </select>
-          </div>
-
-          <button type="button"
-            class="btn btn-danger"
-            onclick="removeOrderLine('${line.id}')">
-            ×
-          </button>
-
-        </div>
-
-        <div class="field" style="margin-top:7px">
-          <label>Descrizione</label>
-
-          <input value="${esc(line.description||"")}"
-            oninput="
-              updateOrderLine(
-                '${line.id}',
-                'description',
-                this.value
-              )
-            ">
-        </div>
-
-        <div class="line-grid-3">
-
-          <div class="field">
-            <label>Quantità</label>
-
-            <input type="number"
-              min="0"
-              step="0.01"
-              value="${line.qty}"
-              onchange="
-                updateOrderLine(
-                  '${line.id}',
-                  'qty',
-                  this.value
-                )
-              ">
-          </div>
-
-          <div class="field">
-            <label>Prezzo</label>
-
-            <input type="number"
-              min="0"
-              step="0.01"
-              value="${line.price}"
-              onchange="
-                updateOrderLine(
-                  '${line.id}',
-                  'price',
-                  this.value
-                )
-              ">
-          </div>
-
-          <div class="field">
-            <label>IVA</label>
-
-            <select onchange="
-              updateOrderLine(
-                '${line.id}',
-                'vat',
-                this.value
-              )
-            ">
-
-              ${[0,4,5,10,22].map(v=>`
-                <option value="${v}"
-                  ${Number(line.vat)===v?"selected":""}>
-                  ${v}%
-                </option>
-              `).join("")}
-
-            </select>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-function calculateOrder(){
-
-  const net=orderLines.reduce((s,l)=>
-    s+Number(l.qty||0)*Number(l.price||0),0
-  );
-
-  const discountPct=Number(orderDiscount.value||0);
-  const discount=net*discountPct/100;
-  const discounted=net-discount;
-
-  let vat=0;
-
-  orderLines.forEach(l=>{
-
-    const row=
-      Number(l.qty||0)*Number(l.price||0);
-
-    const discountedRow=
-      net>0
-        ?row-discount*(row/net)
-        :row;
-
-    vat+=discountedRow*Number(l.vat||0)/100;
-
-  });
-
-  const shipping=Number(orderShipping.value||0);
-
-  const total=discounted+vat+shipping;
-
-  sumNet.textContent=money(net);
-  sumDiscount.textContent=money(discount);
-  sumVat.textContent=money(vat);
-  sumShipping.textContent=money(shipping);
-  sumTotal.textContent=money(total);
-
-  return{
-    net,
-    discountPct,
-    discount,
-    vat,
-    shipping,
-    total
-  };
-
-}
-
-function saveOrder(e){
-
-  e.preventDefault();
-
-  const idv=orderId.value;
-  const totals=calculateOrder();
-
-  const validLines=orderLines.filter(l=>
-    l.description.trim() &&
-    Number(l.qty)>0
-  );
-
-  if(!validLines.length){
-    toast("Inserisci almeno una riga valida");
-    return;
-  }
-
-  const old=data.orders.find(o=>o.id===idv);
-
-  const o={
-    id:idv||uid("order"),
-    number:orderNumber.value.trim(),
-    supplierId:orderSupplier.value,
-    date:orderDate.value,
-    deliveryDate:orderDeliveryDate.value,
-    status:orderStatus.value,
-    paymentStatus:orderPayment.value,
-    lines:clone(validLines),
-    net:totals.net,
-    discount:totals.discountPct,
-    discountAmount:totals.discount,
-    vat:totals.vat,
-    shipping:totals.shipping,
-    total:totals.total,
-    notes:orderNotes.value.trim(),
-    createdAt:old?.createdAt||new Date().toISOString()
-  };
-
-  if(idv){
-
-    data.orders=data.orders.map(x=>
-      x.id===idv?o:x
+    toast(
+      "Prodotto collegato ad altri dati"
     );
 
-  }else{
-
-    data.orders.push(o);
-
-    if(orderCreateDelivery.checked){
-
-      data.deliveries.push({
-        id:uid("delivery"),
-        orderId:o.id,
-        carrier:"",
-        tracking:"",
-        trackingUrl:"",
-        expectedDate:o.deliveryDate,
-        actualDate:"",
-        status:"In preparazione",
-        notes:"",
-        received:false,
-        createdAt:new Date().toISOString()
-      });
-
-    }
-
+    return;
   }
 
-  closeModal("orderModal");
-  save();
+  await loadAll();
 
-  toast("Ordine salvato");
-
+  toast("Prodotto eliminato");
 }
 
-function orderCard(o,actions=true){
+/* =========================================================
+   ORDINI
+========================================================= */
+
+function orderCard(o){
+
+  const lines=
+    orderRows.filter(r=>
+      String(r.ordine_id)===
+      String(o.id)
+    );
 
   return `
+
     <article class="item">
 
       <div class="item-top">
 
         <div>
-          <h3>${esc(o.number)}</h3>
+          <h3>${esc(o.numero_ordine||"Ordine")}</h3>
 
           <div class="subtitle">
-            ${esc(supplierName(o.supplierId))} ·
-            ${(o.lines||[]).length} righe
+            ${esc(supplierName(o.fornitore_id))}
+            ·
+            ${lines.length} righe
           </div>
         </div>
 
-        <span class="badge ${statusClass(o.status)}">
-          ${esc(o.status)}
+        <span class="badge ${
+          o.stato==="CONSEGNATO"
+            ?"good"
+            :o.stato==="ANNULLATO"
+            ?"bad"
+            :"info"
+        }">
+          ${esc(o.stato||"BOZZA")}
         </span>
 
       </div>
@@ -3353,971 +2655,671 @@ function orderCard(o,actions=true){
       <div class="meta">
 
         <div>
-          <label>Totale</label>
-          <strong>${money(o.total||o.grandTotal||0)}</strong>
-        </div>
-
-        <div>
           <label>Data</label>
-          <strong>${esc(o.date||"—")}</strong>
+          <strong>${esc(o.data_ordine||"—")}</strong>
         </div>
 
         <div>
           <label>Consegna</label>
-          <strong>${esc(o.deliveryDate||"—")}</strong>
+          <strong>
+            ${esc(o.data_consegna_prevista||"—")}
+          </strong>
         </div>
 
         <div>
-          <label>Pagamento</label>
-          <strong>${esc(o.paymentStatus||"—")}</strong>
+          <label>Totale</label>
+          <strong>${money(o.totale)}</strong>
+        </div>
+
+        <div>
+          <label>Trasporto</label>
+          <strong>${money(o.trasporto)}</strong>
         </div>
 
       </div>
 
-      ${actions?`
-        <div class="actions">
+    </article>
 
-          <button class="mini blue"
-            onclick="printOrder('${o.id}')">
-            STAMPA
-          </button>
+  `;
+}
 
-          <button class="mini"
-            onclick="advanceOrder('${o.id}')">
-            AVANZA
-          </button>
+function openOrder(){
 
-          <button class="mini primary"
-            onclick="editOrder('${o.id}')">
-            MODIFICA
-          </button>
+  if(!suppliers.length){
 
-          <button class="mini danger"
-            onclick="deleteOrder('${o.id}')">
-            ELIMINA
+    toast("Crea prima un fornitore");
+
+    return;
+  }
+
+  orderSupplier.innerHTML=
+    supplierOptions();
+
+  orderNumber.value=
+    `XA-${new Date().getFullYear()}-${String(
+      orders.length+1
+    ).padStart(4,"0")}`;
+
+  orderDate.value=today();
+  orderDelivery.value="";
+  orderStatus.value="BOZZA";
+  orderShipping.value=0;
+  orderNotes.value="";
+
+  orderDraftLines=[
+    {
+      id:crypto.randomUUID(),
+      productId:"",
+      qty:1,
+      price:0,
+      vat:22
+    }
+  ];
+
+  renderOrderLines();
+
+  openModal("orderModal");
+}
+
+function addOrderLine(){
+
+  orderDraftLines.push({
+    id:crypto.randomUUID(),
+    productId:"",
+    qty:1,
+    price:0,
+    vat:22
+  });
+
+  renderOrderLines();
+}
+
+function deleteDraftLine(id){
+
+  if(orderDraftLines.length<=1){
+    return;
+  }
+
+  orderDraftLines=
+    orderDraftLines.filter(l=>l.id!==id);
+
+  renderOrderLines();
+}
+
+function updateDraftLine(id,field,value){
+
+  const line=
+    orderDraftLines.find(l=>l.id===id);
+
+  if(!line){
+    return;
+  }
+
+  if(field==="productId"){
+
+    line.productId=value;
+
+    const p=
+      products.find(x=>
+        String(x.id)===String(value)
+      );
+
+    if(p){
+      line.price=Number(p.prezzo_unitario||0);
+      line.vat=Number(p.iva||22);
+    }
+
+  }else{
+
+    line[field]=Number(value||0);
+  }
+
+  renderOrderLines();
+}
+
+function renderOrderLines(){
+
+  const sid=
+    orderSupplier?.value;
+
+  const allowed=
+    sid
+      ?products.filter(p=>
+          String(p.fornitore_id)===
+          String(sid)
+        )
+      :products;
+
+  orderLines.innerHTML=
+    orderDraftLines.map((l,i)=>`
+
+      <div class="order-line">
+
+        <div class="line-row">
+
+          <div class="field">
+
+            <label>Prodotto ${i+1}</label>
+
+            <select
+              onchange="
+                updateDraftLine(
+                  '${l.id}',
+                  'productId',
+                  this.value
+                )
+              ">
+
+              <option value="">
+                Seleziona prodotto
+              </option>
+
+              ${allowed.map(p=>`
+
+                <option
+                  value="${p.id}"
+                  ${
+                    String(p.id)===
+                    String(l.productId)
+                      ?"selected"
+                      :""
+                  }>
+
+                  ${esc(p.nome)}
+                  ·
+                  ${money(p.prezzo_unitario)}
+
+                </option>
+
+              `).join("")}
+
+            </select>
+
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-red"
+            onclick="deleteDraftLine('${l.id}')">
+            ×
           </button>
 
         </div>
-      `:""}
 
-    </article>
-  `;
+        <div class="cols" style="margin-top:7px">
 
+          <div class="field">
+
+            <label>Quantità</label>
+
+            <input
+              type="number"
+              min="0"
+              step="0.001"
+              value="${l.qty}"
+              onchange="
+                updateDraftLine(
+                  '${l.id}',
+                  'qty',
+                  this.value
+                )
+              ">
+
+          </div>
+
+          <div class="field">
+
+            <label>Prezzo</label>
+
+            <input
+              type="number"
+              min="0"
+              step="0.0001"
+              value="${l.price}"
+              onchange="
+                updateDraftLine(
+                  '${l.id}',
+                  'price',
+                  this.value
+                )
+              ">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
 }
+
+orderForm.addEventListener("submit",async e=>{
+
+  e.preventDefault();
+
+  const valid=
+    orderDraftLines.filter(l=>
+      l.productId &&
+      Number(l.qty)>0
+    );
+
+  if(!valid.length){
+
+    toast("Inserisci almeno un prodotto");
+
+    return;
+  }
+
+  let net=0;
+  let vatTotal=0;
+
+  valid.forEach(l=>{
+
+    const row=
+      Number(l.qty)*
+      Number(l.price);
+
+    net+=row;
+
+    vatTotal+=
+      row*Number(l.vat||0)/100;
+  });
+
+  const shipping=
+    Number(orderShipping.value||0);
+
+  const total=
+    net+vatTotal+shipping;
+
+  const {
+    data:orderData,
+    error:orderError
+  }=
+    await db
+      .from("ordini")
+      .insert({
+        fornitore_id:Number(orderSupplier.value),
+        numero_ordine:orderNumber.value.trim(),
+        data_ordine:orderDate.value,
+        data_consegna_prevista:
+          orderDelivery.value || null,
+        stato:orderStatus.value,
+        imponibile:net,
+        iva:vatTotal,
+        trasporto:shipping,
+        totale:total,
+        note:orderNotes.value.trim() || null
+      })
+      .select()
+      .single();
+
+  if(orderError){
+
+    console.error(orderError);
+
+    toast("Errore creazione ordine");
+
+    return;
+  }
+
+  const rows=
+    valid.map(l=>{
+
+      const p=
+        products.find(x=>
+          String(x.id)===
+          String(l.productId)
+        );
+
+      const imponibile=
+        Number(l.qty)*
+        Number(l.price);
+
+      const iva=
+        imponibile*
+        Number(l.vat||0)/100;
+
+      return{
+        ordine_id:orderData.id,
+        prodotto_id:Number(l.productId),
+        descrizione:p?.nome || "Prodotto",
+        quantita:Number(l.qty),
+        prezzo_unitario:Number(l.price),
+        iva_percentuale:Number(l.vat||0),
+        imponibile_riga:imponibile,
+        iva_riga:iva,
+        totale_riga:imponibile+iva
+      };
+    });
+
+  const {error:rowsError}=
+    await db
+      .from("righe_ordine")
+      .insert(rows);
+
+  if(rowsError){
+
+    console.error(rowsError);
+
+    toast(
+      "Ordine creato, errore sulle righe"
+    );
+
+    return;
+  }
+
+  closeModal("orderModal");
+
+  await loadAll();
+
+  toast("Ordine XA creato");
+});
 
 function renderOrders(){
 
-  const q=(orderSearch?.value||"").toLowerCase();
+  const q=
+    (orderSearch?.value||"")
+      .toLowerCase();
 
-  const list=data.orders.filter(o=>
-    [
-      o.number,
-      supplierName(o.supplierId),
-      o.status,
-      ...(o.lines||[]).map(l=>l.description)
-    ].join(" ").toLowerCase().includes(q)
-  );
+  const list=
+    orders.filter(o=>
+      [
+        o.numero_ordine,
+        supplierName(o.fornitore_id),
+        o.stato
+      ]
+      .join(" ")
+      .toLowerCase()
+      .includes(q)
+    );
 
   orderList.innerHTML=
     list.length
-      ?[...list]
-        .sort((a,b)=>
-          String(b.date).localeCompare(String(a.date))
-        )
-        .map(o=>orderCard(o,true))
-        .join("")
-      :empty("Nessun ordine","Crea il primo ordine XA.");
-
+      ?list.map(orderCard).join("")
+      :empty(
+        "Nessun ordine",
+        "Crea il primo ordine XA."
+      );
 }
 
-function editOrder(id){
-
-  const o=data.orders.find(x=>x.id===id);
-
-  if(o) openOrder(o);
-
-}
-
-function advanceOrder(id){
-
-  const states=[
-    "Bozza",
-    "Inviato",
-    "Confermato",
-    "In viaggio",
-    "Consegnato"
-  ];
-
-  const o=data.orders.find(x=>x.id===id);
-
-  if(!o || o.status==="Annullato") return;
-
-  const index=states.indexOf(o.status);
-
-  o.status=
-    states[Math.min(index+1,states.length-1)];
-
-  save();
-
-}
-
-function deleteOrder(id){
-
-  if(!confirm("Eliminare ordine e consegna collegata?")) return;
-
-  data.orders=data.orders.filter(o=>o.id!==id);
-  data.deliveries=data.deliveries.filter(d=>d.orderId!==id);
-
-  save();
-
-}
-
-function printOrder(id){
-
-  const o=data.orders.find(x=>x.id===id);
-  const s=data.suppliers.find(x=>x.id===o?.supplierId);
-
-  if(!o) return;
-
-  printArea.innerHTML=`
-
-    <div style="
-      padding:30px;
-      font-family:Arial,sans-serif;
-      color:#222
-    ">
-
-      <h1 style="
-        font-family:Georgia,serif;
-        color:#5f1929
-      ">
-        XA SUPPLY COMMAND
-      </h1>
-
-      <h2>ORDINE DI ACQUISTO ${esc(o.number)}</h2>
-
-      <p>
-        <strong>Fornitore:</strong>
-        ${esc(s?.name||"")}
-      </p>
-
-      <p>
-        ${esc(s?.address||"")}
-        ${esc(s?.city||"")}
-        ${esc(s?.country||"")}
-      </p>
-
-      <p>
-        <strong>Data:</strong> ${esc(o.date||"")}
-        &nbsp;&nbsp;
-        <strong>Consegna prevista:</strong>
-        ${esc(o.deliveryDate||"")}
-      </p>
-
-      <table style="
-        width:100%;
-        border-collapse:collapse;
-        margin-top:25px
-      ">
-
-        <thead>
-          <tr>
-            <th style="border-bottom:1px solid #999;padding:8px">Prodotto</th>
-            <th style="border-bottom:1px solid #999;padding:8px">Q.tà</th>
-            <th style="border-bottom:1px solid #999;padding:8px">Prezzo</th>
-            <th style="border-bottom:1px solid #999;padding:8px">IVA</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${(o.lines||[]).map(l=>`
-            <tr>
-              <td style="padding:8px;border-bottom:1px solid #ddd">
-                ${esc(l.description)}
-              </td>
-
-              <td style="padding:8px;border-bottom:1px solid #ddd">
-                ${l.qty}
-              </td>
-
-              <td style="padding:8px;border-bottom:1px solid #ddd">
-                ${money(l.price)}
-              </td>
-
-              <td style="padding:8px;border-bottom:1px solid #ddd">
-                ${l.vat}%
-              </td>
-            </tr>
-          `).join("")}
-
-        </tbody>
-      </table>
-
-      <h2 style="text-align:right;margin-top:25px">
-        TOTALE: ${money(o.total||0)}
-      </h2>
-
-      <p style="margin-top:50px;font-size:12px">
-        ${esc(data.settings.company)}
-      </p>
-
-    </div>
-  `;
-
-  window.print();
-
-}
-
-/* CONSEGNE */
-
-function openDelivery(d=null){
-
-  if(!data.orders.length){
-    toast("Crea prima un ordine");
-    return;
-  }
-
-  deliveryOrder.innerHTML=orderOptions();
-
-  deliveryId.value=d?.id||"";
-  deliveryOrder.value=d?.orderId||"";
-  deliveryCarrier.value=d?.carrier||"";
-  deliveryTracking.value=d?.tracking||"";
-  deliveryUrl.value=d?.trackingUrl||"";
-  deliveryExpected.value=d?.expectedDate||"";
-  deliveryActual.value=d?.actualDate||"";
-  deliveryStatus.value=d?.status||"In preparazione";
-  deliveryNotes.value=d?.notes||"";
-
-  openModal("deliveryModal");
-
-}
-
-function saveDelivery(e){
-
-  e.preventDefault();
-
-  const idv=deliveryId.value;
-  const old=data.deliveries.find(d=>d.id===idv);
-
-  const d={
-    id:idv||uid("delivery"),
-    orderId:deliveryOrder.value,
-    carrier:deliveryCarrier.value.trim(),
-    tracking:deliveryTracking.value.trim(),
-    trackingUrl:deliveryUrl.value.trim(),
-    expectedDate:deliveryExpected.value,
-    actualDate:deliveryActual.value,
-    status:deliveryStatus.value,
-    notes:deliveryNotes.value.trim(),
-    received:deliveryStatus.value==="Consegnato",
-    createdAt:old?.createdAt||new Date().toISOString()
-  };
-
-  if(d.status==="Consegnato" && !d.actualDate){
-    d.actualDate=today();
-  }
-
-  if(idv){
-    data.deliveries=data.deliveries.map(x=>
-      x.id===idv?d:x
-    );
-  }else{
-    data.deliveries.push(d);
-  }
-
-  const o=data.orders.find(x=>x.id===d.orderId);
-
-  if(o && d.status==="Consegnato"){
-    o.status="Consegnato";
-  }
-
-  closeModal("deliveryModal");
-  save();
-
-}
-
-function receiveDelivery(id){
-
-  const d=data.deliveries.find(x=>x.id===id);
-
-  if(!d) return;
-
-  if(d.received){
-    toast("Merce già caricata in magazzino");
-    return;
-  }
-
-  const o=data.orders.find(x=>x.id===d.orderId);
-
-  if(!o) return;
-
-  (o.lines||[]).forEach(line=>{
-
-    const p=data.products.find(x=>
-      x.id===line.productId
+/* =========================================================
+   STOCK
+========================================================= */
+
+function renderStock(){
+
+  const low=
+    products.filter(p=>
+      Number(p.stock_minimo||0)>0 &&
+      Number(p.stock_attuale||0)<=
+      Number(p.stock_minimo||0)
     );
 
-    if(!p) return;
-
-    const previous=Number(p.stock||0);
-    const qty=Number(line.qty||0);
-
-    p.stock=previous+qty;
-
-    data.movements.push({
-      id:uid("mov"),
-      productId:p.id,
-      type:"IN",
-      qty,
-      previous,
-      result:p.stock,
-      reason:"Ricevimento ordine "+o.number,
-      date:today(),
-      createdAt:new Date().toISOString()
-    });
-
-  });
-
-  d.status="Consegnato";
-  d.actualDate=today();
-  d.received=true;
-
-  o.status="Consegnato";
-
-  save();
-
-  toast("Merce caricata in magazzino");
-
-}
-
-function renderDeliveries(){
-
-  const q=(deliverySearch?.value||"").toLowerCase();
-
-  const list=data.deliveries.filter(d=>
-    [
-      orderName(d.orderId),
-      d.carrier,
-      d.tracking,
-      d.status
-    ].join(" ").toLowerCase().includes(q)
-  );
-
-  deliveryList.innerHTML=
-    list.length
-      ?list.map(d=>{
-
-        const late=
-          d.status!=="Consegnato" &&
-          d.expectedDate &&
-          d.expectedDate<today();
-
-        return `
-          <article class="item">
-
-            <div class="item-top">
-
-              <div>
-                <h3>${esc(orderName(d.orderId))}</h3>
-
-                <div class="subtitle">
-                  ${esc(d.carrier||"Corriere non indicato")}
-                </div>
-              </div>
-
-              <span class="badge ${late?"bad":statusClass(d.status)}">
-                ${late?"RITARDO":esc(d.status)}
-              </span>
-
-            </div>
-
-            <div class="meta">
-
-              <div>
-                <label>Tracking</label>
-                <strong>${esc(d.tracking||"—")}</strong>
-              </div>
-
-              <div>
-                <label>Prevista</label>
-                <strong>${esc(d.expectedDate||"—")}</strong>
-              </div>
-
-              <div>
-                <label>Ricevuta</label>
-                <strong>${esc(d.actualDate||"—")}</strong>
-              </div>
-
-              <div>
-                <label>Magazzino</label>
-                <strong>${d.received?"CARICATO":"DA CARICARE"}</strong>
-              </div>
-
-            </div>
-
-            <div class="actions">
-
-              ${d.trackingUrl?`
-                <button class="mini blue"
-                  onclick="window.open('${esc(d.trackingUrl)}','_blank')">
-                  TRACKING
-                </button>
-              `:""}
-
-              ${!d.received?`
-                <button class="mini green"
-                  onclick="receiveDelivery('${d.id}')">
-                  RICEVI MERCE
-                </button>
-              `:""}
-
-              <button class="mini primary"
-                onclick="editDelivery('${d.id}')">
-                MODIFICA
-              </button>
-
-            </div>
-
-          </article>
-        `;
-
-      }).join("")
-      :empty("Nessuna consegna","Le consegne appariranno qui.");
-
-}
-
-function editDelivery(id){
-
-  const d=data.deliveries.find(x=>x.id===id);
-
-  if(d) openDelivery(d);
-
-}
-
-/* FATTURE */
-
-function openInvoice(i=null){
-
-  if(!data.suppliers.length){
-    toast("Crea prima un fornitore");
-    return;
-  }
-
-  invoiceSupplier.innerHTML=supplierOptions();
-  invoiceOrder.innerHTML=
-    `<option value="">Nessun ordine</option>`+
-    data.orders.map(o=>`
-      <option value="${o.id}">
-        ${esc(o.number)}
-      </option>
-    `).join("");
-
-  invoiceId.value=i?.id||"";
-  invoiceNumber.value=i?.number||"";
-  invoiceSupplier.value=i?.supplierId||"";
-  invoiceOrder.value=i?.orderId||"";
-  invoiceDate.value=i?.date||today();
-  invoiceDue.value=i?.dueDate||"";
-  invoiceAmount.value=i?.amount??"";
-  invoiceStatus.value=i?.status||"Da pagare";
-  invoiceNotes.value=i?.notes||"";
-
-  openModal("invoiceModal");
-
-}
-
-function saveInvoice(e){
-
-  e.preventDefault();
-
-  const idv=invoiceId.value;
-  const old=data.invoices.find(i=>i.id===idv);
-
-  const invoice={
-    id:idv||uid("invoice"),
-    number:invoiceNumber.value.trim(),
-    supplierId:invoiceSupplier.value,
-    orderId:invoiceOrder.value,
-    date:invoiceDate.value,
-    dueDate:invoiceDue.value,
-    amount:Number(invoiceAmount.value||0),
-    status:invoiceStatus.value,
-    notes:invoiceNotes.value.trim(),
-    createdAt:old?.createdAt||new Date().toISOString()
-  };
-
-  if(idv){
-
-    data.invoices=data.invoices.map(x=>
-      x.id===idv?invoice:x
+  const units=
+    products.reduce(
+      (s,p)=>
+        s+Number(p.stock_attuale||0),
+      0
     );
 
-  }else{
-
-    data.invoices.push(invoice);
-
-  }
-
-  if(invoice.orderId){
-
-    const o=data.orders.find(x=>
-      x.id===invoice.orderId
+  const value=
+    products.reduce(
+      (s,p)=>
+        s+
+        Number(p.stock_attuale||0)*
+        Number(p.prezzo_unitario||0),
+      0
     );
 
-    if(o){
-      o.paymentStatus=
-        invoice.status==="Pagata"
-          ?"Pagato"
-          :"Da pagare";
-    }
+  stockArticles.textContent=
+    products.length;
 
-  }
+  stockLow.textContent=
+    low.length;
 
-  closeModal("invoiceModal");
-  save();
+  stockUnits.textContent=
+    units.toFixed(2);
 
-}
+  stockValue.textContent=
+    money(value);
 
-function markInvoicePaid(id){
-
-  const i=data.invoices.find(x=>x.id===id);
-
-  if(!i) return;
-
-  i.status="Pagata";
-
-  if(i.orderId){
-
-    const o=data.orders.find(x=>x.id===i.orderId);
-
-    if(o) o.paymentStatus="Pagato";
-
-  }
-
-  save();
-
-}
-
-function renderInvoices(){
-
-  const q=(invoiceSearch?.value||"").toLowerCase();
-
-  const list=data.invoices.filter(i=>
-    [
-      i.number,
-      supplierName(i.supplierId),
-      i.status
-    ].join(" ").toLowerCase().includes(q)
-  );
-
-  invoiceList.innerHTML=
-    list.length
-      ?list.map(i=>{
-
-        const overdue=
-          i.status!=="Pagata" &&
-          i.dueDate &&
-          i.dueDate<today();
-
-        return `
-          <article class="item">
-
-            <div class="item-top">
-
-              <div>
-                <h3>${esc(i.number)}</h3>
-
-                <div class="subtitle">
-                  ${esc(supplierName(i.supplierId))}
-                  ${i.orderId?" · "+esc(orderName(i.orderId)):""}
-                </div>
-              </div>
-
-              <span class="badge ${
-                overdue?"bad":statusClass(i.status)
-              }">
-                ${overdue?"SCADUTA":esc(i.status)}
-              </span>
-
-            </div>
-
-            <div class="meta">
-
-              <div>
-                <label>Importo</label>
-                <strong>${money(i.amount)}</strong>
-              </div>
-
-              <div>
-                <label>Data</label>
-                <strong>${esc(i.date||"—")}</strong>
-              </div>
-
-              <div>
-                <label>Scadenza</label>
-                <strong>${esc(i.dueDate||"—")}</strong>
-              </div>
-
-              <div>
-                <label>Ordine</label>
-                <strong>${esc(orderName(i.orderId))}</strong>
-              </div>
-
-            </div>
-
-            <div class="actions">
-
-              ${i.status!=="Pagata"?`
-                <button class="mini green"
-                  onclick="markInvoicePaid('${i.id}')">
-                  SEGNA PAGATA
-                </button>
-              `:""}
-
-              <button class="mini primary"
-                onclick="editInvoice('${i.id}')">
-                MODIFICA
-              </button>
-
-            </div>
-
-          </article>
-        `;
-
-      }).join("")
-      :empty("Nessuna fattura","Registra la prima fattura fornitore.");
-
-}
-
-function editInvoice(id){
-
-  const i=data.invoices.find(x=>x.id===id);
-
-  if(i) openInvoice(i);
-
-}
-
-/* ANALISI */
-
-function renderAnalysis(){
-
-  const valid=data.orders.filter(o=>
-    o.status!=="Annullato"
-  );
-
-  const spend=valid.reduce((s,o)=>
-    s+Number(o.total||o.grandTotal||0),0
-  );
-
-  anaSpend.textContent=money(spend);
-
-  anaAverage.textContent=
-    money(valid.length?spend/valid.length:0);
-
-  const invoiceOpen=data.invoices
-    .filter(i=>i.status!=="Pagata")
-    .reduce((s,i)=>s+Number(i.amount||0),0);
-
-  anaInvoices.textContent=money(invoiceOpen);
-
-  let top=null;
-
-  data.suppliers.forEach(s=>{
-
-    const score=Number(supplierScore(s));
-
-    if(!top || score>top.score){
-      top={name:s.name,score};
-    }
-
-  });
-
-  anaSupplier.textContent=
-    top?top.name:"—";
-
-  supplierRanking.innerHTML=
-    data.suppliers.length
-      ?[...data.suppliers]
-        .sort((a,b)=>
-          Number(supplierScore(b))-
-          Number(supplierScore(a))
-        )
-        .map(s=>{
-
-          const orders=data.orders.filter(o=>
-            o.supplierId===s.id
-          );
-
-          const total=orders.reduce((sum,o)=>
-            sum+Number(o.total||o.grandTotal||0),0
-          );
-
-          return `
-            <tr>
-              <td><strong>${esc(s.name)}</strong></td>
-              <td>${orders.length}</td>
-              <td>${money(total)}</td>
-              <td>${s.rating||0}/5</td>
-              <td>${s.deliveryDays||"—"} gg</td>
-              <td><strong>${supplierScore(s)}</strong></td>
-            </tr>
-          `;
-
-        }).join("")
-      :`<tr><td colspan="6">Nessun fornitore.</td></tr>`;
-
-  renderComparison();
-
-}
-
-function renderComparison(){
-
-  const q=(compareSearch?.value||"").toLowerCase();
-
-  const products=data.products
-    .filter(p=>p.name.toLowerCase().includes(q))
-    .sort((a,b)=>{
-      const n=a.name.localeCompare(b.name);
-      return n||realCost(a)-realCost(b);
-    });
-
-  const best={};
-
-  products.forEach(p=>{
-
-    const key=p.name.toLowerCase();
-    const cost=realCost(p);
-
-    if(best[key]===undefined || cost<best[key]){
-      best[key]=cost;
-    }
-
-  });
-
-  comparisonTable.innerHTML=
+  stockTable.innerHTML=
     products.length
       ?products.map(p=>{
 
-        const cost=realCost(p);
-        const isBest=
-          cost===best[p.name.toLowerCase()];
+        const isLow=
+          Number(p.stock_minimo||0)>0 &&
+          Number(p.stock_attuale||0)<=
+          Number(p.stock_minimo||0);
 
         return `
-          <tr class="${isBest?"best-row":""}">
+
+          <tr>
+
             <td>
-              <strong>${esc(p.name)}</strong>
-              ${isBest?" ✓":""}
+              <strong>${esc(p.nome)}</strong>
             </td>
 
-            <td>${esc(supplierName(p.supplierId))}</td>
-            <td>${money(p.price)}</td>
-            <td>${p.minimum||"—"}</td>
-            <td>${money(p.shippingEstimate||0)}</td>
-            <td><strong>${money(cost)}</strong></td>
+            <td>
+              ${esc(supplierName(p.fornitore_id))}
+            </td>
+
+            <td>
+              ${p.stock_attuale||0}
+              ${esc(p.unita_misura||"")}
+            </td>
+
+            <td>
+              ${p.stock_minimo||0}
+            </td>
+
+            <td>
+              ${money(p.prezzo_unitario)}
+            </td>
+
+            <td>
+              ${isLow?"RIORDINO":"OK"}
+            </td>
+
           </tr>
+
         `;
 
       }).join("")
-      :`<tr><td colspan="6">Nessun prodotto.</td></tr>`;
-
+      :`
+        <tr>
+          <td colspan="6">
+            Nessun prodotto.
+          </td>
+        </tr>
+      `;
 }
 
-/* SETTINGS */
+/* =========================================================
+   DOCUMENTI
+========================================================= */
 
-function loadSettings(){
+function renderDocuments(){
 
-  companyName.value=
-    data.settings.company||
-    "XA Fermented Redrinks";
+  deliveryCount.textContent=
+    deliveries.length;
 
-  currency.value=
-    data.settings.currency||
-    "EUR";
+  invoiceCount.textContent=
+    invoices.length;
 
-}
+  deliveryList.innerHTML=
+    deliveries.length
+      ?deliveries.map(d=>`
 
-function saveSettings(){
+        <article class="item">
 
-  data.settings.company=
-    companyName.value.trim()||
-    "XA Fermented Redrinks";
+          <div class="item-top">
 
-  data.settings.currency=currency.value;
+            <div>
+              <h3>
+                Consegna ordine
+                ${esc(
+                  orders.find(o=>
+                    String(o.id)===
+                    String(d.ordine_id)
+                  )?.numero_ordine || "—"
+                )}
+              </h3>
 
-  save();
+              <div class="subtitle">
+                ${esc(d.corriere||"Corriere non indicato")}
+              </div>
+            </div>
 
-  toast("Impostazioni salvate");
+            <span class="badge info">
+              ${esc(d.stato)}
+            </span>
 
-}
+          </div>
 
-function downloadText(filename,text,type){
+          <div class="meta">
 
-  const blob=new Blob([text],{type});
-  const url=URL.createObjectURL(blob);
+            <div>
+              <label>Tracking</label>
+              <strong>${esc(d.tracking||"—")}</strong>
+            </div>
 
-  const a=document.createElement("a");
+            <div>
+              <label>Prevista</label>
+              <strong>${esc(d.data_prevista||"—")}</strong>
+            </div>
 
-  a.href=url;
-  a.download=filename;
+          </div>
 
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+        </article>
 
-  URL.revokeObjectURL(url);
-
-}
-
-function exportBackup(){
-
-  downloadText(
-    "xa-supply-v2-backup-"+today()+".json",
-    JSON.stringify(data,null,2),
-    "application/json"
-  );
-
-}
-
-function exportOrdersCSV(){
-
-  const rows=[
-    [
-      "Numero",
-      "Data",
-      "Fornitore",
-      "Stato",
-      "Pagamento",
-      "Totale"
-    ]
-  ];
-
-  data.orders.forEach(o=>{
-    rows.push([
-      o.number,
-      o.date,
-      supplierName(o.supplierId),
-      o.status,
-      o.paymentStatus,
-      o.total||o.grandTotal||0
-    ]);
-  });
-
-  const csv=rows.map(r=>
-    r.map(v=>
-      `"${String(v??"").replaceAll('"','""')}"`
-    ).join(";")
-  ).join("\n");
-
-  downloadText(
-    "xa-ordini-"+today()+".csv",
-    csv,
-    "text/csv;charset=utf-8"
-  );
-
-}
-
-function exportStockCSV(){
-
-  const rows=[
-    [
-      "Prodotto",
-      "Fornitore",
-      "Codice",
-      "Stock",
-      "Unita",
-      "Scorta minima",
-      "Prezzo",
-      "Valore"
-    ]
-  ];
-
-  data.products.forEach(p=>{
-
-    rows.push([
-      p.name,
-      supplierName(p.supplierId),
-      p.code,
-      p.stock,
-      p.unit,
-      p.minStock,
-      p.price,
-      Number(p.stock||0)*Number(p.price||0)
-    ]);
-
-  });
-
-  const csv=rows.map(r=>
-    r.map(v=>
-      `"${String(v??"").replaceAll('"','""')}"`
-    ).join(";")
-  ).join("\n");
-
-  downloadText(
-    "xa-magazzino-"+today()+".csv",
-    csv,
-    "text/csv;charset=utf-8"
-  );
-
-}
-
-function importBackup(e){
-
-  const file=e.target.files?.[0];
-
-  if(!file) return;
-
-  const reader=new FileReader();
-
-  reader.onload=()=>{
-
-    try{
-
-      data=normalize(
-        JSON.parse(reader.result)
+      `).join("")
+      :empty(
+        "Nessuna consegna",
+        "Le consegne appariranno qui."
       );
 
-      save();
-      loadSettings();
+  invoiceList.innerHTML=
+    invoices.length
+      ?invoices.map(i=>`
 
-      toast("Backup importato");
+        <article class="item">
 
-    }catch(err){
+          <div class="item-top">
 
-      alert("Backup non valido");
+            <div>
+              <h3>${esc(i.numero_fattura)}</h3>
 
-    }
+              <div class="subtitle">
+                ${esc(supplierName(i.fornitore_id))}
+              </div>
+            </div>
 
-    e.target.value="";
+            <span class="badge ${
+              i.stato==="PAGATA"
+                ?"good"
+                :"warn"
+            }">
+              ${esc(i.stato)}
+            </span>
 
-  };
+          </div>
 
-  reader.readAsText(file);
+          <div class="meta">
 
+            <div>
+              <label>Totale</label>
+              <strong>${money(i.totale)}</strong>
+            </div>
+
+            <div>
+              <label>Scadenza</label>
+              <strong>${esc(i.data_scadenza||"—")}</strong>
+            </div>
+
+          </div>
+
+        </article>
+
+      `).join("")
+      :empty(
+        "Nessuna fattura",
+        "Le fatture appariranno qui."
+      );
 }
 
-function resetData(){
+/* =========================================================
+   XA BUY ENGINE
+========================================================= */
 
-  const answer=prompt(
-    "Per cancellare tutto scrivi esattamente: CANCELLA XA"
-  );
+function renderBuyEngine(){
 
-  if(answer!=="CANCELLA XA"){
-    toast("Operazione annullata");
-    return;
-  }
+  const q=
+    (compareSearch?.value||"")
+      .toLowerCase();
 
-  data=clone(EMPTY);
+  const list=
+    products
+      .filter(p=>
+        p.nome
+          .toLowerCase()
+          .includes(q)
+      )
+      .sort(
+        (a,b)=>
+          realCost(a)-realCost(b)
+      );
 
-  localStorage.removeItem(KEY);
+  buyTable.innerHTML=
+    list.length
+      ?list.map((p,index)=>`
 
-  save();
-  loadSettings();
+        <tr>
 
+          <td>
+            <strong>
+              ${index===0 && q ? "✓ " : ""}
+              ${esc(p.nome)}
+            </strong>
+          </td>
+
+          <td>
+            ${esc(supplierName(p.fornitore_id))}
+          </td>
+
+          <td>
+            ${money(p.prezzo_unitario)}
+          </td>
+
+          <td>
+            ${p.minimo_ordine||0}
+          </td>
+
+          <td>
+            ${money(p.costo_trasporto)}
+          </td>
+
+          <td>
+            <strong>
+              ${money(realCost(p))}
+            </strong>
+          </td>
+
+        </tr>
+
+      `).join("")
+      :`
+        <tr>
+          <td colspan="6">
+            Nessun prodotto.
+          </td>
+        </tr>
+      `;
 }
 
-/* RENDER */
+/* =========================================================
+   RENDER
+========================================================= */
 
 function renderAll(){
 
@@ -4326,14 +3328,47 @@ function renderAll(){
   renderProducts();
   renderOrders();
   renderStock();
-  renderDeliveries();
-  renderInvoices();
-  renderAnalysis();
-
+  renderDocuments();
+  renderBuyEngine();
 }
 
-loadSettings();
-renderAll();
+/* =========================================================
+   MODAL CLICK
+========================================================= */
+
+document
+  .querySelectorAll(".modal-bg")
+  .forEach(bg=>{
+
+    bg.addEventListener("click",e=>{
+
+      if(e.target===bg){
+        bg.classList.remove("show");
+      }
+
+    });
+
+  });
+
+/* =========================================================
+   START
+========================================================= */
+
+db.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    if(event==="SIGNED_OUT"){
+      showLogin();
+    }
+
+    if(event==="SIGNED_IN" && session){
+      showApp(session);
+    }
+
+  }
+);
+
+checkSession();
 
 </script>
 
