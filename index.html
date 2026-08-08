@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#541826">
+<meta name="theme-color" content="#641b2e">
 
 <title>XA Supply Command</title>
 
@@ -12,194 +12,197 @@
 <style>
 :root{
   --wine:#641b2e;
-  --wine-dark:#321017;
-  --wine-light:#8d3048;
-  --cream:#f4ead8;
-  --paper:#fffaf0;
-  --gold:#b58b48;
-  --ink:#2a2020;
-  --muted:#7c716b;
+  --wine2:#9b2f4d;
+  --dark:#321017;
+  --cream:#fff9ed;
+  --gold:#d0ad6c;
+  --ink:#2b2021;
+  --muted:#796e68;
   --green:#347457;
   --red:#a93645;
-  --line:rgba(88,35,44,.14);
+  --line:#dfceb2;
 }
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
 body{
   margin:0;
   min-height:100vh;
   font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(180deg,#faf4e8,#ede0ca);
   color:var(--ink);
+  background:#f2e6d3;
 }
 
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
+button,input{
+  font:inherit;
+}
 
-/* LOGIN */
+button{
+  cursor:pointer;
+}
 
-.login-screen{
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN / RECOVERY */
+
+.auth-screen{
   min-height:100vh;
   padding:25px 18px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(circle at 80% 10%,rgba(208,166,93,.20),transparent 32%),
-    linear-gradient(150deg,#291015,#5f192c 60%,#7f2b40);
+    radial-gradient(circle at 85% 10%,rgba(154,45,73,.5),transparent 35%),
+    linear-gradient(145deg,#3a1019,#65192d 60%,#821f3b);
 }
 
-.login-box{
+.auth-box{
   width:min(100%,440px);
-  padding:30px 22px;
-  border-radius:30px;
-  background:#fffaf0;
-  box-shadow:0 30px 70px rgba(0,0,0,.30);
+  padding:31px 22px;
+  border-radius:31px;
+  background:var(--cream);
+  box-shadow:0 28px 70px rgba(0,0,0,.3);
 }
 
-.login-logo{
-  width:78px;
-  height:78px;
-  margin:0 auto 20px;
+.logo{
+  width:86px;
+  height:86px;
+  margin:0 auto 22px;
   display:grid;
   place-items:center;
   border:3px solid var(--wine);
-  border-radius:25px;
+  border-radius:27px;
   color:var(--wine);
-  font:900 37px Georgia,serif;
+  font:900 42px Georgia,serif;
 }
 
-.login-box h1{
+.auth-box h1{
   margin:0;
+  color:var(--dark);
   text-align:center;
-  color:var(--wine-dark);
-  font:900 31px Georgia,serif;
+  font:900 32px Georgia,serif;
 }
 
 .claim{
-  margin:10px 0 28px;
-  text-align:center;
+  margin:12px 0 30px;
   color:var(--muted);
+  text-align:center;
   font-size:9px;
   font-weight:900;
   letter-spacing:1.4px;
 }
 
-.field{margin-bottom:13px}
+.field{
+  margin-bottom:15px;
+}
 
 .field label{
   display:block;
-  margin:0 0 6px 2px;
-  color:var(--wine-dark);
+  margin:0 0 7px 3px;
+  color:var(--dark);
   font-size:9px;
   font-weight:900;
-  text-transform:uppercase;
 }
 
-.field input,
-.field select,
-.field textarea{
+.field input{
   width:100%;
-  border:1px solid #d7c4a5;
-  border-radius:14px;
-  outline:none;
-  background:#fffdf8;
-}
-
-.field input,
-.field select{
-  height:49px;
+  height:52px;
   padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  outline:none;
+  background:#fffef9;
+  color:var(--ink);
 }
 
-.field textarea{
-  min-height:85px;
-  padding:12px;
+.field input:focus{
+  border-color:var(--wine);
 }
 
 .btn{
-  min-height:46px;
-  padding:11px 15px;
+  width:100%;
+  min-height:49px;
   border:0;
-  border-radius:14px;
+  border-radius:15px;
   font-size:10px;
   font-weight:900;
 }
 
 .btn-primary{
-  width:100%;
   color:white;
-  background:linear-gradient(135deg,var(--wine),#9c304e);
+  background:linear-gradient(135deg,var(--wine),var(--wine2));
 }
 
-.btn-soft{
-  width:100%;
-  margin-top:8px;
+.btn-link{
+  margin-top:10px;
   color:var(--wine);
   background:transparent;
 }
 
-.login-status{
-  min-height:22px;
-  margin-top:12px;
-  text-align:center;
+.status{
+  min-height:25px;
+  margin-top:14px;
   color:var(--red);
+  text-align:center;
   font-size:10px;
   font-weight:800;
-  line-height:1.4;
+  line-height:1.45;
 }
 
-.success{
-  color:var(--green)!important;
+.status.ok{
+  color:var(--green);
 }
 
 /* APP */
 
-.app{
+#app{
   min-height:100vh;
-  padding-bottom:85px;
+  padding-bottom:78px;
 }
 
 .top{
   position:sticky;
   top:0;
-  z-index:40;
+  z-index:20;
   padding:10px;
-  background:rgba(247,239,225,.96);
+  background:#f6ead8;
   border-bottom:1px solid var(--line);
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:11px;
   padding:12px;
-  border-radius:21px;
+  border-radius:20px;
   color:white;
-  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
+  background:linear-gradient(135deg,var(--dark),var(--wine));
 }
 
-.logo{
-  width:52px;
-  height:52px;
+.brand-logo{
+  width:50px;
+  height:50px;
   display:grid;
   place-items:center;
-  border:2px solid #ead7ae;
-  border-radius:15px;
-  font:900 25px Georgia,serif;
+  border:2px solid #ead4a8;
+  border-radius:14px;
+  font:900 24px Georgia,serif;
 }
 
 .brand strong{
   display:block;
-  font:900 16px Georgia,serif;
+  font:900 15px Georgia,serif;
 }
 
 .brand small{
   display:block;
   margin-top:4px;
-  color:#ead9bb;
+  color:#ead8ba;
   font-size:7px;
   font-weight:900;
 }
@@ -210,18 +213,20 @@ button{cursor:pointer}
   font-weight:900;
 }
 
-main{padding:13px}
+main{
+  padding:13px;
+}
 
 .hero{
-  padding:24px 19px;
-  border-radius:27px;
+  padding:23px 18px;
+  border-radius:26px;
   color:white;
-  background:linear-gradient(145deg,#351018,#6f2035 65%,#963c51);
+  background:linear-gradient(145deg,#351018,#6c2034 65%,#963c51);
 }
 
 .hero h2{
-  margin:12px 0 7px;
-  font:900 32px Georgia,serif;
+  margin:6px 0 8px;
+  font:900 31px Georgia,serif;
 }
 
 .hero p{
@@ -229,27 +234,6 @@ main{padding:13px}
   color:#eadacd;
   font-size:11px;
   line-height:1.5;
-}
-
-.hero-actions{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-top:17px;
-}
-
-.hero-actions .btn{
-  width:auto;
-}
-
-.btn-gold{
-  background:#e4c782;
-  color:#402719;
-}
-
-.btn-dark{
-  background:#352427;
-  color:white;
 }
 
 .stats{
@@ -262,7 +246,7 @@ main{padding:13px}
 .stat,.card{
   padding:14px;
   border:1px solid var(--line);
-  border-radius:19px;
+  border-radius:18px;
   background:#fffaf1;
 }
 
@@ -270,56 +254,36 @@ main{padding:13px}
   color:var(--muted);
   font-size:7px;
   font-weight:900;
-  text-transform:uppercase;
 }
 
 .stat strong{
   display:block;
   margin-top:7px;
-  color:var(--wine-dark);
+  color:var(--dark);
   font:900 23px Georgia,serif;
 }
 
-.card{margin-top:10px}
+.card{
+  margin-top:10px;
+}
 
 .card h3{
   margin:0 0 10px;
-  color:var(--wine-dark);
+  color:var(--dark);
   font:900 17px Georgia,serif;
 }
 
-.quick{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
+.page{
+  display:none;
 }
 
-.quick button{
-  min-height:72px;
-  padding:11px;
-  border:1px solid #dcc7a5;
-  border-radius:15px;
-  background:#f6ead5;
-  text-align:left;
-}
-
-.quick strong{
+.page.active{
   display:block;
-  color:var(--wine);
-  font-size:10px;
 }
-
-.quick small{
-  color:var(--muted);
-  font-size:8px;
-}
-
-.page{display:none}
-.page.active{display:block}
 
 .page-title h2{
   margin:4px 0;
-  color:var(--wine-dark);
+  color:var(--dark);
   font:900 27px Georgia,serif;
 }
 
@@ -329,104 +293,36 @@ main{padding:13px}
   font-size:10px;
 }
 
-.toolbar{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:7px;
-}
-
-.search{
-  height:44px;
-  padding:0 12px;
-  border:1px solid #d8c4a4;
-  border-radius:13px;
-}
-
 .list{
   display:grid;
   gap:8px;
-  margin-top:9px;
 }
 
 .item{
   padding:13px;
   border:1px solid var(--line);
-  border-radius:17px;
+  border-radius:16px;
   background:#fffaf1;
 }
 
 .item h3{
   margin:0;
-  color:var(--wine-dark);
+  color:var(--dark);
   font:900 15px Georgia,serif;
 }
 
-.subtitle{
-  margin-top:5px;
+.item p{
+  margin:5px 0 0;
   color:var(--muted);
   font-size:9px;
-}
-
-.meta{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5px;
-  margin-top:9px;
-}
-
-.meta div{
-  padding:8px;
-  border-radius:11px;
-  background:#f1e4d0;
-}
-
-.meta label{
-  display:block;
-  color:var(--muted);
-  font-size:6px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.meta strong{
-  display:block;
-  margin-top:4px;
-  font-size:9px;
-}
-
-.actions{
-  display:flex;
-  gap:6px;
-  margin-top:9px;
-  flex-wrap:wrap;
-}
-
-.mini{
-  padding:7px 10px;
-  border:0;
-  border-radius:9px;
-  background:#e9d9bd;
-  color:var(--wine);
-  font-size:8px;
-  font-weight:900;
-}
-
-.mini.primary{
-  background:var(--wine);
-  color:white;
-}
-
-.mini.red{
-  background:var(--red);
-  color:white;
 }
 
 .empty{
   padding:25px;
   border:1px dashed #cdb89a;
-  border-radius:17px;
-  text-align:center;
+  border-radius:16px;
   color:var(--muted);
+  text-align:center;
   font-size:10px;
 }
 
@@ -435,9 +331,9 @@ main{padding:13px}
   left:0;
   right:0;
   bottom:0;
-  z-index:50;
+  z-index:30;
   display:grid;
-  grid-template-columns:repeat(6,1fr);
+  grid-template-columns:repeat(5,1fr);
   padding:6px 4px max(7px,env(safe-area-inset-bottom));
   border-top:1px solid var(--line);
   background:#fffaf1;
@@ -447,8 +343,8 @@ main{padding:13px}
   padding:7px 2px;
   border:0;
   border-radius:10px;
+  color:#746764;
   background:transparent;
-  color:#756864;
   font-size:6px;
   font-weight:900;
 }
@@ -459,37 +355,14 @@ main{padding:13px}
 }
 
 .nav.active{
+  color:white;
   background:var(--wine);
-  color:white;
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  z-index:100;
-  width:calc(100% - 30px);
-  max-width:440px;
-  padding:12px;
-  border-radius:13px;
-  background:#332226;
-  color:white;
-  text-align:center;
-  font-size:9px;
-  font-weight:900;
-  opacity:0;
-  transform:translate(-50%,70px);
-  transition:.2s;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
 }
 
 @media(min-width:700px){
-  .stats{grid-template-columns:repeat(4,1fr)}
-  .quick{grid-template-columns:repeat(4,1fr)}
+  .stats{
+    grid-template-columns:repeat(4,1fr);
+  }
 }
 </style>
 </head>
@@ -497,10 +370,12 @@ main{padding:13px}
 <body>
 
 <!-- LOGIN -->
-<section class="login-screen" id="loginScreen">
-  <div class="login-box">
 
-    <div class="login-logo">XA</div>
+<section class="auth-screen" id="loginScreen">
+
+  <div class="auth-box">
+
+    <div class="logo">XA</div>
 
     <h1>Supply Command</h1>
 
@@ -511,23 +386,23 @@ main{padding:13px}
     <form id="loginForm">
 
       <div class="field">
-        <label>Email</label>
+        <label>EMAIL</label>
         <input
           id="loginEmail"
           type="email"
           autocomplete="username"
-          required
-          placeholder="Email XA">
+          placeholder="Email XA"
+          required>
       </div>
 
       <div class="field">
-        <label>Password</label>
+        <label>PASSWORD</label>
         <input
           id="loginPassword"
           type="password"
           autocomplete="current-password"
-          required
-          placeholder="Password">
+          placeholder="Password"
+          required>
       </div>
 
       <button class="btn btn-primary" type="submit">
@@ -535,26 +410,28 @@ main{padding:13px}
       </button>
 
       <button
-        class="btn btn-soft"
+        class="btn btn-link"
         type="button"
-        onclick="forgotPassword()">
+        onclick="sendPasswordRecovery()">
         PASSWORD DIMENTICATA?
       </button>
 
     </form>
 
-    <div class="login-status" id="loginStatus"></div>
+    <div class="status" id="loginStatus"></div>
 
   </div>
+
 </section>
 
 
-<!-- NUOVA PASSWORD -->
-<section class="login-screen hidden" id="recoveryScreen">
+<!-- RECUPERO PASSWORD -->
 
-  <div class="login-box">
+<section class="auth-screen hidden" id="recoveryScreen">
 
-    <div class="login-logo">XA</div>
+  <div class="auth-box">
+
+    <div class="logo">XA</div>
 
     <h1>Nuova password</h1>
 
@@ -565,23 +442,25 @@ main{padding:13px}
     <form id="recoveryForm">
 
       <div class="field">
-        <label>Nuova password</label>
+        <label>NUOVA PASSWORD</label>
         <input
           id="newPassword"
           type="password"
           minlength="8"
-          required
-          placeholder="Minimo 8 caratteri">
+          autocomplete="new-password"
+          placeholder="Minimo 8 caratteri"
+          required>
       </div>
 
       <div class="field">
-        <label>Ripeti password</label>
+        <label>RIPETI PASSWORD</label>
         <input
           id="newPassword2"
           type="password"
           minlength="8"
-          required
-          placeholder="Ripeti la password">
+          autocomplete="new-password"
+          placeholder="Ripeti la password"
+          required>
       </div>
 
       <button class="btn btn-primary" type="submit">
@@ -590,7 +469,7 @@ main{padding:13px}
 
     </form>
 
-    <div class="login-status" id="recoveryStatus"></div>
+    <div class="status" id="recoveryStatus"></div>
 
   </div>
 
@@ -598,17 +477,18 @@ main{padding:13px}
 
 
 <!-- APP -->
-<div class="app hidden" id="app">
+
+<div id="app" class="hidden">
 
 <header class="top">
 
   <div class="brand">
 
-    <div class="logo">XA</div>
+    <div class="brand-logo">XA</div>
 
     <div>
       <strong>XA SUPPLY COMMAND</strong>
-      <small>SUPABASE ONLINE · PROCUREMENT SYSTEM</small>
+      <small>SUPABASE ONLINE · PROCUREMENT</small>
     </div>
 
     <div class="online" id="onlineBadge">
@@ -624,86 +504,43 @@ main{padding:13px}
 <section class="page active" id="page-home">
 
   <div class="hero">
-
-    <small>● XA CLOUD OPERATIONS</small>
-
     <h2>Supply Command</h2>
 
     <p>
-      Fornitori, prodotti, ordini e acquisti XA
-      sincronizzati online con Supabase.
+      Fornitori, prodotti e ordini XA sincronizzati
+      online con Supabase.
     </p>
-
-    <div class="hero-actions">
-
-      <button class="btn btn-gold" onclick="goPage('suppliers')">
-        FORNITORI
-      </button>
-
-      <button class="btn btn-dark" onclick="goPage('products')">
-        PRODOTTI
-      </button>
-
-      <button class="btn btn-primary" style="width:auto" onclick="goPage('orders')">
-        ORDINI
-      </button>
-
-    </div>
-
   </div>
 
   <div class="stats">
 
     <div class="stat">
-      <small>Fornitori</small>
+      <small>FORNITORI</small>
       <strong id="kpiSuppliers">0</strong>
     </div>
 
     <div class="stat">
-      <small>Prodotti</small>
+      <small>PRODOTTI</small>
       <strong id="kpiProducts">0</strong>
     </div>
 
     <div class="stat">
-      <small>Ordini</small>
+      <small>ORDINI</small>
       <strong id="kpiOrders">0</strong>
     </div>
 
     <div class="stat">
-      <small>Online</small>
+      <small>CLOUD</small>
       <strong>XA</strong>
     </div>
 
   </div>
 
   <div class="card">
-
-    <h3>Operazioni rapide</h3>
-
-    <div class="quick">
-
-      <button onclick="goPage('suppliers')">
-        <strong>🏢 Fornitori</strong>
-        <small>Archivio fornitori</small>
-      </button>
-
-      <button onclick="goPage('products')">
-        <strong>📦 Prodotti</strong>
-        <small>Catalogo acquisti</small>
-      </button>
-
-      <button onclick="goPage('orders')">
-        <strong>🛒 Ordini</strong>
-        <small>Ordini fornitori</small>
-      </button>
-
-      <button onclick="loadAll()">
-        <strong>↻ Sincronizza</strong>
-        <small>Aggiorna Supabase</small>
-      </button>
-
-    </div>
-
+    <h3>XA Online</h3>
+    <p style="font-size:10px;color:#796e68">
+      Database collegato a Supabase.
+    </p>
   </div>
 
 </section>
@@ -714,16 +551,6 @@ main{padding:13px}
   <div class="page-title">
     <h2>Fornitori</h2>
     <p>Archivio fornitori XA</p>
-  </div>
-
-  <div class="toolbar">
-    <input
-      class="search"
-      id="supplierSearch"
-      placeholder="Cerca..."
-      oninput="renderSuppliers()">
-
-    <button class="btn btn-primary" style="width:46px" onclick="simpleAddSupplier()">+</button>
   </div>
 
   <div class="list" id="supplierList"></div>
@@ -738,16 +565,6 @@ main{padding:13px}
     <p>Catalogo acquisti</p>
   </div>
 
-  <div class="toolbar">
-    <input
-      class="search"
-      id="productSearch"
-      placeholder="Cerca..."
-      oninput="renderProducts()">
-
-    <button class="btn btn-primary" style="width:46px" onclick="simpleAddProduct()">+</button>
-  </div>
-
   <div class="list" id="productList"></div>
 
 </section>
@@ -757,7 +574,7 @@ main{padding:13px}
 
   <div class="page-title">
     <h2>Ordini</h2>
-    <p>Ordini di acquisto</p>
+    <p>Ordini fornitori</p>
   </div>
 
   <div class="list" id="orderList"></div>
@@ -775,7 +592,7 @@ main{padding:13px}
   <div class="card">
 
     <div class="field">
-      <label>Email collegata</label>
+      <label>EMAIL</label>
       <input id="accountEmail" readonly>
     </div>
 
@@ -808,10 +625,6 @@ main{padding:13px}
   <b>🛒</b>ORDINI
 </button>
 
-<button class="nav" onclick="loadAll()">
-  <b>↻</b>SYNC
-</button>
-
 <button class="nav" onclick="goPage('account',this)">
   <b>●</b>XA
 </button>
@@ -820,23 +633,29 @@ main{padding:13px}
 
 </div>
 
-<div class="toast" id="toast"></div>
-
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
+/* ==========================================================
+   XA SUPPLY COMMAND
+   AUTH RECOVERY FIX
+========================================================== */
 
 const SUPABASE_URL =
-"https://dmvdmkfwmvmgggvwqnkz.supabase.co";
+  "https://dmvdmkfwmvmgggvwqnkz.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_yIP9daDD0ICiisUysO74cA_UOhQGNNP";
+  "sb_publishable_yIP9daDD0ICiisUysO74cA_UOhQGNNP";
 
 const APP_URL =
-"https://essenzadiluna1-oss.github.io/xa-supply-command/";
+  "https://essenzadiluna1-oss.github.io/xa-supply-command/";
+
+
+/*
+  Usiamo PKCE per i nuovi reset.
+  Manteniamo anche gestione manuale dei vecchi link
+  con access_token / refresh_token.
+*/
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
@@ -845,319 +664,549 @@ const db = window.supabase.createClient(
     auth:{
       persistSession:true,
       autoRefreshToken:true,
-      detectSessionInUrl:true
+      detectSessionInUrl:false,
+      flowType:"pkce"
     }
   }
 );
 
-
-/* =========================
-   STATO
-========================= */
 
 let suppliers=[];
 let products=[];
 let orders=[];
 
 
-/* =========================
-   UTILITY
-========================= */
+/* ==========================================================
+   ELEMENTI
+========================================================== */
 
-function esc(v=""){
-  return String(v)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;");
+const loginScreen =
+  document.getElementById("loginScreen");
+
+const recoveryScreen =
+  document.getElementById("recoveryScreen");
+
+const app =
+  document.getElementById("app");
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const recoveryForm =
+  document.getElementById("recoveryForm");
+
+const loginEmail =
+  document.getElementById("loginEmail");
+
+const loginPassword =
+  document.getElementById("loginPassword");
+
+const loginStatus =
+  document.getElementById("loginStatus");
+
+const recoveryStatus =
+  document.getElementById("recoveryStatus");
+
+const newPassword =
+  document.getElementById("newPassword");
+
+const newPassword2 =
+  document.getElementById("newPassword2");
+
+const accountEmail =
+  document.getElementById("accountEmail");
+
+
+/* ==========================================================
+   SCHERMATE
+========================================================== */
+
+function showLogin(){
+
+  app.classList.add("hidden");
+  recoveryScreen.classList.add("hidden");
+  loginScreen.classList.remove("hidden");
 }
 
-function money(v){
-  return new Intl.NumberFormat(
-    "it-IT",
-    {
-      style:"currency",
-      currency:"EUR"
-    }
-  ).format(Number(v||0));
-}
-
-function toast(message){
-
-  const t=document.getElementById("toast");
-
-  t.textContent=message;
-  t.classList.add("show");
-
-  setTimeout(()=>{
-    t.classList.remove("show");
-  },2500);
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-loginForm.addEventListener(
-"submit",
-async e=>{
-
-  e.preventDefault();
-
-  loginStatus.classList.remove("success");
-  loginStatus.textContent="Connessione...";
-
-  const {data,error}=
-  await db.auth.signInWithPassword({
-    email:loginEmail.value.trim(),
-    password:loginPassword.value
-  });
-
-  if(error){
-
-    loginStatus.textContent=
-    "Email o password non corretti.";
-
-    return;
-  }
-
-  loginStatus.textContent="";
-
-  showApp(data.session);
-
-  await loadAll();
-});
-
-
-/* =========================
-   PASSWORD DIMENTICATA
-========================= */
-
-async function forgotPassword(){
-
-  const email=
-  loginEmail.value.trim();
-
-  if(!email){
-
-    loginStatus.textContent=
-    "Inserisci prima la tua email.";
-
-    loginEmail.focus();
-
-    return;
-  }
-
-  loginStatus.classList.remove("success");
-
-  loginStatus.textContent=
-  "Invio email di recupero...";
-
-  const {error}=
-  await db.auth.resetPasswordForEmail(
-    email,
-    {
-      redirectTo:APP_URL
-    }
-  );
-
-  if(error){
-
-    console.error(error);
-
-    loginStatus.textContent=
-    "Errore durante l'invio dell'email.";
-
-    return;
-  }
-
-  loginStatus.classList.add("success");
-
-  loginStatus.textContent=
-  "Email inviata. Apri la posta e premi il link di recupero.";
-}
-
-
-/* =========================
-   SCHERMATA NUOVA PASSWORD
-========================= */
 
 function showRecovery(){
 
-  loginScreen.classList.add("hidden");
-
   app.classList.add("hidden");
-
+  loginScreen.classList.add("hidden");
   recoveryScreen.classList.remove("hidden");
 
+  recoveryStatus.classList.remove("ok");
   recoveryStatus.textContent="";
 }
 
 
-/* =========================
-   SALVA NUOVA PASSWORD
-========================= */
+function showApp(session){
 
-recoveryForm.addEventListener(
-"submit",
-async e=>{
+  loginScreen.classList.add("hidden");
+  recoveryScreen.classList.add("hidden");
+  app.classList.remove("hidden");
 
-  e.preventDefault();
+  accountEmail.value =
+    session?.user?.email || "";
+}
 
-  recoveryStatus.classList.remove("success");
 
-  const p1=
-  newPassword.value;
+/* ==========================================================
+   PULISCI URL DOPO AUTH
+========================================================== */
 
-  const p2=
-  newPassword2.value;
+function cleanAuthUrl(){
 
-  if(p1.length<8){
+  window.history.replaceState(
+    {},
+    document.title,
+    APP_URL
+  );
+}
 
-    recoveryStatus.textContent=
-    "La password deve avere almeno 8 caratteri.";
+
+/* ==========================================================
+   AVVIO AUTH
+========================================================== */
+
+async function bootAuth(){
+
+  /*
+    1. Controlliamo eventuali errori arrivati da Supabase.
+  */
+
+  const query =
+    new URLSearchParams(window.location.search);
+
+  const hash =
+    new URLSearchParams(
+      window.location.hash.replace(/^#/,"")
+    );
+
+  const errorDescription =
+    query.get("error_description") ||
+    hash.get("error_description");
+
+  if(errorDescription){
+
+    showLogin();
+
+    loginStatus.textContent =
+      decodeURIComponent(
+        errorDescription.replace(/\+/g," ")
+      );
+
+    cleanAuthUrl();
 
     return;
   }
 
-  if(p1!==p2){
 
-    recoveryStatus.textContent=
-    "Le due password non coincidono.";
+  /*
+    2. FLUSSO PKCE
+       Supabase torna con:
+       ?code=xxxxxxxx
+  */
 
-    return;
-  }
+  const code =
+    query.get("code");
 
-  recoveryStatus.textContent=
-  "Salvataggio nuova password...";
+  if(code){
 
-  const {error}=
-  await db.auth.updateUser({
-    password:p1
-  });
+    showRecovery();
 
-  if(error){
-
-    console.error(error);
-
-    recoveryStatus.textContent=
-    "Errore nel salvataggio della password.";
-
-    return;
-  }
-
-  recoveryStatus.classList.add("success");
-
-  recoveryStatus.textContent=
-  "Password cambiata correttamente.";
-
-  newPassword.value="";
-  newPassword2.value="";
-
-  setTimeout(async()=>{
-
-    recoveryScreen.classList.add("hidden");
+    recoveryStatus.textContent =
+      "Verifica del link di recupero...";
 
     const {
-      data:{session}
-    }=
-    await db.auth.getSession();
+      data,
+      error
+    } =
+      await db.auth.exchangeCodeForSession(code);
 
-    if(session){
+    if(error){
 
-      showApp(session);
-      await loadAll();
+      console.error(
+        "XA exchangeCodeForSession:",
+        error
+      );
 
-    }else{
+      showLogin();
 
-      loginScreen.classList.remove("hidden");
+      loginStatus.textContent =
+        "Il link di recupero non è più valido. Premi di nuovo PASSWORD DIMENTICATA?";
+
+      cleanAuthUrl();
+
+      return;
     }
 
-  },1200);
-
-});
-
-
-/* =========================
-   AUTH EVENTS
-========================= */
-
-db.auth.onAuthStateChange(
-async(event,session)=>{
-
-  console.log(
-    "XA AUTH:",
-    event
-  );
-
-  if(event==="PASSWORD_RECOVERY"){
+    cleanAuthUrl();
 
     showRecovery();
 
     return;
   }
 
-  if(event==="SIGNED_OUT"){
 
-    app.classList.add("hidden");
+  /*
+    3. VECCHIO FLUSSO IMPLICITO
+       Supabase può tornare con:
+       #access_token=...
+       &refresh_token=...
+       &type=recovery
+  */
 
-    recoveryScreen.classList.add("hidden");
+  const accessToken =
+    hash.get("access_token");
 
-    loginScreen.classList.remove("hidden");
+  const refreshToken =
+    hash.get("refresh_token");
 
-    return;
-  }
+  const type =
+    hash.get("type");
 
   if(
-    event==="SIGNED_IN" &&
-    session &&
-    !recoveryScreen.classList.contains("hidden")
+    accessToken &&
+    refreshToken
   ){
-    return;
+
+    recoveryStatus.textContent =
+      "Verifica del link di recupero...";
+
+    const {
+      data,
+      error
+    } =
+      await db.auth.setSession({
+        access_token:accessToken,
+        refresh_token:refreshToken
+      });
+
+    if(error){
+
+      console.error(
+        "XA setSession:",
+        error
+      );
+
+      showLogin();
+
+      loginStatus.textContent =
+        "Il link di recupero non è valido. Richiedine uno nuovo.";
+
+      cleanAuthUrl();
+
+      return;
+    }
+
+    cleanAuthUrl();
+
+    /*
+      Se il link era un recupero password,
+      mostriamo NUOVA PASSWORD.
+    */
+
+    if(
+      type === "recovery" ||
+      hash.has("access_token")
+    ){
+
+      showRecovery();
+
+      return;
+    }
   }
 
-});
 
-
-/* =========================
-   AVVIO
-========================= */
-
-async function startXA(){
+  /*
+    4. Sessione normale già esistente.
+  */
 
   const {
     data:{session}
-  }=
-  await db.auth.getSession();
+  } =
+    await db.auth.getSession();
 
   if(session){
 
     showApp(session);
+
     await loadAll();
 
   }else{
 
-    loginScreen.classList.remove("hidden");
+    showLogin();
   }
 }
 
 
-/* =========================
-   APP
-========================= */
+/* ==========================================================
+   LOGIN NORMALE
+========================================================== */
 
-function showApp(session){
+loginForm.addEventListener(
+  "submit",
+  async function(e){
 
-  recoveryScreen.classList.add("hidden");
+    e.preventDefault();
 
-  loginScreen.classList.add("hidden");
+    loginStatus.classList.remove("ok");
 
-  app.classList.remove("hidden");
+    loginStatus.textContent =
+      "Connessione...";
 
-  accountEmail.value=
-  session?.user?.email || "";
+    const {
+      data,
+      error
+    } =
+      await db.auth.signInWithPassword({
+        email:loginEmail.value.trim(),
+        password:loginPassword.value
+      });
+
+    if(error){
+
+      console.error(error);
+
+      loginStatus.textContent =
+        "Email o password non corretti.";
+
+      return;
+    }
+
+    loginStatus.textContent="";
+
+    showApp(data.session);
+
+    await loadAll();
+  }
+);
+
+
+/* ==========================================================
+   INVIO EMAIL RECUPERO
+========================================================== */
+
+async function sendPasswordRecovery(){
+
+  const email =
+    loginEmail.value.trim();
+
+  loginStatus.classList.remove("ok");
+
+
+  if(!email){
+
+    loginStatus.textContent =
+      "Inserisci prima la tua email.";
+
+    loginEmail.focus();
+
+    return;
+  }
+
+
+  loginStatus.textContent =
+    "Invio email di recupero...";
+
+
+  const {
+    error
+  } =
+    await db.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo:APP_URL
+      }
+    );
+
+
+  if(error){
+
+    console.error(
+      "XA resetPasswordForEmail:",
+      error
+    );
+
+    loginStatus.textContent =
+      "Errore durante l'invio dell'email.";
+
+    return;
+  }
+
+
+  loginStatus.classList.add("ok");
+
+  loginStatus.textContent =
+    "Email inviata. Apri l'ULTIMA email ricevuta e premi il link.";
 }
 
+
+/* ==========================================================
+   NUOVA PASSWORD
+========================================================== */
+
+recoveryForm.addEventListener(
+  "submit",
+  async function(e){
+
+    e.preventDefault();
+
+    recoveryStatus.classList.remove("ok");
+
+
+    const p1 =
+      newPassword.value;
+
+    const p2 =
+      newPassword2.value;
+
+
+    if(p1.length < 8){
+
+      recoveryStatus.textContent =
+        "Usa almeno 8 caratteri.";
+
+      return;
+    }
+
+
+    if(p1 !== p2){
+
+      recoveryStatus.textContent =
+        "Le due password non coincidono.";
+
+      return;
+    }
+
+
+    recoveryStatus.textContent =
+      "Salvataggio password...";
+
+
+    const {
+      data:{user},
+      error:userError
+    } =
+      await db.auth.getUser();
+
+
+    if(
+      userError ||
+      !user
+    ){
+
+      console.error(userError);
+
+      recoveryStatus.textContent =
+        "Sessione di recupero non valida. Richiedi un nuovo link.";
+
+      return;
+    }
+
+
+    const {
+      error
+    } =
+      await db.auth.updateUser({
+        password:p1
+      });
+
+
+    if(error){
+
+      console.error(
+        "XA updateUser:",
+        error
+      );
+
+      recoveryStatus.textContent =
+        "Non è stato possibile cambiare la password.";
+
+      return;
+    }
+
+
+    recoveryStatus.classList.add("ok");
+
+    recoveryStatus.textContent =
+      "PASSWORD CAMBIATA ✓";
+
+
+    newPassword.value="";
+    newPassword2.value="";
+
+
+    /*
+      Chiudiamo la sessione di recovery.
+      Poi l'utente entra normalmente
+      con email + nuova password.
+    */
+
+    setTimeout(
+      async function(){
+
+        await db.auth.signOut();
+
+        showLogin();
+
+        loginEmail.focus();
+
+        loginStatus.classList.add("ok");
+
+        loginStatus.textContent =
+          "Nuova password salvata. Ora entra in XA.";
+
+      },
+      1200
+    );
+  }
+);
+
+
+/* ==========================================================
+   AUTH EVENTS
+========================================================== */
+
+db.auth.onAuthStateChange(
+  function(event,session){
+
+    console.log(
+      "XA AUTH EVENT:",
+      event
+    );
+
+    /*
+      Backup aggiuntivo:
+      se Supabase genera esplicitamente
+      PASSWORD_RECOVERY, mostriamo subito
+      la schermata nuova password.
+    */
+
+    if(event === "PASSWORD_RECOVERY"){
+
+      showRecovery();
+
+      return;
+    }
+
+
+    if(event === "SIGNED_OUT"){
+
+      if(
+        recoveryScreen.classList.contains("hidden")
+      ){
+        showLogin();
+      }
+    }
+  }
+);
+
+
+/* ==========================================================
+   LOGOUT
+========================================================== */
 
 async function logout(){
 
@@ -1165,58 +1214,67 @@ async function logout(){
 
   loginPassword.value="";
 
-  toast("Sessione chiusa");
+  showLogin();
 }
 
 
-/* =========================
+/* ==========================================================
    NAVIGAZIONE
-========================= */
+========================================================== */
 
 function goPage(name,button){
 
   document
     .querySelectorAll(".page")
-    .forEach(p=>
-      p.classList.remove("active")
-    );
+    .forEach(function(page){
+      page.classList.remove("active");
+    });
+
 
   document
     .getElementById("page-"+name)
     .classList.add("active");
 
+
   document
     .querySelectorAll(".nav")
-    .forEach(n=>
-      n.classList.remove("active")
-    );
+    .forEach(function(nav){
+      nav.classList.remove("active");
+    });
+
 
   if(button){
     button.classList.add("active");
   }
 
+
   window.scrollTo(0,0);
 }
 
 
-/* =========================
-   LOAD SUPABASE
-========================= */
+/* ==========================================================
+   DATABASE
+========================================================== */
 
 async function safeLoad(table){
 
-  const {data,error}=
-  await db
-    .from(table)
-    .select("*")
-    .order(
-      "created_at",
-      {ascending:false}
-    );
+  const {
+    data,
+    error
+  } =
+    await db
+      .from(table)
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
 
   if(error){
 
     console.error(
+      "XA TABLE:",
       table,
       error
     );
@@ -1224,292 +1282,174 @@ async function safeLoad(table){
     return [];
   }
 
+
   return data || [];
 }
 
 
 async function loadAll(){
 
-  onlineBadge.textContent=
-  "● SYNC";
+  onlineBadge.textContent =
+    "● SYNC";
 
-  const [
-    a,
-    b,
-    c
-  ]=
-  await Promise.all([
-    safeLoad("fornitori"),
-    safeLoad("prodotti"),
-    safeLoad("ordini")
-  ]);
 
-  suppliers=a;
-  products=b;
-  orders=c;
+  const results =
+    await Promise.all([
+      safeLoad("fornitori"),
+      safeLoad("prodotti"),
+      safeLoad("ordini")
+    ]);
 
-  onlineBadge.textContent=
-  "● ONLINE";
+
+  suppliers =
+    results[0];
+
+  products =
+    results[1];
+
+  orders =
+    results[2];
+
+
+  onlineBadge.textContent =
+    "● ONLINE";
+
 
   renderAll();
 }
 
 
-/* =========================
+/* ==========================================================
    RENDER
-========================= */
+========================================================== */
+
+function esc(value=""){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+
+function money(value){
+
+  return new Intl.NumberFormat(
+    "it-IT",
+    {
+      style:"currency",
+      currency:"EUR"
+    }
+  ).format(
+    Number(value || 0)
+  );
+}
+
 
 function renderAll(){
 
-  kpiSuppliers.textContent=
-  suppliers.length;
+  kpiSuppliers.textContent =
+    suppliers.length;
 
-  kpiProducts.textContent=
-  products.length;
+  kpiProducts.textContent =
+    products.length;
 
-  kpiOrders.textContent=
-  orders.length;
+  kpiOrders.textContent =
+    orders.length;
 
-  renderSuppliers();
-  renderProducts();
-  renderOrders();
+
+  supplierList.innerHTML =
+    suppliers.length
+      ?
+      suppliers
+        .map(function(s){
+
+          return `
+            <div class="item">
+              <h3>${esc(s.nome)}</h3>
+              <p>
+                ${esc(s.categoria || "Fornitore")}
+                ${s.citta ? " · "+esc(s.citta) : ""}
+              </p>
+            </div>
+          `;
+
+        })
+        .join("")
+      :
+      `
+        <div class="empty">
+          Nessun fornitore presente.
+        </div>
+      `;
+
+
+  productList.innerHTML =
+    products.length
+      ?
+      products
+        .map(function(p){
+
+          return `
+            <div class="item">
+              <h3>${esc(p.nome)}</h3>
+              <p>
+                ${esc(p.categoria || "")}
+                ·
+                ${money(p.prezzo_unitario)}
+              </p>
+            </div>
+          `;
+
+        })
+        .join("")
+      :
+      `
+        <div class="empty">
+          Nessun prodotto presente.
+        </div>
+      `;
+
+
+  orderList.innerHTML =
+    orders.length
+      ?
+      orders
+        .map(function(o){
+
+          return `
+            <div class="item">
+              <h3>
+                ${esc(
+                  o.numero_ordine ||
+                  "Ordine XA"
+                )}
+              </h3>
+
+              <p>
+                ${esc(o.stato || "BOZZA")}
+                ·
+                ${money(o.totale)}
+              </p>
+            </div>
+          `;
+
+        })
+        .join("")
+      :
+      `
+        <div class="empty">
+          Nessun ordine presente.
+        </div>
+      `;
 }
 
 
-function renderSuppliers(){
-
-  const q=
-  (supplierSearch.value||"")
-  .toLowerCase();
-
-  const list=
-  suppliers.filter(s=>
-    [
-      s.nome,
-      s.ragione_sociale,
-      s.citta,
-      s.paese
-    ]
-    .join(" ")
-    .toLowerCase()
-    .includes(q)
-  );
-
-  supplierList.innerHTML=
-  list.length
-  ?
-  list.map(s=>`
-
-    <div class="item">
-
-      <h3>${esc(s.nome)}</h3>
-
-      <div class="subtitle">
-        ${esc(s.categoria||"Fornitore")}
-        ·
-        ${esc(s.citta||"")}
-        ${esc(s.paese||"")}
-      </div>
-
-      <div class="meta">
-
-        <div>
-          <label>Referente</label>
-          <strong>${esc(s.referente||"—")}</strong>
-        </div>
-
-        <div>
-          <label>Pagamento</label>
-          <strong>${esc(s.pagamento||"—")}</strong>
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("")
-  :
-  `<div class="empty">
-    Nessun fornitore presente.
-  </div>`;
-}
-
-
-function renderProducts(){
-
-  const q=
-  (productSearch.value||"")
-  .toLowerCase();
-
-  const list=
-  products.filter(p=>
-    String(p.nome||"")
-    .toLowerCase()
-    .includes(q)
-  );
-
-  productList.innerHTML=
-  list.length
-  ?
-  list.map(p=>`
-
-    <div class="item">
-
-      <h3>${esc(p.nome)}</h3>
-
-      <div class="subtitle">
-        ${esc(p.categoria||"")}
-      </div>
-
-      <div class="meta">
-
-        <div>
-          <label>Prezzo</label>
-          <strong>${money(p.prezzo_unitario)}</strong>
-        </div>
-
-        <div>
-          <label>Stock</label>
-          <strong>${p.stock_attuale||0}</strong>
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("")
-  :
-  `<div class="empty">
-    Nessun prodotto presente.
-  </div>`;
-}
-
-
-function renderOrders(){
-
-  orderList.innerHTML=
-  orders.length
-  ?
-  orders.map(o=>`
-
-    <div class="item">
-
-      <h3>
-        ${esc(o.numero_ordine||"Ordine XA")}
-      </h3>
-
-      <div class="subtitle">
-        Stato:
-        ${esc(o.stato||"BOZZA")}
-      </div>
-
-      <div class="meta">
-
-        <div>
-          <label>Data</label>
-          <strong>${esc(o.data_ordine||"—")}</strong>
-        </div>
-
-        <div>
-          <label>Totale</label>
-          <strong>${money(o.totale)}</strong>
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("")
-  :
-  `<div class="empty">
-    Nessun ordine presente.
-  </div>`;
-}
-
-
-/* =========================
-   INSERIMENTI RAPIDI
-========================= */
-
-async function simpleAddSupplier(){
-
-  const nome=
-  prompt("Nome del nuovo fornitore:");
-
-  if(!nome){
-    return;
-  }
-
-  const {error}=
-  await db
-  .from("fornitori")
-  .insert({
-    nome:nome.trim(),
-    stato:"ATTIVO"
-  });
-
-  if(error){
-
-    console.error(error);
-
-    toast("Errore salvataggio");
-
-    return;
-  }
-
-  await loadAll();
-
-  toast("Fornitore salvato");
-}
-
-
-async function simpleAddProduct(){
-
-  if(!suppliers.length){
-
-    toast(
-      "Inserisci prima un fornitore"
-    );
-
-    return;
-  }
-
-  const nome=
-  prompt("Nome del nuovo prodotto:");
-
-  if(!nome){
-    return;
-  }
-
-  const {error}=
-  await db
-  .from("prodotti")
-  .insert({
-    nome:nome.trim(),
-    fornitore_id:suppliers[0].id,
-    stato:"ATTIVO"
-  });
-
-  if(error){
-
-    console.error(error);
-
-    toast("Errore salvataggio");
-
-    return;
-  }
-
-  await loadAll();
-
-  toast("Prodotto salvato");
-}
-
-
-/* =========================
+/* ==========================================================
    START
-========================= */
+========================================================== */
 
-startXA();
+bootAuth();
 
 </script>
 
