@@ -1270,17 +1270,24 @@ async function safeLoad(table){
         {ascending:false}
       );
 
+if(error){
 
-  if(error){
+  console.error(
+    "XA resetPasswordForEmail:",
+    error
+  );
 
-    console.error(
-      "XA TABLE:",
-      table,
-      error
-    );
+  loginStatus.textContent =
+    "ERRORE SUPABASE: " +
+    (error.message || "Errore sconosciuto") +
+    " | codice: " +
+    (error.code || "nessuno") +
+    " | status: " +
+    (error.status || "nessuno");
 
-    return [];
-  }
+  return;
+}
+
 
 
   return data || [];
