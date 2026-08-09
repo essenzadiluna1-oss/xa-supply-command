@@ -3,40 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#571526">
-<title>XA Supply Command V2</title>
+<meta name="theme-color" content="#65182d">
+<title>XA Supply Command V3</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
-  --wine:#65182d;
-  --wine2:#9d304d;
-  --dark:#321016;
-  --cream:#fff8eb;
+  --wine:#68172e;
+  --wine2:#9e2c4c;
+  --dark:#351018;
+  --cream:#fff8ea;
   --paper:#fffdf7;
-  --sand:#ead9bc;
-  --gold:#c9a462;
-  --ink:#2b2020;
-  --muted:#796d67;
-  --green:#2f7855;
-  --red:#aa3946;
-  --line:#ddc9aa;
+  --sand:#efe0c4;
+  --gold:#dfc17d;
+  --line:#ddc8a7;
+  --ink:#2d2021;
+  --muted:#786c66;
+  --green:#337457;
+  --greenbg:#dcebdd;
+  --red:#a93645;
+  --redbg:#f2d8d8;
 }
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
 html,body{
   margin:0;
   min-height:100%;
   font-family:Arial,Helvetica,sans-serif;
-  background:#f0e3cf;
   color:var(--ink);
+  background:#f1e4d0;
 }
 
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
 
 /* LOGIN */
 
@@ -47,26 +60,26 @@ button{cursor:pointer}
   justify-content:center;
   padding:24px 18px;
   background:
-    radial-gradient(circle at 85% 10%,rgba(155,47,76,.32),transparent 34%),
-    linear-gradient(150deg,#351017,#62172b 62%,#841e3a);
+    radial-gradient(circle at 85% 8%,rgba(159,47,77,.34),transparent 34%),
+    linear-gradient(150deg,#341017,#64182d 62%,#861f3c);
 }
 
 .auth-card{
-  width:min(100%,440px);
-  padding:30px 22px;
-  border-radius:31px;
+  width:min(100%,450px);
+  padding:31px 23px;
+  border-radius:32px;
   background:var(--cream);
-  box-shadow:0 28px 70px rgba(0,0,0,.30);
+  box-shadow:0 28px 70px rgba(0,0,0,.3);
 }
 
 .auth-logo{
-  width:86px;
-  height:86px;
+  width:88px;
+  height:88px;
   margin:0 auto 22px;
   display:grid;
   place-items:center;
   border:3px solid var(--wine);
-  border-radius:27px;
+  border-radius:28px;
   color:var(--wine);
   font:900 42px Georgia,serif;
 }
@@ -75,11 +88,11 @@ button{cursor:pointer}
   margin:0;
   text-align:center;
   color:var(--dark);
-  font:900 31px Georgia,serif;
+  font:900 32px Georgia,serif;
 }
 
 .claim{
-  margin:12px 0 28px;
+  margin:12px 0 29px;
   text-align:center;
   color:var(--muted);
   font-size:9px;
@@ -89,90 +102,96 @@ button{cursor:pointer}
 
 /* COMMON */
 
-.field{margin-bottom:14px}
+.field{
+  margin-bottom:13px;
+}
 
 .field label{
   display:block;
-  margin:0 0 7px 3px;
+  margin:0 0 6px 3px;
   color:var(--dark);
   font-size:9px;
   font-weight:900;
 }
 
 .field input,
-.field textarea,
-.field select{
+.field select,
+.field textarea{
   width:100%;
   border:1px solid var(--line);
   border-radius:15px;
   background:var(--paper);
-  outline:none;
   color:var(--ink);
+  outline:none;
 }
 
 .field input,
 .field select{
-  height:52px;
-  padding:0 14px;
+  height:50px;
+  padding:0 13px;
 }
 
 .field textarea{
-  min-height:100px;
-  padding:13px;
+  min-height:90px;
+  padding:12px 13px;
   resize:vertical;
 }
 
 .field input:focus,
-.field textarea:focus,
-.field select:focus{
+.field select:focus,
+.field textarea:focus{
   border-color:var(--wine);
 }
 
 .btn{
-  min-height:47px;
+  min-height:46px;
+  padding:9px 13px;
   border:0;
   border-radius:14px;
-  padding:10px 14px;
   font-size:10px;
   font-weight:900;
 }
 
-.btn-primary{
+.primary{
   color:#fff;
   background:linear-gradient(135deg,var(--wine),var(--wine2));
 }
 
-.btn-gold{
-  color:#3c251d;
-  background:#dec184;
+.gold{
+  color:#40271f;
+  background:var(--gold);
 }
 
-.btn-soft{
+.soft{
   color:var(--wine);
-  background:#efe0c5;
+  background:var(--sand);
 }
 
-.btn-danger{
+.danger{
   color:#fff;
   background:var(--red);
 }
 
-.full{width:100%}
+.full{
+  width:100%;
+}
 
 .status{
   min-height:25px;
-  margin-top:13px;
+  margin-top:12px;
   text-align:center;
   color:var(--red);
   font-size:10px;
-  font-weight:800;
+  font-weight:900;
 }
 
-.status.ok{color:var(--green)}
+.status.ok{
+  color:var(--green);
+}
 
 /* APP */
 
-.app{
+#app{
   min-height:100vh;
   padding-bottom:86px;
 }
@@ -182,8 +201,8 @@ button{cursor:pointer}
   top:0;
   z-index:40;
   padding:9px;
-  background:rgba(242,229,210,.97);
   border-bottom:1px solid var(--line);
+  background:rgba(242,229,210,.97);
 }
 
 .brand{
@@ -194,22 +213,25 @@ button{cursor:pointer}
   border-radius:20px;
   color:#fff;
   background:linear-gradient(135deg,var(--dark),var(--wine));
+  box-shadow:0 7px 20px rgba(73,19,32,.18);
 }
 
 .brand-logo{
-  width:49px;
-  height:49px;
-  flex:0 0 49px;
+  width:50px;
+  height:50px;
+  flex:0 0 50px;
   display:grid;
   place-items:center;
   border:2px solid #ead1a2;
   border-radius:15px;
-  font:900 23px Georgia,serif;
+  font:900 24px Georgia,serif;
 }
 
-.brand-title{min-width:0}
+.brand-text{
+  min-width:0;
+}
 
-.brand-title strong{
+.brand-text strong{
   display:block;
   white-space:nowrap;
   overflow:hidden;
@@ -217,42 +239,56 @@ button{cursor:pointer}
   font:900 15px Georgia,serif;
 }
 
-.brand-title small{
+.brand-text small{
   display:block;
   margin-top:4px;
   color:#ead8ba;
   font-size:7px;
   font-weight:900;
-  letter-spacing:.7px;
+  letter-spacing:.8px;
 }
 
 .cloud{
   margin-left:auto;
   white-space:nowrap;
-  color:#9de4b6;
+  color:#9fe5b8;
   font-size:7px;
   font-weight:900;
 }
 
-main{padding:12px}
+main{
+  padding:12px;
+}
 
-.page{display:none}
-.page.active{display:block}
+.page{
+  display:none;
+}
 
-/* DASHBOARD */
+.page.active{
+  display:block;
+}
+
+/* HOME */
 
 .hero{
   padding:22px 18px;
   border-radius:26px;
   color:#fff;
   background:
-    radial-gradient(circle at 90% 0,rgba(223,193,132,.24),transparent 30%),
+    radial-gradient(circle at 92% 0,rgba(223,193,132,.25),transparent 31%),
     linear-gradient(145deg,#361017,#691b30 62%,#963b51);
+}
+
+.hero-kicker{
+  color:#e7ca91;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1px;
 }
 
 .hero h2{
   margin:8px 0 7px;
-  font:900 29px Georgia,serif;
+  font:900 30px Georgia,serif;
 }
 
 .hero p{
@@ -264,22 +300,23 @@ main{padding:12px}
 
 .hero-actions{
   display:flex;
-  gap:7px;
   flex-wrap:wrap;
+  gap:7px;
   margin-top:17px;
 }
 
 .kpis{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:8px;
   margin-top:10px;
 }
 
 .kpi{
+  min-height:114px;
   padding:14px;
   border:1px solid var(--line);
-  border-radius:18px;
+  border-radius:19px;
   background:var(--cream);
 }
 
@@ -288,42 +325,43 @@ main{padding:12px}
   color:var(--muted);
   font-size:7px;
   font-weight:900;
+  letter-spacing:.7px;
 }
 
 .kpi strong{
   display:block;
-  margin-top:7px;
+  margin-top:8px;
   color:var(--dark);
-  font:900 24px Georgia,serif;
+  font:900 25px Georgia,serif;
 }
 
 .card{
   margin-top:10px;
   padding:14px;
   border:1px solid var(--line);
-  border-radius:19px;
+  border-radius:20px;
   background:var(--cream);
 }
 
 .card h3{
-  margin:0 0 10px;
+  margin:0 0 11px;
   color:var(--dark);
-  font:900 17px Georgia,serif;
+  font:900 18px Georgia,serif;
 }
 
 .quick-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:8px;
 }
 
 .quick{
-  min-height:76px;
+  min-height:84px;
   padding:12px;
   border:1px solid #dbc6a5;
-  border-radius:15px;
+  border-radius:16px;
   text-align:left;
-  background:#f3e5cb;
+  background:#f3e5ca;
 }
 
 .quick b{
@@ -334,21 +372,39 @@ main{padding:12px}
 
 .quick span{
   display:block;
-  margin-top:5px;
+  margin-top:6px;
   color:var(--muted);
   font-size:8px;
+}
+
+.db-ok{
+  padding:11px;
+  border-radius:12px;
+  color:#276047;
+  background:var(--greenbg);
+  font-size:9px;
+  font-weight:900;
+}
+
+.db-error{
+  padding:11px;
+  border-radius:12px;
+  color:#922e3e;
+  background:var(--redbg);
+  font-size:9px;
+  font-weight:900;
 }
 
 /* PAGE */
 
 .page-head{
-  margin:4px 1px 12px;
+  margin:5px 2px 13px;
 }
 
 .page-head h2{
   margin:0;
   color:var(--dark);
-  font:900 27px Georgia,serif;
+  font:900 29px Georgia,serif;
 }
 
 .page-head p{
@@ -359,72 +415,92 @@ main{padding:12px}
 
 .toolbar{
   display:grid;
-  grid-template-columns:1fr auto auto;
+  grid-template-columns:minmax(0,1fr) auto auto;
   gap:7px;
   margin-bottom:10px;
 }
 
 .search{
   width:100%;
-  height:45px;
+  min-width:0;
+  height:46px;
   padding:0 13px;
   border:1px solid var(--line);
-  border-radius:13px;
+  border-radius:14px;
   background:var(--paper);
   outline:none;
 }
 
 .list{
   display:grid;
-  gap:8px;
+  gap:9px;
 }
 
 .item{
   padding:13px;
   border:1px solid var(--line);
-  border-radius:17px;
+  border-radius:18px;
   background:var(--cream);
 }
 
 .item-top{
   display:flex;
-  gap:8px;
   align-items:flex-start;
+  gap:10px;
 }
 
 .item-icon{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
   display:grid;
   place-items:center;
-  border-radius:12px;
+  border-radius:13px;
   background:#edddc1;
   font-size:18px;
+}
+
+.item-main{
+  min-width:0;
+  flex:1;
 }
 
 .item h3{
   margin:1px 0 0;
   color:var(--dark);
-  font:900 15px Georgia,serif;
+  font:900 16px Georgia,serif;
+  overflow-wrap:anywhere;
 }
 
 .item-sub{
   margin-top:5px;
   color:var(--muted);
   font-size:8px;
+  line-height:1.4;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:7px;
+  padding:5px 8px;
+  border-radius:99px;
+  color:#fff;
+  background:var(--wine);
+  font-size:7px;
+  font-weight:900;
 }
 
 .meta{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:6px;
-  margin-top:10px;
+  margin-top:11px;
 }
 
 .meta-box{
-  padding:8px;
-  border-radius:11px;
+  min-width:0;
+  padding:9px;
+  border-radius:12px;
   background:#f1e3cb;
 }
 
@@ -442,17 +518,42 @@ main{padding:12px}
   overflow-wrap:anywhere;
 }
 
+.item-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:10px;
+}
+
+.item-actions button{
+  min-height:40px;
+  border:0;
+  border-radius:11px;
+  font-size:8px;
+  font-weight:900;
+}
+
+.edit-btn{
+  color:var(--wine);
+  background:#ead8b8;
+}
+
+.delete-btn{
+  color:#972e3e;
+  background:#f3dada;
+}
+
 .empty{
-  padding:28px 15px;
-  border:1px dashed #cbb494;
+  padding:29px 15px;
+  border:1px dashed #c8b18f;
   border-radius:17px;
   text-align:center;
   color:var(--muted);
-  background:rgba(255,249,237,.5);
+  background:rgba(255,249,237,.45);
   font-size:10px;
 }
 
-/* MODAL */
+/* MODALS */
 
 .modal{
   position:fixed;
@@ -461,37 +562,42 @@ main{padding:12px}
   display:flex;
   align-items:flex-end;
   justify-content:center;
-  padding:16px;
-  background:rgba(34,14,18,.63);
+  padding:14px;
+  background:rgba(35,14,18,.65);
 }
 
 .modal-card{
-  width:min(100%,560px);
-  max-height:92vh;
+  width:min(100%,580px);
+  max-height:94vh;
   overflow:auto;
   padding:18px;
-  border-radius:26px 26px 20px 20px;
-  background:#fff8eb;
+  border-radius:27px 27px 20px 20px;
+  background:var(--cream);
   box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
 .modal-head{
+  position:sticky;
+  top:-18px;
+  z-index:5;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
-  margin-bottom:16px;
+  margin:-18px -18px 15px;
+  padding:18px;
+  background:var(--cream);
 }
 
 .modal-head h2{
   margin:0;
   color:var(--dark);
-  font:900 24px Georgia,serif;
+  font:900 25px Georgia,serif;
 }
 
 .close{
-  width:42px;
-  height:42px;
+  width:43px;
+  height:43px;
   border:0;
   border-radius:50%;
   color:var(--wine);
@@ -502,7 +608,6 @@ main{padding:12px}
 .form-grid{
   display:grid;
   grid-template-columns:1fr;
-  gap:0;
 }
 
 .form-actions{
@@ -517,8 +622,8 @@ main{padding:12px}
 .account-mail{
   padding:13px;
   border-radius:13px;
-  background:#efe1c9;
   color:var(--dark);
+  background:#efe1c9;
   font-size:11px;
   overflow-wrap:anywhere;
 }
@@ -541,7 +646,7 @@ main{padding:12px}
 .nav{
   padding:7px 2px;
   border:0;
-  border-radius:10px;
+  border-radius:11px;
   color:#756965;
   background:transparent;
   font-size:6px;
@@ -551,7 +656,7 @@ main{padding:12px}
 .nav b{
   display:block;
   margin-bottom:2px;
-  font-size:16px;
+  font-size:17px;
 }
 
 .nav.active{
@@ -561,21 +666,29 @@ main{padding:12px}
 
 @media(min-width:700px){
   main{
-    max-width:900px;
+    max-width:920px;
     margin:auto;
   }
 
-  .kpis{grid-template-columns:repeat(4,1fr)}
-  .quick-grid{grid-template-columns:repeat(4,1fr)}
+  .kpis{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
   .form-grid{
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:0 10px;
   }
 }
 </style>
 </head>
 
 <body>
+
+<!-- LOGIN -->
 
 <section class="auth" id="loginScreen">
 
@@ -586,30 +699,43 @@ main{padding:12px}
     <h1>Supply Command</h1>
 
     <div class="claim">
-      FERMENTED REDRINKS · ONLINE OPERATIONS
+      V3 · FERMENTED REDRINKS · ONLINE OPERATIONS
     </div>
 
     <div class="field">
       <label>EMAIL</label>
-      <input id="email" type="email" autocomplete="username">
+      <input
+        id="loginEmail"
+        type="email"
+        autocomplete="username"
+        placeholder="Email XA">
     </div>
 
     <div class="field">
       <label>PASSWORD</label>
-      <input id="password" type="password" autocomplete="current-password">
+      <input
+        id="loginPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Password">
     </div>
 
-    <button class="btn btn-primary full" id="loginBtn">
+    <button
+      class="btn primary full"
+      onclick="loginXA()">
       ENTRA IN XA
     </button>
 
     <div class="status" id="loginStatus"></div>
 
   </div>
+
 </section>
 
 
-<div class="app hidden" id="app">
+<!-- APP -->
+
+<div id="app" class="hidden">
 
 <header class="topbar">
 
@@ -617,9 +743,9 @@ main{padding:12px}
 
     <div class="brand-logo">XA</div>
 
-    <div class="brand-title">
+    <div class="brand-text">
       <strong>XA Supply Command</strong>
-      <small>V2 · PROCUREMENT CONTROL</small>
+      <small>V3 · PROCUREMENT CONTROL</small>
     </div>
 
     <div class="cloud" id="cloudStatus">
@@ -632,20 +758,41 @@ main{padding:12px}
 
 <main>
 
+<!-- HOME -->
+
 <section class="page active" id="page-home">
 
   <div class="hero">
-    <h2>Supply Command</h2>
+
+    <div class="hero-kicker">
+      XA CLOUD OPERATIONS
+    </div>
+
+    <h2>Supply Command V3</h2>
+
     <p>
-      Controllo fornitori, prodotti e ordini collegato al database XA.
+      Fornitori, catalogo prodotti e ordini di acquisto
+      sincronizzati con Supabase.
     </p>
 
     <div class="hero-actions">
-      <button class="btn btn-gold" onclick="openPage('suppliers')">FORNITORI</button>
-      <button class="btn btn-soft" onclick="openPage('products')">PRODOTTI</button>
-      <button class="btn btn-primary" onclick="openPage('orders')">ORDINI</button>
+
+      <button class="btn gold" onclick="openPage('suppliers')">
+        FORNITORI
+      </button>
+
+      <button class="btn soft" onclick="openPage('products')">
+        PRODOTTI
+      </button>
+
+      <button class="btn primary" onclick="openPage('orders')">
+        ORDINI
+      </button>
+
     </div>
+
   </div>
+
 
   <div class="kpis">
 
@@ -665,11 +812,12 @@ main{padding:12px}
     </div>
 
     <div class="kpi">
-      <small>SISTEMA</small>
-      <strong>XA</strong>
+      <small>VALORE ORDINI</small>
+      <strong id="kpiOrderValue">€ 0</strong>
     </div>
 
   </div>
+
 
   <div class="card">
 
@@ -677,19 +825,19 @@ main{padding:12px}
 
     <div class="quick-grid">
 
-      <button class="quick" onclick="openPage('suppliers')">
-        <b>🏢 FORNITORI</b>
-        <span>Archivio fornitori</span>
+      <button class="quick" onclick="openSupplierModal()">
+        <b>＋ FORNITORE</b>
+        <span>Nuovo fornitore</span>
       </button>
 
-      <button class="quick" onclick="openPage('products')">
-        <b>📦 PRODOTTI</b>
-        <span>Catalogo acquisti</span>
+      <button class="quick" onclick="openProductModal()">
+        <b>＋ PRODOTTO</b>
+        <span>Nuovo prodotto</span>
       </button>
 
-      <button class="quick" onclick="openPage('orders')">
-        <b>🛒 ORDINI</b>
-        <span>Ordini fornitori</span>
+      <button class="quick" onclick="openOrderModal()">
+        <b>＋ ORDINE</b>
+        <span>Nuovo ordine</span>
       </button>
 
       <button class="quick" onclick="loadEverything()">
@@ -698,15 +846,31 @@ main{padding:12px}
       </button>
 
     </div>
+
   </div>
 
+
   <div class="card">
+
+    <h3>Controllo scorte</h3>
+
+    <div id="stockAlerts"></div>
+
+  </div>
+
+
+  <div class="card">
+
     <h3>Stato database</h3>
+
     <div id="dbStatus"></div>
+
   </div>
 
 </section>
 
+
+<!-- FORNITORI -->
 
 <section class="page" id="page-suppliers">
 
@@ -718,20 +882,16 @@ main{padding:12px}
   <div class="toolbar">
 
     <input
-      id="supplierSearch"
       class="search"
+      id="supplierSearch"
       placeholder="Cerca fornitore..."
       oninput="renderSuppliers()">
 
-    <button
-      class="btn btn-gold"
-      onclick="openSupplierModal()">
+    <button class="btn gold" onclick="openSupplierModal()">
       + NUOVO
     </button>
 
-    <button
-      class="btn btn-primary"
-      onclick="loadEverything()">
+    <button class="btn primary" onclick="loadEverything()">
       ↻
     </button>
 
@@ -742,22 +902,30 @@ main{padding:12px}
 </section>
 
 
+<!-- PRODOTTI -->
+
 <section class="page" id="page-products">
 
   <div class="page-head">
     <h2>Prodotti</h2>
-    <p>Catalogo prodotti XA</p>
+    <p>Catalogo materie prime, packaging e prodotti XA</p>
   </div>
 
   <div class="toolbar">
 
     <input
-      id="productSearch"
       class="search"
+      id="productSearch"
       placeholder="Cerca prodotto..."
       oninput="renderProducts()">
 
-    <button class="btn btn-primary" onclick="loadEverything()">↻</button>
+    <button class="btn gold" onclick="openProductModal()">
+      + NUOVO
+    </button>
+
+    <button class="btn primary" onclick="loadEverything()">
+      ↻
+    </button>
 
   </div>
 
@@ -765,6 +933,8 @@ main{padding:12px}
 
 </section>
 
+
+<!-- ORDINI -->
 
 <section class="page" id="page-orders">
 
@@ -776,12 +946,18 @@ main{padding:12px}
   <div class="toolbar">
 
     <input
-      id="orderSearch"
       class="search"
+      id="orderSearch"
       placeholder="Cerca ordine..."
       oninput="renderOrders()">
 
-    <button class="btn btn-primary" onclick="loadEverything()">↻</button>
+    <button class="btn gold" onclick="openOrderModal()">
+      + NUOVO
+    </button>
+
+    <button class="btn primary" onclick="loadEverything()">
+      ↻
+    </button>
 
   </div>
 
@@ -790,11 +966,13 @@ main{padding:12px}
 </section>
 
 
+<!-- ACCOUNT -->
+
 <section class="page" id="page-account">
 
   <div class="page-head">
     <h2>Account XA</h2>
-    <p>Sessione autenticata Supabase</p>
+    <p>Sessione Supabase</p>
   </div>
 
   <div class="card">
@@ -804,9 +982,9 @@ main{padding:12px}
     <div class="account-mail" id="accountEmail"></div>
 
     <button
-      class="btn btn-danger full"
+      class="btn danger full"
       style="margin-top:14px"
-      id="logoutBtn">
+      onclick="logoutXA()">
       ESCI DA XA
     </button>
 
@@ -844,16 +1022,29 @@ main{padding:12px}
 </div>
 
 
-<!-- MODALE NUOVO FORNITORE -->
+<!-- ==============================
+     MODALE FORNITORE
+================================ -->
 
 <div class="modal hidden" id="supplierModal">
 
   <div class="modal-card">
 
     <div class="modal-head">
-      <h2>Nuovo fornitore</h2>
-      <button class="close" onclick="closeSupplierModal()">×</button>
+
+      <h2 id="supplierModalTitle">
+        Nuovo fornitore
+      </h2>
+
+      <button class="close" onclick="closeModal('supplierModal')">
+        ×
+      </button>
+
     </div>
+
+
+    <input type="hidden" id="supplierId">
+
 
     <div class="form-grid">
 
@@ -869,12 +1060,12 @@ main{padding:12px}
 
       <div class="field">
         <label>CATEGORIA</label>
-        <input id="supplierCategoria" placeholder="Es. sidro, bottiglie, mele">
+        <input id="supplierCategoria" placeholder="Es. sidro, mele, packaging">
       </div>
 
       <div class="field">
         <label>REFERENTE</label>
-        <input id="supplierReferente" placeholder="Nome referente">
+        <input id="supplierReferente" placeholder="Referente">
       </div>
 
       <div class="field">
@@ -932,26 +1123,38 @@ main{padding:12px}
         <input id="supplierIban" placeholder="IBAN">
       </div>
 
+      <div class="field">
+        <label>STATO</label>
+
+        <select id="supplierStato">
+          <option>ATTIVO</option>
+          <option>SOSPESO</option>
+          <option>ARCHIVIATO</option>
+        </select>
+      </div>
+
     </div>
+
 
     <div class="field">
       <label>NOTE</label>
-      <textarea id="supplierNote" placeholder="Note sul fornitore"></textarea>
+      <textarea id="supplierNote" placeholder="Note"></textarea>
     </div>
+
 
     <div class="form-actions">
 
       <button
-        class="btn btn-soft"
-        onclick="closeSupplierModal()">
+        class="btn soft"
+        onclick="closeModal('supplierModal')">
         ANNULLA
       </button>
 
       <button
-        class="btn btn-primary"
-        id="saveSupplierBtn"
+        class="btn primary"
+        id="supplierSaveBtn"
         onclick="saveSupplier()">
-        SALVA FORNITORE
+        SALVA
       </button>
 
     </div>
@@ -962,6 +1165,277 @@ main{padding:12px}
 
 </div>
 
+
+<!-- ==============================
+     MODALE PRODOTTO
+================================ -->
+
+<div class="modal hidden" id="productModal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2 id="productModalTitle">
+        Nuovo prodotto
+      </h2>
+
+      <button class="close" onclick="closeModal('productModal')">
+        ×
+      </button>
+
+    </div>
+
+
+    <input type="hidden" id="productId">
+
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>NOME *</label>
+        <input id="productNome" placeholder="Nome prodotto">
+      </div>
+
+      <div class="field">
+        <label>FORNITORE</label>
+        <select id="productSupplier"></select>
+      </div>
+
+      <div class="field">
+        <label>CATEGORIA</label>
+        <input id="productCategoria" placeholder="Categoria">
+      </div>
+
+      <div class="field">
+        <label>SOTTOCATEGORIA</label>
+        <input id="productSottocategoria" placeholder="Sottocategoria">
+      </div>
+
+      <div class="field">
+        <label>CODICE</label>
+        <input id="productCodice" placeholder="Codice articolo">
+      </div>
+
+      <div class="field">
+        <label>SKU</label>
+        <input id="productSku" placeholder="SKU">
+      </div>
+
+      <div class="field">
+        <label>UNITÀ MISURA</label>
+
+        <select id="productUnit">
+          <option value="pz">pz</option>
+          <option value="kg">kg</option>
+          <option value="g">g</option>
+          <option value="L">L</option>
+          <option value="ml">ml</option>
+          <option value="conf">conf</option>
+          <option value="cartone">cartone</option>
+          <option value="pallet">pallet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>PREZZO UNITARIO €</label>
+        <input id="productPrice" type="number" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>IVA %</label>
+        <input id="productIva" type="number" step="0.01" value="22">
+      </div>
+
+      <div class="field">
+        <label>GIACENZA</label>
+        <input id="productStock" type="number" step="0.001" value="0">
+      </div>
+
+      <div class="field">
+        <label>SCORTA MINIMA</label>
+        <input id="productMinStock" type="number" step="0.001" value="0">
+      </div>
+
+      <div class="field">
+        <label>STATO</label>
+
+        <select id="productStato">
+          <option>ATTIVO</option>
+          <option>SOSPESO</option>
+          <option>ARCHIVIATO</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <div class="field">
+      <label>NOTE</label>
+      <textarea id="productNote" placeholder="Note prodotto"></textarea>
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        class="btn soft"
+        onclick="closeModal('productModal')">
+        ANNULLA
+      </button>
+
+      <button
+        class="btn primary"
+        id="productSaveBtn"
+        onclick="saveProduct()">
+        SALVA
+      </button>
+
+    </div>
+
+    <div class="status" id="productStatus"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ==============================
+     MODALE ORDINE
+================================ -->
+
+<div class="modal hidden" id="orderModal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2 id="orderModalTitle">
+        Nuovo ordine
+      </h2>
+
+      <button class="close" onclick="closeModal('orderModal')">
+        ×
+      </button>
+
+    </div>
+
+
+    <input type="hidden" id="orderId">
+
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>NUMERO ORDINE</label>
+        <input id="orderNumber" placeholder="Automatico se vuoto">
+      </div>
+
+      <div class="field">
+        <label>FORNITORE</label>
+        <select id="orderSupplier" onchange="filterOrderProducts()"></select>
+      </div>
+
+      <div class="field">
+        <label>PRODOTTO</label>
+        <select id="orderProduct" onchange="orderProductChanged()"></select>
+      </div>
+
+      <div class="field">
+        <label>QUANTITÀ</label>
+        <input
+          id="orderQty"
+          type="number"
+          step="0.001"
+          value="1"
+          oninput="calculateOrderTotal()">
+      </div>
+
+      <div class="field">
+        <label>UNITÀ MISURA</label>
+        <input id="orderUnit" value="pz">
+      </div>
+
+      <div class="field">
+        <label>PREZZO UNITARIO €</label>
+        <input
+          id="orderPrice"
+          type="number"
+          step="0.01"
+          value="0"
+          oninput="calculateOrderTotal()">
+      </div>
+
+      <div class="field">
+        <label>TOTALE €</label>
+        <input id="orderTotal" type="number" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>DATA ORDINE</label>
+        <input id="orderDate" type="date">
+      </div>
+
+      <div class="field">
+        <label>CONSEGNA PREVISTA</label>
+        <input id="orderDelivery" type="date">
+      </div>
+
+      <div class="field">
+        <label>STATO</label>
+
+        <select id="orderStato">
+          <option>BOZZA</option>
+          <option>INVIATO</option>
+          <option>CONFERMATO</option>
+          <option>IN CONSEGNA</option>
+          <option>RICEVUTO</option>
+          <option>ANNULLATO</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <div class="field">
+      <label>DESCRIZIONE</label>
+      <input id="orderDescription" placeholder="Descrizione ordine">
+    </div>
+
+
+    <div class="field">
+      <label>NOTE</label>
+      <textarea id="orderNote" placeholder="Note ordine"></textarea>
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        class="btn soft"
+        onclick="closeModal('orderModal')">
+        ANNULLA
+      </button>
+
+      <button
+        class="btn primary"
+        id="orderSaveBtn"
+        onclick="saveOrder()">
+        SALVA
+      </button>
+
+    </div>
+
+    <div class="status" id="orderStatus"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ==============================
+     JAVASCRIPT
+================================ -->
 
 <script>
 
@@ -986,13 +1460,33 @@ const db =
   );
 
 
-let suppliers=[];
-let products=[];
-let orders=[];
-let tableErrors={};
+let suppliers = [];
+let products = [];
+let orders = [];
+let tableErrors = {};
 
 
-/* UTILITY */
+/* ==============================
+   UTILITY
+================================ */
+
+function el(id){
+  return document.getElementById(id);
+}
+
+function val(id){
+  return (el(id).value || "").trim();
+}
+
+function nullable(id){
+  const v = val(id);
+  return v === "" ? null : v;
+}
+
+function numberValue(id){
+  const n = Number(el(id).value);
+  return Number.isFinite(n) ? n : 0;
+}
 
 function safe(v=""){
   return String(v ?? "")
@@ -1003,15 +1497,7 @@ function safe(v=""){
 
 function euro(v){
 
-  if(v===null || v===undefined || v===""){
-    return "—";
-  }
-
-  const n=Number(v);
-
-  if(Number.isNaN(n)){
-    return safe(v);
-  }
+  const n = Number(v || 0);
 
   return new Intl.NumberFormat(
     "it-IT",
@@ -1022,55 +1508,103 @@ function euro(v){
   ).format(n);
 }
 
-function value(id){
-  return document.getElementById(id).value.trim();
+function today(){
+
+  const d = new Date();
+
+  const year = d.getFullYear();
+
+  const month =
+    String(d.getMonth()+1).padStart(2,"0");
+
+  const day =
+    String(d.getDate()).padStart(2,"0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function orderCode(){
+
+  const d = new Date();
+
+  return "XA-" +
+    d.getFullYear() +
+    String(d.getMonth()+1).padStart(2,"0") +
+    String(d.getDate()).padStart(2,"0") +
+    "-" +
+    String(d.getHours()).padStart(2,"0") +
+    String(d.getMinutes()).padStart(2,"0") +
+    String(d.getSeconds()).padStart(2,"0");
+}
+
+function supplierName(id){
+
+  const item =
+    suppliers.find(
+      x => String(x.id) === String(id)
+    );
+
+  return item?.nome || "—";
+}
+
+function productName(id){
+
+  const item =
+    products.find(
+      x => String(x.id) === String(id)
+    );
+
+  return item?.nome || "—";
+}
+
+function setBusy(buttonId,busy,textNormal){
+
+  const button = el(buttonId);
+
+  button.disabled = busy;
+
+  button.textContent =
+    busy ? "SALVATAGGIO..." : textNormal;
 }
 
 
-/* LOGIN */
-
-document.getElementById("loginBtn")
-.addEventListener("click",loginXA);
-
-document.getElementById("password")
-.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    loginXA();
-  }
-});
+/* ==============================
+   AUTH
+================================ */
 
 async function loginXA(){
 
-  const email=value("email");
-  const password=document.getElementById("password").value;
-  const status=document.getElementById("loginStatus");
+  const email = val("loginEmail");
+  const password = el("loginPassword").value;
+  const status = el("loginStatus");
 
   status.classList.remove("ok");
 
   if(!email){
-    status.textContent="Inserisci l'email.";
+    status.textContent = "Inserisci l'email.";
     return;
   }
 
   if(!password){
-    status.textContent="Inserisci la password.";
+    status.textContent = "Inserisci la password.";
     return;
   }
 
-  status.textContent="Connessione a XA...";
+  status.textContent = "Connessione...";
 
-  const {data,error}=
-  await db.auth.signInWithPassword({
-    email,
-    password
-  });
+  const {data,error} =
+    await db.auth.signInWithPassword({
+      email,
+      password
+    });
 
   if(error){
-    status.textContent="SUPABASE: "+error.message;
+    status.textContent =
+      "SUPABASE: " + error.message;
     return;
   }
 
-  status.textContent="";
+  status.textContent = "";
 
   enterXA(data.session);
 
@@ -1078,109 +1612,131 @@ async function loginXA(){
 }
 
 
-/* SESSIONE */
-
 async function bootXA(){
 
   const {
     data:{session}
-  }=await db.auth.getSession();
+  } =
+    await db.auth.getSession();
 
   if(session){
+
     enterXA(session);
+
     await loadEverything();
+
+  }else{
+
+    el("loginScreen")
+      .classList.remove("hidden");
   }
 }
+
 
 function enterXA(session){
 
-  document.getElementById("loginScreen")
-  .classList.add("hidden");
+  el("loginScreen").classList.add("hidden");
 
-  document.getElementById("app")
-  .classList.remove("hidden");
+  el("app").classList.remove("hidden");
 
-  document.getElementById("accountEmail")
-  .textContent=session?.user?.email || "Utente XA";
+  el("accountEmail").textContent =
+    session?.user?.email || "Utente XA";
 }
 
 
-/* LOGOUT */
-
-document.getElementById("logoutBtn")
-.addEventListener("click",async()=>{
+async function logoutXA(){
 
   await db.auth.signOut();
 
-  document.getElementById("app")
-  .classList.add("hidden");
+  el("app").classList.add("hidden");
 
-  document.getElementById("loginScreen")
-  .classList.remove("hidden");
+  el("loginScreen").classList.remove("hidden");
 
-  document.getElementById("password").value="";
+  el("loginPassword").value = "";
+
+  openPage("home");
+}
+
+
+el("loginPassword")
+.addEventListener(
+  "keydown",
+  event => {
+
+    if(event.key === "Enter"){
+      loginXA();
+    }
+  }
+);
+
+
+/* ==============================
+   NAVIGAZIONE
+================================ */
+
+document
+.querySelectorAll(".nav")
+.forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => openPage(button.dataset.page)
+  );
 });
 
 
-/* NAV */
+function openPage(name){
 
-document.querySelectorAll(".nav")
-.forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-
-    openPage(
-      btn.dataset.page,
-      btn
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      page => page.classList.remove("active")
     );
 
-  });
+  const page =
+    el("page-" + name);
 
-});
-
-function openPage(name,button=null){
-
-  document.querySelectorAll(".page")
-  .forEach(page=>page.classList.remove("active"));
-
-  const target=document.getElementById("page-"+name);
-
-  if(target){
-    target.classList.add("active");
+  if(page){
+    page.classList.add("active");
   }
 
-  document.querySelectorAll(".nav")
-  .forEach(nav=>nav.classList.remove("active"));
+  document
+    .querySelectorAll(".nav")
+    .forEach(
+      nav => nav.classList.remove("active")
+    );
 
-  if(button){
-    button.classList.add("active");
-  }else{
-    const nav=document.querySelector(
+  const nav =
+    document.querySelector(
       `.nav[data-page="${name}"]`
     );
 
-    if(nav){
-      nav.classList.add("active");
-    }
+  if(nav){
+    nav.classList.add("active");
   }
 
   window.scrollTo(0,0);
 }
 
 
-/* DATABASE */
+/* ==============================
+   DATABASE
+================================ */
 
 async function readTable(name){
 
-  const {data,error}=
-  await db
-    .from(name)
-    .select("*")
-    .order("created_at",{ascending:false});
+  const {data,error} =
+    await db
+      .from(name)
+      .select("*")
+      .order("created_at",{ascending:false});
 
   if(error){
 
-    tableErrors[name]=error.message;
+    console.error(name,error);
+
+    tableErrors[name] =
+      error.message;
 
     return [];
   }
@@ -1193,41 +1749,59 @@ async function readTable(name){
 
 async function loadEverything(){
 
-  document.getElementById("cloudStatus")
-  .textContent="● SYNC";
+  el("cloudStatus").textContent =
+    "● SYNC";
 
-  const results=
-  await Promise.all([
-    readTable("fornitori"),
-    readTable("prodotti"),
-    readTable("ordini")
-  ]);
+  const [
+    supplierData,
+    productData,
+    orderData
+  ] =
+    await Promise.all([
+      readTable("fornitori"),
+      readTable("prodotti"),
+      readTable("ordini")
+    ]);
 
-  suppliers=results[0];
-  products=results[1];
-  orders=results[2];
+  suppliers = supplierData;
+  products = productData;
+  orders = orderData;
 
-  document.getElementById("cloudStatus")
-  .textContent="● ONLINE";
+  el("cloudStatus").textContent =
+    "● ONLINE";
 
-  renderAll();
+  refreshSelects();
+  renderEverything();
 }
 
 
-/* RENDER */
+/* ==============================
+   DASHBOARD
+================================ */
 
-function renderAll(){
+function renderEverything(){
 
-  document.getElementById("kpiSuppliers")
-  .textContent=suppliers.length;
+  el("kpiSuppliers").textContent =
+    suppliers.length;
 
-  document.getElementById("kpiProducts")
-  .textContent=products.length;
+  el("kpiProducts").textContent =
+    products.length;
 
-  document.getElementById("kpiOrders")
-  .textContent=orders.length;
+  el("kpiOrders").textContent =
+    orders.length;
+
+  const total =
+    orders.reduce(
+      (sum,item) =>
+        sum + Number(item.totale || 0),
+      0
+    );
+
+  el("kpiOrderValue").textContent =
+    euro(total);
 
   renderDatabaseStatus();
+  renderStockAlerts();
   renderSuppliers();
   renderProducts();
   renderOrders();
@@ -1236,88 +1810,157 @@ function renderAll(){
 
 function renderDatabaseStatus(){
 
-  const box=document.getElementById("dbStatus");
+  const errors =
+    Object.keys(tableErrors);
 
-  const names=Object.keys(tableErrors);
+  if(!errors.length){
 
-  if(!names.length){
-
-    box.innerHTML=`
-      <div style="
-        padding:11px;
-        border-radius:12px;
-        background:#dcebdd;
-        color:#276047;
-        font-size:9px;
-        font-weight:900;
-      ">
-        ● SUPABASE ONLINE · DATABASE COLLEGATO
-      </div>
-    `;
+    el("dbStatus").innerHTML =
+      `<div class="db-ok">
+        ● SUPABASE ONLINE · DATABASE V3 COLLEGATO
+       </div>`;
 
     return;
   }
 
-  box.innerHTML=`
-    <div style="
-      padding:11px;
-      border-radius:12px;
-      background:#f4d9d8;
-      color:#912f3e;
-      font-size:9px;
-      font-weight:900;
-    ">
-      Problemi tabelle: ${safe(names.join(", "))}
-    </div>
-  `;
+  el("dbStatus").innerHTML =
+    `<div class="db-error">
+      Problemi: ${safe(errors.join(", "))}
+     </div>`;
 }
 
 
-/* FORNITORI */
+function renderStockAlerts(){
 
-function renderSuppliers(){
+  const alerts =
+    products.filter(
+      p =>
+        Number(p.stock_minimo || 0) > 0 &&
+        Number(p.stock_attuale || 0)
+        <=
+        Number(p.stock_minimo || 0)
+    );
 
-  const target=document.getElementById("supplierList");
+  if(!alerts.length){
 
-  const search=
-  (document.getElementById("supplierSearch").value || "")
-  .toLowerCase();
-
-  const filtered=
-  suppliers.filter(item=>
-    Object.values(item)
-    .join(" ")
-    .toLowerCase()
-    .includes(search)
-  );
-
-  if(!filtered.length){
-
-    target.innerHTML=`
-      <div class="empty">
-        Nessun fornitore presente.<br><br>
-        Premi <b>+ NUOVO</b> per inserire il primo fornitore XA.
-      </div>
-    `;
+    el("stockAlerts").innerHTML =
+      `<div class="db-ok">
+        Nessun prodotto sotto scorta minima.
+       </div>`;
 
     return;
   }
 
-  target.innerHTML=
-  filtered.map(item=>{
+  el("stockAlerts").innerHTML =
+    alerts.map(
+      p => `
+        <div class="db-error"
+             style="margin-bottom:6px">
+          ⚠ ${safe(p.nome)}:
+          giacenza ${safe(p.stock_attuale)}
+          / minimo ${safe(p.stock_minimo)}
+        </div>
+      `
+    ).join("");
+}
 
-    return `
+
+/* ==============================
+   SELECT
+================================ */
+
+function refreshSelects(){
+
+  const supplierOptions =
+    `<option value="">— Nessun fornitore —</option>` +
+    suppliers.map(
+      s =>
+        `<option value="${s.id}">
+          ${safe(s.nome)}
+        </option>`
+    ).join("");
+
+  el("productSupplier").innerHTML =
+    supplierOptions;
+
+  el("orderSupplier").innerHTML =
+    supplierOptions;
+
+  filterOrderProducts();
+}
+
+
+function filterOrderProducts(){
+
+  const supplierId =
+    el("orderSupplier").value;
+
+  let available = products;
+
+  if(supplierId){
+
+    available =
+      products.filter(
+        p =>
+          String(p.fornitore_id) ===
+          String(supplierId)
+      );
+  }
+
+  el("orderProduct").innerHTML =
+    `<option value="">— Nessun prodotto —</option>` +
+    available.map(
+      p =>
+        `<option value="${p.id}">
+          ${safe(p.nome)}
+        </option>`
+    ).join("");
+}
+
+
+/* ==============================
+   FORNITORI RENDER
+================================ */
+
+function renderSuppliers(){
+
+  const query =
+    val("supplierSearch").toLowerCase();
+
+  const data =
+    suppliers.filter(
+      item =>
+        Object.values(item)
+          .join(" ")
+          .toLowerCase()
+          .includes(query)
+    );
+
+  if(!data.length){
+
+    el("supplierList").innerHTML =
+      `<div class="empty">
+        Nessun fornitore presente.
+       </div>`;
+
+    return;
+  }
+
+  el("supplierList").innerHTML =
+    data.map(
+      item => `
+
       <article class="item">
 
         <div class="item-top">
 
-          <div class="item-icon">🏢</div>
+          <div class="item-icon">
+            🏢
+          </div>
 
-          <div>
+          <div class="item-main">
 
-            <h3>
-              ${safe(item.nome || "Fornitore XA")}
-            </h3>
+            <h3>${safe(item.nome)}</h3>
 
             <div class="item-sub">
               ${safe(item.categoria || "Fornitore")}
@@ -1325,9 +1968,14 @@ function renderSuppliers(){
               ${item.paese ? " · "+safe(item.paese) : ""}
             </div>
 
+            <span class="badge">
+              ${safe(item.stato || "ATTIVO")}
+            </span>
+
           </div>
 
         </div>
+
 
         <div class="meta">
 
@@ -1353,162 +2001,242 @@ function renderSuppliers(){
 
         </div>
 
-      </article>
-    `;
 
-  }).join("");
+        <div class="item-actions">
+
+          <button
+            class="edit-btn"
+            onclick="editSupplier(${item.id})">
+            MODIFICA
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteSupplier(${item.id})">
+            ELIMINA
+          </button>
+
+        </div>
+
+      </article>
+
+      `
+    ).join("");
 }
 
 
-/* MODAL FORNITORE */
+/* ==============================
+   FORNITORE CRUD
+================================ */
 
 function openSupplierModal(){
 
-  document.getElementById("supplierModal")
-  .classList.remove("hidden");
+  clearSupplierForm();
 
-  document.getElementById("supplierStatus")
-  .textContent="";
+  el("supplierModalTitle").textContent =
+    "Nuovo fornitore";
 
-  document.getElementById("supplierNome").focus();
-}
-
-function closeSupplierModal(){
-
-  document.getElementById("supplierModal")
-  .classList.add("hidden");
+  el("supplierModal").classList.remove("hidden");
 }
 
 
-/* SALVA FORNITORE */
+function editSupplier(id){
+
+  const item =
+    suppliers.find(x => x.id === id);
+
+  if(!item) return;
+
+  el("supplierId").value = item.id;
+  el("supplierNome").value = item.nome || "";
+  el("supplierRagione").value = item.ragione_sociale || "";
+  el("supplierCategoria").value = item.categoria || "";
+  el("supplierReferente").value = item.referente || "";
+  el("supplierEmail").value = item.email || "";
+  el("supplierTelefono").value = item.telefono || "";
+  el("supplierIndirizzo").value = item.indirizzo || "";
+  el("supplierCitta").value = item.citta || "";
+  el("supplierProvincia").value = item.provincia || "";
+  el("supplierCap").value = item.cap || "";
+  el("supplierPaese").value = item.paese || "Italia";
+  el("supplierPiva").value = item.partita_iva || "";
+  el("supplierCf").value = item.codice_fiscale || "";
+  el("supplierPagamento").value = item.pagamento || "";
+  el("supplierIban").value = item.iban || "";
+  el("supplierStato").value = item.stato || "ATTIVO";
+  el("supplierNote").value = item.note || "";
+
+  el("supplierModalTitle").textContent =
+    "Modifica fornitore";
+
+  el("supplierModal").classList.remove("hidden");
+}
+
 
 async function saveSupplier(){
 
-  const status=
-  document.getElementById("supplierStatus");
-
-  const saveBtn=
-  document.getElementById("saveSupplierBtn");
+  const status =
+    el("supplierStatus");
 
   status.classList.remove("ok");
 
+  if(!val("supplierNome")){
 
-  const nome=value("supplierNome");
-
-  if(!nome){
-
-    status.textContent=
-    "Inserisci almeno il nome del fornitore.";
+    status.textContent =
+      "Inserisci il nome.";
 
     return;
   }
 
+  const record = {
 
-  const record={
+    updated_at:new Date().toISOString(),
 
-    nome:nome,
+    nome:val("supplierNome"),
 
     ragione_sociale:
-      value("supplierRagione") || null,
+      nullable("supplierRagione"),
 
     categoria:
-      value("supplierCategoria") || null,
+      nullable("supplierCategoria"),
 
     referente:
-      value("supplierReferente") || null,
+      nullable("supplierReferente"),
 
     email:
-      value("supplierEmail") || null,
+      nullable("supplierEmail"),
 
     telefono:
-      value("supplierTelefono") || null,
+      nullable("supplierTelefono"),
 
     indirizzo:
-      value("supplierIndirizzo") || null,
+      nullable("supplierIndirizzo"),
 
     citta:
-      value("supplierCitta") || null,
+      nullable("supplierCitta"),
 
     provincia:
-      value("supplierProvincia") || null,
+      nullable("supplierProvincia"),
 
     cap:
-      value("supplierCap") || null,
+      nullable("supplierCap"),
 
     paese:
-      value("supplierPaese") || "Italia",
+      val("supplierPaese") || "Italia",
 
     partita_iva:
-      value("supplierPiva") || null,
+      nullable("supplierPiva"),
 
     codice_fiscale:
-      value("supplierCf") || null,
+      nullable("supplierCf"),
 
     pagamento:
-      value("supplierPagamento") || null,
+      nullable("supplierPagamento"),
 
     iban:
-      value("supplierIban") || null,
+      nullable("supplierIban"),
+
+    stato:
+      val("supplierStato") || "ATTIVO",
 
     note:
-      value("supplierNote") || null,
-
-    stato:"ATTIVO"
+      nullable("supplierNote")
   };
 
+  setBusy(
+    "supplierSaveBtn",
+    true,
+    "SALVA"
+  );
 
-  saveBtn.disabled=true;
-  saveBtn.textContent="SALVATAGGIO...";
+  const id =
+    val("supplierId");
 
-  status.textContent=
-  "Invio a Supabase...";
+  let error;
 
+  if(id){
 
-  const {error}=
-  await db
-    .from("fornitori")
-    .insert(record);
+    ({error} =
+      await db
+        .from("fornitori")
+        .update(record)
+        .eq("id",id));
 
+  }else{
 
-  saveBtn.disabled=false;
-  saveBtn.textContent="SALVA FORNITORE";
+    ({error} =
+      await db
+        .from("fornitori")
+        .insert(record));
+  }
 
+  setBusy(
+    "supplierSaveBtn",
+    false,
+    "SALVA"
+  );
 
   if(error){
 
-    console.error(error);
-
-    status.textContent=
-    "SUPABASE: "+error.message;
+    status.textContent =
+      "SUPABASE: " + error.message;
 
     return;
   }
 
-
   status.classList.add("ok");
 
-  status.textContent=
-  "FORNITORE SALVATO ✓";
-
-
-  clearSupplierForm();
+  status.textContent =
+    "FORNITORE SALVATO ✓";
 
   await loadEverything();
 
+  setTimeout(
+    () => {
+      closeModal("supplierModal");
+      openPage("suppliers");
+    },
+    500
+  );
+}
 
-  setTimeout(()=>{
 
-    closeSupplierModal();
+async function deleteSupplier(id){
 
-    openPage("suppliers");
+  const item =
+    suppliers.find(x => x.id === id);
 
-  },700);
+  if(
+    !confirm(
+      `Eliminare il fornitore "${item?.nome || ""}"?`
+    )
+  ){
+    return;
+  }
+
+  const {error} =
+    await db
+      .from("fornitori")
+      .delete()
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Supabase: " + error.message
+    );
+
+    return;
+  }
+
+  await loadEverything();
 }
 
 
 function clearSupplierForm(){
 
   [
+    "supplierId",
     "supplierNome",
     "supplierRagione",
     "supplierCategoria",
@@ -1525,160 +2253,785 @@ function clearSupplierForm(){
     "supplierIban",
     "supplierNote"
   ]
-  .forEach(id=>{
-    document.getElementById(id).value="";
-  });
+  .forEach(
+    id => el(id).value = ""
+  );
 
-  document.getElementById("supplierPaese")
-  .value="Italia";
+  el("supplierPaese").value =
+    "Italia";
+
+  el("supplierStato").value =
+    "ATTIVO";
+
+  el("supplierStatus").textContent =
+    "";
 }
 
 
-/* PRODOTTI */
+/* ==============================
+   PRODOTTI RENDER
+================================ */
 
 function renderProducts(){
 
-  const target=document.getElementById("productList");
+  const query =
+    val("productSearch").toLowerCase();
 
-  const search=
-  (document.getElementById("productSearch").value || "")
-  .toLowerCase();
+  const data =
+    products.filter(
+      item =>
+        Object.values(item)
+          .join(" ")
+          .toLowerCase()
+          .includes(query)
+    );
 
-  const filtered=
-  products.filter(item=>
-    Object.values(item)
-    .join(" ")
-    .toLowerCase()
-    .includes(search)
-  );
+  if(!data.length){
 
-  if(!filtered.length){
-
-    target.innerHTML=`
-      <div class="empty">
+    el("productList").innerHTML =
+      `<div class="empty">
         Nessun prodotto presente.
-      </div>
-    `;
+       </div>`;
 
     return;
   }
 
-  target.innerHTML=
-  filtered.map(item=>`
+  el("productList").innerHTML =
+    data.map(
+      item => `
 
-    <article class="item">
+      <article class="item">
 
-      <div class="item-top">
+        <div class="item-top">
 
-        <div class="item-icon">📦</div>
+          <div class="item-icon">
+            📦
+          </div>
 
-        <div>
+          <div class="item-main">
 
-          <h3>${safe(item.nome || "Prodotto XA")}</h3>
+            <h3>${safe(item.nome)}</h3>
 
-          <div class="item-sub">
-            ${safe(item.categoria || "Prodotto")}
+            <div class="item-sub">
+              ${safe(item.categoria || "Prodotto")}
+              · ${safe(supplierName(item.fornitore_id))}
+            </div>
+
+            <span class="badge">
+              ${safe(item.stato || "ATTIVO")}
+            </span>
+
           </div>
 
         </div>
 
-      </div>
 
-      <div class="meta">
+        <div class="meta">
 
-        <div class="meta-box">
-          <label>PREZZO</label>
-          <strong>${euro(item.prezzo_unitario)}</strong>
+          <div class="meta-box">
+            <label>PREZZO</label>
+            <strong>${euro(item.prezzo_unitario)}</strong>
+          </div>
+
+          <div class="meta-box">
+            <label>GIACENZA</label>
+            <strong>
+              ${safe(item.stock_attuale ?? 0)}
+              ${safe(item.unita_misura || "")}
+            </strong>
+          </div>
+
+          <div class="meta-box">
+            <label>SCORTA MINIMA</label>
+            <strong>${safe(item.stock_minimo ?? 0)}</strong>
+          </div>
+
+          <div class="meta-box">
+            <label>CODICE</label>
+            <strong>${safe(item.codice || item.sku || "—")}</strong>
+          </div>
+
         </div>
 
-        <div class="meta-box">
-          <label>GIACENZA</label>
-          <strong>${safe(item.stock_attuale ?? "—")}</strong>
+
+        <div class="item-actions">
+
+          <button
+            class="edit-btn"
+            onclick="editProduct(${item.id})">
+            MODIFICA
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteProduct(${item.id})">
+            ELIMINA
+          </button>
+
         </div>
 
-      </div>
+      </article>
 
-    </article>
-
-  `).join("");
+      `
+    ).join("");
 }
 
 
-/* ORDINI */
+/* ==============================
+   PRODOTTO CRUD
+================================ */
+
+function openProductModal(){
+
+  clearProductForm();
+
+  refreshSelects();
+
+  el("productModalTitle").textContent =
+    "Nuovo prodotto";
+
+  el("productModal").classList.remove("hidden");
+}
+
+
+function editProduct(id){
+
+  const item =
+    products.find(x => x.id === id);
+
+  if(!item) return;
+
+  refreshSelects();
+
+  el("productId").value = item.id;
+  el("productNome").value = item.nome || "";
+  el("productSupplier").value = item.fornitore_id || "";
+  el("productCategoria").value = item.categoria || "";
+  el("productSottocategoria").value = item.sottocategoria || "";
+  el("productCodice").value = item.codice || "";
+  el("productSku").value = item.sku || "";
+  el("productUnit").value = item.unita_misura || "pz";
+  el("productPrice").value = item.prezzo_unitario || 0;
+  el("productIva").value = item.iva ?? 22;
+  el("productStock").value = item.stock_attuale || 0;
+  el("productMinStock").value = item.stock_minimo || 0;
+  el("productStato").value = item.stato || "ATTIVO";
+  el("productNote").value = item.note || "";
+
+  el("productModalTitle").textContent =
+    "Modifica prodotto";
+
+  el("productModal").classList.remove("hidden");
+}
+
+
+async function saveProduct(){
+
+  const status =
+    el("productStatus");
+
+  status.classList.remove("ok");
+
+  if(!val("productNome")){
+
+    status.textContent =
+      "Inserisci il nome del prodotto.";
+
+    return;
+  }
+
+  const supplierId =
+    val("productSupplier");
+
+  const record = {
+
+    updated_at:new Date().toISOString(),
+
+    nome:val("productNome"),
+
+    fornitore_id:
+      supplierId ? Number(supplierId) : null,
+
+    categoria:
+      nullable("productCategoria"),
+
+    sottocategoria:
+      nullable("productSottocategoria"),
+
+    codice:
+      nullable("productCodice"),
+
+    sku:
+      nullable("productSku"),
+
+    unita_misura:
+      val("productUnit") || "pz",
+
+    prezzo_unitario:
+      numberValue("productPrice"),
+
+    iva:
+      numberValue("productIva"),
+
+    stock_attuale:
+      numberValue("productStock"),
+
+    stock_minimo:
+      numberValue("productMinStock"),
+
+    stato:
+      val("productStato") || "ATTIVO",
+
+    note:
+      nullable("productNote")
+  };
+
+  setBusy(
+    "productSaveBtn",
+    true,
+    "SALVA"
+  );
+
+  const id =
+    val("productId");
+
+  let error;
+
+  if(id){
+
+    ({error} =
+      await db
+        .from("prodotti")
+        .update(record)
+        .eq("id",id));
+
+  }else{
+
+    ({error} =
+      await db
+        .from("prodotti")
+        .insert(record));
+  }
+
+  setBusy(
+    "productSaveBtn",
+    false,
+    "SALVA"
+  );
+
+  if(error){
+
+    status.textContent =
+      "SUPABASE: " + error.message;
+
+    return;
+  }
+
+  status.classList.add("ok");
+
+  status.textContent =
+    "PRODOTTO SALVATO ✓";
+
+  await loadEverything();
+
+  setTimeout(
+    () => {
+      closeModal("productModal");
+      openPage("products");
+    },
+    500
+  );
+}
+
+
+async function deleteProduct(id){
+
+  const item =
+    products.find(x => x.id === id);
+
+  if(
+    !confirm(
+      `Eliminare il prodotto "${item?.nome || ""}"?`
+    )
+  ){
+    return;
+  }
+
+  const {error} =
+    await db
+      .from("prodotti")
+      .delete()
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Supabase: " + error.message
+    );
+
+    return;
+  }
+
+  await loadEverything();
+}
+
+
+function clearProductForm(){
+
+  [
+    "productId",
+    "productNome",
+    "productCategoria",
+    "productSottocategoria",
+    "productCodice",
+    "productSku",
+    "productNote"
+  ]
+  .forEach(
+    id => el(id).value = ""
+  );
+
+  el("productSupplier").value = "";
+  el("productUnit").value = "pz";
+  el("productPrice").value = "0";
+  el("productIva").value = "22";
+  el("productStock").value = "0";
+  el("productMinStock").value = "0";
+  el("productStato").value = "ATTIVO";
+  el("productStatus").textContent = "";
+}
+
+
+/* ==============================
+   ORDINI RENDER
+================================ */
 
 function renderOrders(){
 
-  const target=document.getElementById("orderList");
+  const query =
+    val("orderSearch").toLowerCase();
 
-  const search=
-  (document.getElementById("orderSearch").value || "")
-  .toLowerCase();
+  const data =
+    orders.filter(
+      item => {
 
-  const filtered=
-  orders.filter(item=>
-    Object.values(item)
-    .join(" ")
-    .toLowerCase()
-    .includes(search)
-  );
+        const extra =
+          supplierName(item.fornitore_id) +
+          " " +
+          productName(item.prodotto_id);
 
-  if(!filtered.length){
+        return (
+          Object.values(item)
+            .join(" ") +
+          " " +
+          extra
+        )
+        .toLowerCase()
+        .includes(query);
+      }
+    );
 
-    target.innerHTML=`
-      <div class="empty">
+  if(!data.length){
+
+    el("orderList").innerHTML =
+      `<div class="empty">
         Nessun ordine presente.
-      </div>
-    `;
+       </div>`;
 
     return;
   }
 
-  target.innerHTML=
-  filtered.map(item=>`
+  el("orderList").innerHTML =
+    data.map(
+      item => `
 
-    <article class="item">
+      <article class="item">
 
-      <div class="item-top">
+        <div class="item-top">
 
-        <div class="item-icon">🛒</div>
+          <div class="item-icon">
+            🛒
+          </div>
 
-        <div>
+          <div class="item-main">
 
-          <h3>
-            ${safe(
-              item.numero_ordine ||
-              item.codice ||
-              "Ordine XA"
-            )}
-          </h3>
+            <h3>
+              ${safe(item.numero_ordine || "Ordine XA")}
+            </h3>
 
-          <div class="item-sub">
-            ${safe(item.stato || "BOZZA")}
+            <div class="item-sub">
+              ${safe(supplierName(item.fornitore_id))}
+              ·
+              ${safe(productName(item.prodotto_id))}
+            </div>
+
+            <span class="badge">
+              ${safe(item.stato || "BOZZA")}
+            </span>
+
           </div>
 
         </div>
 
-      </div>
 
-      <div class="meta">
+        <div class="meta">
 
-        <div class="meta-box">
-          <label>TOTALE</label>
-          <strong>${euro(item.totale)}</strong>
+          <div class="meta-box">
+            <label>QUANTITÀ</label>
+            <strong>
+              ${safe(item.quantita ?? 0)}
+              ${safe(item.unita_misura || "")}
+            </strong>
+          </div>
+
+          <div class="meta-box">
+            <label>TOTALE</label>
+            <strong>${euro(item.totale)}</strong>
+          </div>
+
+          <div class="meta-box">
+            <label>DATA ORDINE</label>
+            <strong>${safe(item.data_ordine || "—")}</strong>
+          </div>
+
+          <div class="meta-box">
+            <label>CONSEGNA</label>
+            <strong>${safe(item.data_consegna || "—")}</strong>
+          </div>
+
         </div>
 
-        <div class="meta-box">
-          <label>STATO</label>
-          <strong>${safe(item.stato || "BOZZA")}</strong>
+
+        <div class="item-actions">
+
+          <button
+            class="edit-btn"
+            onclick="editOrder(${item.id})">
+            MODIFICA
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteOrder(${item.id})">
+            ELIMINA
+          </button>
+
         </div>
 
-      </div>
+      </article>
 
-    </article>
-
-  `).join("");
+      `
+    ).join("");
 }
 
+
+/* ==============================
+   ORDINE CRUD
+================================ */
+
+function openOrderModal(){
+
+  clearOrderForm();
+
+  refreshSelects();
+
+  el("orderDate").value = today();
+
+  el("orderNumber").value =
+    orderCode();
+
+  el("orderModalTitle").textContent =
+    "Nuovo ordine";
+
+  el("orderModal").classList.remove("hidden");
+}
+
+
+function editOrder(id){
+
+  const item =
+    orders.find(x => x.id === id);
+
+  if(!item) return;
+
+  refreshSelects();
+
+  el("orderId").value = item.id;
+  el("orderNumber").value = item.numero_ordine || "";
+  el("orderSupplier").value = item.fornitore_id || "";
+
+  filterOrderProducts();
+
+  el("orderProduct").value = item.prodotto_id || "";
+  el("orderDescription").value = item.descrizione || "";
+  el("orderQty").value = item.quantita ?? 1;
+  el("orderUnit").value = item.unita_misura || "pz";
+  el("orderPrice").value = item.prezzo_unitario || 0;
+  el("orderTotal").value = item.totale || 0;
+  el("orderDate").value = item.data_ordine || today();
+  el("orderDelivery").value = item.data_consegna || "";
+  el("orderStato").value = item.stato || "BOZZA";
+  el("orderNote").value = item.note || "";
+
+  el("orderModalTitle").textContent =
+    "Modifica ordine";
+
+  el("orderModal").classList.remove("hidden");
+}
+
+
+function orderProductChanged(){
+
+  const id =
+    el("orderProduct").value;
+
+  const product =
+    products.find(
+      p => String(p.id) === String(id)
+    );
+
+  if(!product) return;
+
+  if(product.fornitore_id){
+
+    el("orderSupplier").value =
+      product.fornitore_id;
+  }
+
+  el("orderUnit").value =
+    product.unita_misura || "pz";
+
+  el("orderPrice").value =
+    product.prezzo_unitario || 0;
+
+  el("orderDescription").value =
+    product.nome || "";
+
+  calculateOrderTotal();
+}
+
+
+function calculateOrderTotal(){
+
+  const qty =
+    numberValue("orderQty");
+
+  const price =
+    numberValue("orderPrice");
+
+  el("orderTotal").value =
+    (qty * price).toFixed(2);
+}
+
+
+async function saveOrder(){
+
+  const status =
+    el("orderStatus");
+
+  status.classList.remove("ok");
+
+  const supplierId =
+    val("orderSupplier");
+
+  const productId =
+    val("orderProduct");
+
+  if(!supplierId){
+
+    status.textContent =
+      "Seleziona un fornitore.";
+
+    return;
+  }
+
+  const record = {
+
+    updated_at:new Date().toISOString(),
+
+    numero_ordine:
+      val("orderNumber") || orderCode(),
+
+    fornitore_id:
+      Number(supplierId),
+
+    prodotto_id:
+      productId ? Number(productId) : null,
+
+    descrizione:
+      nullable("orderDescription"),
+
+    quantita:
+      numberValue("orderQty"),
+
+    unita_misura:
+      val("orderUnit") || "pz",
+
+    prezzo_unitario:
+      numberValue("orderPrice"),
+
+    totale:
+      numberValue("orderTotal"),
+
+    data_ordine:
+      val("orderDate") || today(),
+
+    data_consegna:
+      nullable("orderDelivery"),
+
+    stato:
+      val("orderStato") || "BOZZA",
+
+    note:
+      nullable("orderNote")
+  };
+
+  setBusy(
+    "orderSaveBtn",
+    true,
+    "SALVA"
+  );
+
+  const id =
+    val("orderId");
+
+  let error;
+
+  if(id){
+
+    ({error} =
+      await db
+        .from("ordini")
+        .update(record)
+        .eq("id",id));
+
+  }else{
+
+    ({error} =
+      await db
+        .from("ordini")
+        .insert(record));
+  }
+
+  setBusy(
+    "orderSaveBtn",
+    false,
+    "SALVA"
+  );
+
+  if(error){
+
+    status.textContent =
+      "SUPABASE: " + error.message;
+
+    return;
+  }
+
+  status.classList.add("ok");
+
+  status.textContent =
+    "ORDINE SALVATO ✓";
+
+  await loadEverything();
+
+  setTimeout(
+    () => {
+      closeModal("orderModal");
+      openPage("orders");
+    },
+    500
+  );
+}
+
+
+async function deleteOrder(id){
+
+  const item =
+    orders.find(x => x.id === id);
+
+  if(
+    !confirm(
+      `Eliminare l'ordine "${item?.numero_ordine || ""}"?`
+    )
+  ){
+    return;
+  }
+
+  const {error} =
+    await db
+      .from("ordini")
+      .delete()
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Supabase: " + error.message
+    );
+
+    return;
+  }
+
+  await loadEverything();
+}
+
+
+function clearOrderForm(){
+
+  [
+    "orderId",
+    "orderNumber",
+    "orderDescription",
+    "orderDelivery",
+    "orderNote"
+  ]
+  .forEach(
+    id => el(id).value = ""
+  );
+
+  el("orderSupplier").value = "";
+  el("orderProduct").value = "";
+  el("orderQty").value = "1";
+  el("orderUnit").value = "pz";
+  el("orderPrice").value = "0";
+  el("orderTotal").value = "0";
+  el("orderDate").value = today();
+  el("orderStato").value = "BOZZA";
+  el("orderStatus").textContent = "";
+}
+
+
+/* ==============================
+   MODALI
+================================ */
+
+function closeModal(id){
+
+  el(id).classList.add("hidden");
+}
+
+
+document
+.querySelectorAll(".modal")
+.forEach(
+  modal => {
+
+    modal.addEventListener(
+      "click",
+      event => {
+
+        if(event.target === modal){
+          modal.classList.add("hidden");
+        }
+      }
+    );
+  }
+);
+
+
+/* ==============================
+   START
+================================ */
 
 bootXA();
 
