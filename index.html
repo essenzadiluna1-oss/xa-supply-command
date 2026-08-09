@@ -24,10 +24,7 @@
   --line:#ddc9aa;
 }
 
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 html,body{
   margin:0;
@@ -37,21 +34,11 @@ html,body{
   color:var(--ink);
 }
 
-button,input{
-  font:inherit;
-}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 .auth{
   min-height:100vh;
@@ -100,9 +87,9 @@ button{
   letter-spacing:1.3px;
 }
 
-.field{
-  margin-bottom:14px;
-}
+/* COMMON */
+
+.field{margin-bottom:14px}
 
 .field label{
   display:block;
@@ -112,17 +99,32 @@ button{
   font-weight:900;
 }
 
-.field input{
+.field input,
+.field textarea,
+.field select{
   width:100%;
-  height:52px;
-  padding:0 14px;
   border:1px solid var(--line);
   border-radius:15px;
   background:var(--paper);
   outline:none;
+  color:var(--ink);
 }
 
-.field input:focus{
+.field input,
+.field select{
+  height:52px;
+  padding:0 14px;
+}
+
+.field textarea{
+  min-height:100px;
+  padding:13px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
   border-color:var(--wine);
 }
 
@@ -155,9 +157,7 @@ button{
   background:var(--red);
 }
 
-.full{
-  width:100%;
-}
+.full{width:100%}
 
 .status{
   min-height:25px;
@@ -168,13 +168,9 @@ button{
   font-weight:800;
 }
 
-.status.ok{
-  color:var(--green);
-}
+.status.ok{color:var(--green)}
 
-/* =========================
-   APP
-========================= */
+/* APP */
 
 .app{
   min-height:100vh;
@@ -198,7 +194,6 @@ button{
   border-radius:20px;
   color:#fff;
   background:linear-gradient(135deg,var(--dark),var(--wine));
-  box-shadow:0 7px 20px rgba(73,19,32,.18);
 }
 
 .brand-logo{
@@ -212,9 +207,7 @@ button{
   font:900 23px Georgia,serif;
 }
 
-.brand-title{
-  min-width:0;
-}
+.brand-title{min-width:0}
 
 .brand-title strong{
   display:block;
@@ -241,17 +234,10 @@ button{
   font-weight:900;
 }
 
-main{
-  padding:12px;
-}
+main{padding:12px}
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
+.page{display:none}
+.page.active{display:block}
 
 /* DASHBOARD */
 
@@ -262,13 +248,6 @@ main{
   background:
     radial-gradient(circle at 90% 0,rgba(223,193,132,.24),transparent 30%),
     linear-gradient(145deg,#361017,#691b30 62%,#963b51);
-}
-
-.hero-kicker{
-  color:#e7c98f;
-  font-size:8px;
-  font-weight:900;
-  letter-spacing:1px;
 }
 
 .hero h2{
@@ -290,10 +269,6 @@ main{
   margin-top:17px;
 }
 
-.hero-actions .btn{
-  width:auto;
-}
-
 .kpis{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -313,7 +288,6 @@ main{
   color:var(--muted);
   font-size:7px;
   font-weight:900;
-  letter-spacing:.6px;
 }
 
 .kpi strong{
@@ -365,7 +339,7 @@ main{
   font-size:8px;
 }
 
-/* LIST PAGES */
+/* PAGE */
 
 .page-head{
   margin:4px 1px 12px;
@@ -384,7 +358,8 @@ main{
 }
 
 .toolbar{
-  display:flex;
+  display:grid;
+  grid-template-columns:1fr auto auto;
   gap:7px;
   margin-bottom:10px;
 }
@@ -467,17 +442,6 @@ main{
   overflow-wrap:anywhere;
 }
 
-.badge{
-  display:inline-block;
-  margin-top:8px;
-  padding:6px 8px;
-  border-radius:999px;
-  color:#fff;
-  background:var(--wine);
-  font-size:7px;
-  font-weight:900;
-}
-
 .empty{
   padding:28px 15px;
   border:1px dashed #cbb494;
@@ -488,13 +452,64 @@ main{
   font-size:10px;
 }
 
-.errorbox{
-  padding:12px;
-  border-radius:13px;
-  color:#912f3e;
-  background:#f4d9d8;
-  font-size:9px;
-  font-weight:700;
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:16px;
+  background:rgba(34,14,18,.63);
+}
+
+.modal-card{
+  width:min(100%,560px);
+  max-height:92vh;
+  overflow:auto;
+  padding:18px;
+  border-radius:26px 26px 20px 20px;
+  background:#fff8eb;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.modal-head h2{
+  margin:0;
+  color:var(--dark);
+  font:900 24px Georgia,serif;
+}
+
+.close{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  color:var(--wine);
+  background:#efdfc4;
+  font-size:21px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+}
+
+.form-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
 }
 
 /* ACCOUNT */
@@ -550,22 +565,17 @@ main{
     margin:auto;
   }
 
-  .kpis{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .quick-grid{
-    grid-template-columns:repeat(4,1fr);
+  .kpis{grid-template-columns:repeat(4,1fr)}
+  .quick-grid{grid-template-columns:repeat(4,1fr)}
+  .form-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   }
 }
 </style>
 </head>
 
 <body>
-
-<!-- =========================
-     LOGIN
-========================= -->
 
 <section class="auth" id="loginScreen">
 
@@ -581,41 +591,23 @@ main{
 
     <div class="field">
       <label>EMAIL</label>
-      <input
-        id="email"
-        type="email"
-        autocomplete="username"
-        placeholder="Email XA">
+      <input id="email" type="email" autocomplete="username">
     </div>
 
     <div class="field">
       <label>PASSWORD</label>
-      <input
-        id="password"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Password">
+      <input id="password" type="password" autocomplete="current-password">
     </div>
 
-    <button
-      class="btn btn-primary full"
-      id="loginBtn">
+    <button class="btn btn-primary full" id="loginBtn">
       ENTRA IN XA
     </button>
 
-    <div
-      class="status"
-      id="loginStatus">
-    </div>
+    <div class="status" id="loginStatus"></div>
 
   </div>
-
 </section>
 
-
-<!-- =========================
-     APP
-========================= -->
 
 <div class="app hidden" id="app">
 
@@ -640,63 +632,36 @@ main{
 
 <main>
 
-<!-- HOME -->
-
 <section class="page active" id="page-home">
 
   <div class="hero">
-
-    <div class="hero-kicker">
-      XA CLOUD OPERATIONS
-    </div>
-
     <h2>Supply Command</h2>
-
     <p>
-      Controllo acquisti, fornitori, prodotti e ordini
-      collegato al database Supabase XA.
+      Controllo fornitori, prodotti e ordini collegato al database XA.
     </p>
 
     <div class="hero-actions">
-
-      <button
-        class="btn btn-gold"
-        onclick="openPage('suppliers')">
-        FORNITORI
-      </button>
-
-      <button
-        class="btn btn-soft"
-        onclick="openPage('products')">
-        PRODOTTI
-      </button>
-
-      <button
-        class="btn btn-primary"
-        onclick="openPage('orders')">
-        ORDINI
-      </button>
-
+      <button class="btn btn-gold" onclick="openPage('suppliers')">FORNITORI</button>
+      <button class="btn btn-soft" onclick="openPage('products')">PRODOTTI</button>
+      <button class="btn btn-primary" onclick="openPage('orders')">ORDINI</button>
     </div>
-
   </div>
-
 
   <div class="kpis">
 
     <div class="kpi">
       <small>FORNITORI</small>
-      <strong id="kpiSuppliers">—</strong>
+      <strong id="kpiSuppliers">0</strong>
     </div>
 
     <div class="kpi">
       <small>PRODOTTI</small>
-      <strong id="kpiProducts">—</strong>
+      <strong id="kpiProducts">0</strong>
     </div>
 
     <div class="kpi">
       <small>ORDINI</small>
-      <strong id="kpiOrders">—</strong>
+      <strong id="kpiOrders">0</strong>
     </div>
 
     <div class="kpi">
@@ -706,60 +671,42 @@ main{
 
   </div>
 
-
   <div class="card">
 
     <h3>Console rapida</h3>
 
     <div class="quick-grid">
 
-      <button
-        class="quick"
-        onclick="openPage('suppliers')">
+      <button class="quick" onclick="openPage('suppliers')">
         <b>🏢 FORNITORI</b>
         <span>Archivio fornitori</span>
       </button>
 
-      <button
-        class="quick"
-        onclick="openPage('products')">
+      <button class="quick" onclick="openPage('products')">
         <b>📦 PRODOTTI</b>
         <span>Catalogo acquisti</span>
       </button>
 
-      <button
-        class="quick"
-        onclick="openPage('orders')">
+      <button class="quick" onclick="openPage('orders')">
         <b>🛒 ORDINI</b>
         <span>Ordini fornitori</span>
       </button>
 
-      <button
-        class="quick"
-        onclick="loadEverything()">
+      <button class="quick" onclick="loadEverything()">
         <b>↻ SYNC</b>
         <span>Aggiorna Supabase</span>
       </button>
 
     </div>
-
   </div>
 
-
   <div class="card">
-
     <h3>Stato database</h3>
-
-    <div id="dbStatus">
-      Connessione in corso...
-    </div>
-
+    <div id="dbStatus"></div>
   </div>
 
 </section>
 
-
-<!-- FORNITORI -->
 
 <section class="page" id="page-suppliers">
 
@@ -769,6 +716,7 @@ main{
   </div>
 
   <div class="toolbar">
+
     <input
       id="supplierSearch"
       class="search"
@@ -776,27 +724,29 @@ main{
       oninput="renderSuppliers()">
 
     <button
+      class="btn btn-gold"
+      onclick="openSupplierModal()">
+      + NUOVO
+    </button>
+
+    <button
       class="btn btn-primary"
       onclick="loadEverything()">
       ↻
     </button>
+
   </div>
 
-  <div
-    class="list"
-    id="supplierList">
-  </div>
+  <div class="list" id="supplierList"></div>
 
 </section>
 
-
-<!-- PRODOTTI -->
 
 <section class="page" id="page-products">
 
   <div class="page-head">
     <h2>Prodotti</h2>
-    <p>Catalogo prodotti e materie prime XA</p>
+    <p>Catalogo prodotti XA</p>
   </div>
 
   <div class="toolbar">
@@ -807,23 +757,14 @@ main{
       placeholder="Cerca prodotto..."
       oninput="renderProducts()">
 
-    <button
-      class="btn btn-primary"
-      onclick="loadEverything()">
-      ↻
-    </button>
+    <button class="btn btn-primary" onclick="loadEverything()">↻</button>
 
   </div>
 
-  <div
-    class="list"
-    id="productList">
-  </div>
+  <div class="list" id="productList"></div>
 
 </section>
 
-
-<!-- ORDINI -->
 
 <section class="page" id="page-orders">
 
@@ -840,23 +781,14 @@ main{
       placeholder="Cerca ordine..."
       oninput="renderOrders()">
 
-    <button
-      class="btn btn-primary"
-      onclick="loadEverything()">
-      ↻
-    </button>
+    <button class="btn btn-primary" onclick="loadEverything()">↻</button>
 
   </div>
 
-  <div
-    class="list"
-    id="orderList">
-  </div>
+  <div class="list" id="orderList"></div>
 
 </section>
 
-
-<!-- ACCOUNT -->
 
 <section class="page" id="page-account">
 
@@ -869,10 +801,7 @@ main{
 
     <h3>Utente collegato</h3>
 
-    <div
-      class="account-mail"
-      id="accountEmail">
-    </div>
+    <div class="account-mail" id="accountEmail"></div>
 
     <button
       class="btn btn-danger full"
@@ -890,39 +819,24 @@ main{
 
 <nav class="bottom">
 
-  <button
-    class="nav active"
-    data-page="home">
-    <b>⌂</b>
-    HOME
+  <button class="nav active" data-page="home">
+    <b>⌂</b>HOME
   </button>
 
-  <button
-    class="nav"
-    data-page="suppliers">
-    <b>🏢</b>
-    FORN.
+  <button class="nav" data-page="suppliers">
+    <b>🏢</b>FORN.
   </button>
 
-  <button
-    class="nav"
-    data-page="products">
-    <b>📦</b>
-    PROD.
+  <button class="nav" data-page="products">
+    <b>📦</b>PROD.
   </button>
 
-  <button
-    class="nav"
-    data-page="orders">
-    <b>🛒</b>
-    ORDINI
+  <button class="nav" data-page="orders">
+    <b>🛒</b>ORDINI
   </button>
 
-  <button
-    class="nav"
-    data-page="account">
-    <b>●</b>
-    XA
+  <button class="nav" data-page="account">
+    <b>●</b>XA
   </button>
 
 </nav>
@@ -930,11 +844,126 @@ main{
 </div>
 
 
-<script>
+<!-- MODALE NUOVO FORNITORE -->
 
-/* ============================================
-   CONFIG XA
-============================================ */
+<div class="modal hidden" id="supplierModal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+      <h2>Nuovo fornitore</h2>
+      <button class="close" onclick="closeSupplierModal()">×</button>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>NOME *</label>
+        <input id="supplierNome" placeholder="Nome fornitore">
+      </div>
+
+      <div class="field">
+        <label>RAGIONE SOCIALE</label>
+        <input id="supplierRagione" placeholder="Ragione sociale">
+      </div>
+
+      <div class="field">
+        <label>CATEGORIA</label>
+        <input id="supplierCategoria" placeholder="Es. sidro, bottiglie, mele">
+      </div>
+
+      <div class="field">
+        <label>REFERENTE</label>
+        <input id="supplierReferente" placeholder="Nome referente">
+      </div>
+
+      <div class="field">
+        <label>EMAIL</label>
+        <input id="supplierEmail" type="email" placeholder="Email">
+      </div>
+
+      <div class="field">
+        <label>TELEFONO</label>
+        <input id="supplierTelefono" placeholder="Telefono">
+      </div>
+
+      <div class="field">
+        <label>INDIRIZZO</label>
+        <input id="supplierIndirizzo" placeholder="Indirizzo">
+      </div>
+
+      <div class="field">
+        <label>CITTÀ</label>
+        <input id="supplierCitta" placeholder="Città">
+      </div>
+
+      <div class="field">
+        <label>PROVINCIA</label>
+        <input id="supplierProvincia" placeholder="Provincia">
+      </div>
+
+      <div class="field">
+        <label>CAP</label>
+        <input id="supplierCap" placeholder="CAP">
+      </div>
+
+      <div class="field">
+        <label>PAESE</label>
+        <input id="supplierPaese" value="Italia">
+      </div>
+
+      <div class="field">
+        <label>PARTITA IVA</label>
+        <input id="supplierPiva" placeholder="Partita IVA">
+      </div>
+
+      <div class="field">
+        <label>CODICE FISCALE</label>
+        <input id="supplierCf" placeholder="Codice fiscale">
+      </div>
+
+      <div class="field">
+        <label>PAGAMENTO</label>
+        <input id="supplierPagamento" placeholder="Es. 30 gg / bonifico">
+      </div>
+
+      <div class="field">
+        <label>IBAN</label>
+        <input id="supplierIban" placeholder="IBAN">
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>NOTE</label>
+      <textarea id="supplierNote" placeholder="Note sul fornitore"></textarea>
+    </div>
+
+    <div class="form-actions">
+
+      <button
+        class="btn btn-soft"
+        onclick="closeSupplierModal()">
+        ANNULLA
+      </button>
+
+      <button
+        class="btn btn-primary"
+        id="saveSupplierBtn"
+        onclick="saveSupplier()">
+        SALVA FORNITORE
+      </button>
+
+    </div>
+
+    <div class="status" id="supplierStatus"></div>
+
+  </div>
+
+</div>
+
+
+<script>
 
 const SUPABASE_URL =
   "https://dmvdmkfwmvmgggvwqnkz.supabase.co";
@@ -957,37 +986,28 @@ const db =
   );
 
 
-let suppliers = [];
-let products  = [];
-let orders    = [];
+let suppliers=[];
+let products=[];
+let orders=[];
+let tableErrors={};
 
-let tableErrors = {};
 
-
-/* ============================================
-   UTILITY
-============================================ */
+/* UTILITY */
 
 function safe(v=""){
-
   return String(v ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;");
 }
 
-
 function euro(v){
 
-  if(
-    v === null ||
-    v === undefined ||
-    v === ""
-  ){
+  if(v===null || v===undefined || v===""){
     return "—";
   }
 
-  const n = Number(v);
+  const n=Number(v);
 
   if(Number.isNaN(n)){
     return safe(v);
@@ -1002,311 +1022,168 @@ function euro(v){
   ).format(n);
 }
 
-
-function firstValue(obj,names,fallback=""){
-
-  for(const name of names){
-
-    if(
-      obj &&
-      obj[name] !== null &&
-      obj[name] !== undefined &&
-      obj[name] !== ""
-    ){
-      return obj[name];
-    }
-  }
-
-  return fallback;
+function value(id){
+  return document.getElementById(id).value.trim();
 }
 
 
-/* ============================================
-   LOGIN
-============================================ */
+/* LOGIN */
 
-document
-  .getElementById("loginBtn")
-  .addEventListener(
-    "click",
-    loginXA
-  );
+document.getElementById("loginBtn")
+.addEventListener("click",loginXA);
 
-
-document
-  .getElementById("password")
-  .addEventListener(
-    "keydown",
-    e=>{
-
-      if(e.key === "Enter"){
-        loginXA();
-      }
-    }
-  );
-
+document.getElementById("password")
+.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    loginXA();
+  }
+});
 
 async function loginXA(){
 
-  const status =
-    document.getElementById("loginStatus");
-
-  const email =
-    document.getElementById("email")
-    .value
-    .trim();
-
-  const password =
-    document.getElementById("password")
-    .value;
-
+  const email=value("email");
+  const password=document.getElementById("password").value;
+  const status=document.getElementById("loginStatus");
 
   status.classList.remove("ok");
 
-
   if(!email){
-
-    status.textContent =
-      "Inserisci l'email.";
-
+    status.textContent="Inserisci l'email.";
     return;
   }
-
 
   if(!password){
-
-    status.textContent =
-      "Inserisci la password.";
-
+    status.textContent="Inserisci la password.";
     return;
   }
 
+  status.textContent="Connessione a XA...";
 
-  status.textContent =
-    "Connessione a XA...";
-
-
-  const {
-    data,
-    error
-  } =
-    await db.auth.signInWithPassword({
-      email,
-      password
-    });
-
+  const {data,error}=
+  await db.auth.signInWithPassword({
+    email,
+    password
+  });
 
   if(error){
-
-    console.error(error);
-
-    status.textContent =
-      "SUPABASE: " +
-      error.message;
-
+    status.textContent="SUPABASE: "+error.message;
     return;
   }
 
+  status.textContent="";
 
-  status.textContent = "";
-
-  enterXA(
-    data.session
-  );
+  enterXA(data.session);
 
   await loadEverything();
 }
 
 
-/* ============================================
-   SESSIONE
-============================================ */
+/* SESSIONE */
 
 async function bootXA(){
 
   const {
-    data:{
-      session
-    }
-  } =
-    await db.auth.getSession();
-
+    data:{session}
+  }=await db.auth.getSession();
 
   if(session){
-
     enterXA(session);
-
     await loadEverything();
-
-  }else{
-
-    document
-      .getElementById("loginScreen")
-      .classList
-      .remove("hidden");
   }
 }
 
-
 function enterXA(session){
 
-  document
-    .getElementById("loginScreen")
-    .classList
-    .add("hidden");
+  document.getElementById("loginScreen")
+  .classList.add("hidden");
 
+  document.getElementById("app")
+  .classList.remove("hidden");
 
-  document
-    .getElementById("app")
-    .classList
-    .remove("hidden");
-
-
-  document
-    .getElementById("accountEmail")
-    .textContent =
-    session?.user?.email || "Utente XA";
+  document.getElementById("accountEmail")
+  .textContent=session?.user?.email || "Utente XA";
 }
 
 
-/* ============================================
-   LOGOUT
-============================================ */
+/* LOGOUT */
 
-document
-  .getElementById("logoutBtn")
-  .addEventListener(
-    "click",
-    async ()=>{
+document.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
 
-      await db.auth.signOut();
+  await db.auth.signOut();
 
-      document
-        .getElementById("app")
-        .classList
-        .add("hidden");
+  document.getElementById("app")
+  .classList.add("hidden");
 
+  document.getElementById("loginScreen")
+  .classList.remove("hidden");
 
-      document
-        .getElementById("loginScreen")
-        .classList
-        .remove("hidden");
+  document.getElementById("password").value="";
+});
 
 
-      document
-        .getElementById("password")
-        .value = "";
+/* NAV */
 
+document.querySelectorAll(".nav")
+.forEach(btn=>{
 
-      document
-        .getElementById("loginStatus")
-        .textContent = "";
-    }
-  );
+  btn.addEventListener("click",()=>{
 
-
-/* ============================================
-   NAV
-============================================ */
-
-document
-  .querySelectorAll(".nav")
-  .forEach(btn=>{
-
-    btn.addEventListener(
-      "click",
-      ()=>{
-
-        openPage(
-          btn.dataset.page,
-          btn
-        );
-      }
+    openPage(
+      btn.dataset.page,
+      btn
     );
 
   });
 
+});
 
 function openPage(name,button=null){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(page=>
-      page.classList.remove("active")
-    );
+  document.querySelectorAll(".page")
+  .forEach(page=>page.classList.remove("active"));
 
-
-  const target =
-    document.getElementById(
-      "page-" + name
-    );
-
+  const target=document.getElementById("page-"+name);
 
   if(target){
     target.classList.add("active");
   }
 
-
-  document
-    .querySelectorAll(".nav")
-    .forEach(nav=>
-      nav.classList.remove("active")
-    );
-
+  document.querySelectorAll(".nav")
+  .forEach(nav=>nav.classList.remove("active"));
 
   if(button){
-
     button.classList.add("active");
-
   }else{
-
-    const nav =
-      document.querySelector(
-        `.nav[data-page="${name}"]`
-      );
+    const nav=document.querySelector(
+      `.nav[data-page="${name}"]`
+    );
 
     if(nav){
       nav.classList.add("active");
     }
   }
 
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  window.scrollTo(0,0);
 }
 
 
-/* ============================================
-   DATABASE
-============================================ */
+/* DATABASE */
 
 async function readTable(name){
 
-  const {
-    data,
-    error
-  } =
-    await db
-      .from(name)
-      .select("*");
-
+  const {data,error}=
+  await db
+    .from(name)
+    .select("*")
+    .order("created_at",{ascending:false});
 
   if(error){
 
-    console.error(
-      "XA TABLE ERROR:",
-      name,
-      error
-    );
-
-    tableErrors[name] =
-      error.message;
+    tableErrors[name]=error.message;
 
     return [];
   }
-
 
   delete tableErrors[name];
 
@@ -1316,57 +1193,39 @@ async function readTable(name){
 
 async function loadEverything(){
 
-  const cloud =
-    document.getElementById("cloudStatus");
+  document.getElementById("cloudStatus")
+  .textContent="● SYNC";
 
-  cloud.textContent =
-    "● SYNC";
+  const results=
+  await Promise.all([
+    readTable("fornitori"),
+    readTable("prodotti"),
+    readTable("ordini")
+  ]);
 
+  suppliers=results[0];
+  products=results[1];
+  orders=results[2];
 
-  const results =
-    await Promise.all([
-      readTable("fornitori"),
-      readTable("prodotti"),
-      readTable("ordini")
-    ]);
-
-
-  suppliers = results[0];
-  products  = results[1];
-  orders    = results[2];
-
-
-  cloud.textContent =
-    "● ONLINE";
-
+  document.getElementById("cloudStatus")
+  .textContent="● ONLINE";
 
   renderAll();
 }
 
 
-/* ============================================
-   RENDER DASHBOARD
-============================================ */
+/* RENDER */
 
 function renderAll(){
 
-  document
-    .getElementById("kpiSuppliers")
-    .textContent =
-    suppliers.length;
+  document.getElementById("kpiSuppliers")
+  .textContent=suppliers.length;
 
+  document.getElementById("kpiProducts")
+  .textContent=products.length;
 
-  document
-    .getElementById("kpiProducts")
-    .textContent =
-    products.length;
-
-
-  document
-    .getElementById("kpiOrders")
-    .textContent =
-    orders.length;
-
+  document.getElementById("kpiOrders")
+  .textContent=orders.length;
 
   renderDatabaseStatus();
   renderSuppliers();
@@ -1377,17 +1236,13 @@ function renderAll(){
 
 function renderDatabaseStatus(){
 
-  const box =
-    document.getElementById("dbStatus");
+  const box=document.getElementById("dbStatus");
 
+  const names=Object.keys(tableErrors);
 
-  const names =
-    Object.keys(tableErrors);
+  if(!names.length){
 
-
-  if(names.length === 0){
-
-    box.innerHTML = `
+    box.innerHTML=`
       <div style="
         padding:11px;
         border-radius:12px;
@@ -1403,196 +1258,303 @@ function renderDatabaseStatus(){
     return;
   }
 
-
-  box.innerHTML = `
-    <div class="errorbox">
-      <b>Connessione attiva</b><br><br>
-      Alcune tabelle non sono ancora disponibili:<br>
-      ${safe(names.join(", "))}
-      <br><br>
-      Continuiamo comunque senza bloccare XA.
+  box.innerHTML=`
+    <div style="
+      padding:11px;
+      border-radius:12px;
+      background:#f4d9d8;
+      color:#912f3e;
+      font-size:9px;
+      font-weight:900;
+    ">
+      Problemi tabelle: ${safe(names.join(", "))}
     </div>
   `;
 }
 
 
-/* ============================================
-   FORNITORI
-============================================ */
+/* FORNITORI */
 
 function renderSuppliers(){
 
-  const target =
-    document.getElementById("supplierList");
+  const target=document.getElementById("supplierList");
 
+  const search=
+  (document.getElementById("supplierSearch").value || "")
+  .toLowerCase();
 
-  const search =
-    (
-      document
-        .getElementById("supplierSearch")
-        .value || ""
-    )
-    .toLowerCase();
-
-
-  const filtered =
-    suppliers.filter(item=>{
-
-      const haystack =
-        Object.values(item)
-          .join(" ")
-          .toLowerCase();
-
-      return haystack.includes(search);
-    });
-
+  const filtered=
+  suppliers.filter(item=>
+    Object.values(item)
+    .join(" ")
+    .toLowerCase()
+    .includes(search)
+  );
 
   if(!filtered.length){
 
-    target.innerHTML = `
+    target.innerHTML=`
       <div class="empty">
-        Nessun fornitore presente.
+        Nessun fornitore presente.<br><br>
+        Premi <b>+ NUOVO</b> per inserire il primo fornitore XA.
       </div>
     `;
 
     return;
   }
 
+  target.innerHTML=
+  filtered.map(item=>{
 
-  target.innerHTML =
-    filtered.map(item=>{
+    return `
+      <article class="item">
 
-      const nome =
-        firstValue(
-          item,
-          [
-            "nome",
-            "ragione_sociale",
-            "azienda",
-            "supplier_name"
-          ],
-          "Fornitore XA"
-        );
+        <div class="item-top">
 
+          <div class="item-icon">🏢</div>
 
-      const categoria =
-        firstValue(
-          item,
-          [
-            "categoria",
-            "tipologia",
-            "settore"
-          ],
-          "Fornitore"
-        );
+          <div>
 
+            <h3>
+              ${safe(item.nome || "Fornitore XA")}
+            </h3>
 
-      const localita =
-        [
-          firstValue(item,["citta","city"]),
-          firstValue(item,["paese","country"])
-        ]
-        .filter(Boolean)
-        .join(" · ");
-
-
-      const referente =
-        firstValue(
-          item,
-          [
-            "referente",
-            "contatto",
-            "contact_name"
-          ],
-          "—"
-        );
-
-
-      const email =
-        firstValue(
-          item,
-          [
-            "email",
-            "mail"
-          ],
-          "—"
-        );
-
-
-      return `
-        <article class="item">
-
-          <div class="item-top">
-
-            <div class="item-icon">
-              🏢
-            </div>
-
-            <div>
-
-              <h3>${safe(nome)}</h3>
-
-              <div class="item-sub">
-                ${safe(categoria)}
-                ${localita ? " · " + safe(localita) : ""}
-              </div>
-
+            <div class="item-sub">
+              ${safe(item.categoria || "Fornitore")}
+              ${item.citta ? " · "+safe(item.citta) : ""}
+              ${item.paese ? " · "+safe(item.paese) : ""}
             </div>
 
           </div>
 
-          <div class="meta">
+        </div>
 
-            <div class="meta-box">
-              <label>REFERENTE</label>
-              <strong>${safe(referente)}</strong>
-            </div>
+        <div class="meta">
 
-            <div class="meta-box">
-              <label>EMAIL</label>
-              <strong>${safe(email)}</strong>
-            </div>
-
+          <div class="meta-box">
+            <label>REFERENTE</label>
+            <strong>${safe(item.referente || "—")}</strong>
           </div>
 
-        </article>
-      `;
+          <div class="meta-box">
+            <label>TELEFONO</label>
+            <strong>${safe(item.telefono || "—")}</strong>
+          </div>
 
-    }).join("");
+          <div class="meta-box">
+            <label>EMAIL</label>
+            <strong>${safe(item.email || "—")}</strong>
+          </div>
+
+          <div class="meta-box">
+            <label>PAGAMENTO</label>
+            <strong>${safe(item.pagamento || "—")}</strong>
+          </div>
+
+        </div>
+
+      </article>
+    `;
+
+  }).join("");
 }
 
 
-/* ============================================
-   PRODOTTI
-============================================ */
+/* MODAL FORNITORE */
+
+function openSupplierModal(){
+
+  document.getElementById("supplierModal")
+  .classList.remove("hidden");
+
+  document.getElementById("supplierStatus")
+  .textContent="";
+
+  document.getElementById("supplierNome").focus();
+}
+
+function closeSupplierModal(){
+
+  document.getElementById("supplierModal")
+  .classList.add("hidden");
+}
+
+
+/* SALVA FORNITORE */
+
+async function saveSupplier(){
+
+  const status=
+  document.getElementById("supplierStatus");
+
+  const saveBtn=
+  document.getElementById("saveSupplierBtn");
+
+  status.classList.remove("ok");
+
+
+  const nome=value("supplierNome");
+
+  if(!nome){
+
+    status.textContent=
+    "Inserisci almeno il nome del fornitore.";
+
+    return;
+  }
+
+
+  const record={
+
+    nome:nome,
+
+    ragione_sociale:
+      value("supplierRagione") || null,
+
+    categoria:
+      value("supplierCategoria") || null,
+
+    referente:
+      value("supplierReferente") || null,
+
+    email:
+      value("supplierEmail") || null,
+
+    telefono:
+      value("supplierTelefono") || null,
+
+    indirizzo:
+      value("supplierIndirizzo") || null,
+
+    citta:
+      value("supplierCitta") || null,
+
+    provincia:
+      value("supplierProvincia") || null,
+
+    cap:
+      value("supplierCap") || null,
+
+    paese:
+      value("supplierPaese") || "Italia",
+
+    partita_iva:
+      value("supplierPiva") || null,
+
+    codice_fiscale:
+      value("supplierCf") || null,
+
+    pagamento:
+      value("supplierPagamento") || null,
+
+    iban:
+      value("supplierIban") || null,
+
+    note:
+      value("supplierNote") || null,
+
+    stato:"ATTIVO"
+  };
+
+
+  saveBtn.disabled=true;
+  saveBtn.textContent="SALVATAGGIO...";
+
+  status.textContent=
+  "Invio a Supabase...";
+
+
+  const {error}=
+  await db
+    .from("fornitori")
+    .insert(record);
+
+
+  saveBtn.disabled=false;
+  saveBtn.textContent="SALVA FORNITORE";
+
+
+  if(error){
+
+    console.error(error);
+
+    status.textContent=
+    "SUPABASE: "+error.message;
+
+    return;
+  }
+
+
+  status.classList.add("ok");
+
+  status.textContent=
+  "FORNITORE SALVATO ✓";
+
+
+  clearSupplierForm();
+
+  await loadEverything();
+
+
+  setTimeout(()=>{
+
+    closeSupplierModal();
+
+    openPage("suppliers");
+
+  },700);
+}
+
+
+function clearSupplierForm(){
+
+  [
+    "supplierNome",
+    "supplierRagione",
+    "supplierCategoria",
+    "supplierReferente",
+    "supplierEmail",
+    "supplierTelefono",
+    "supplierIndirizzo",
+    "supplierCitta",
+    "supplierProvincia",
+    "supplierCap",
+    "supplierPiva",
+    "supplierCf",
+    "supplierPagamento",
+    "supplierIban",
+    "supplierNote"
+  ]
+  .forEach(id=>{
+    document.getElementById(id).value="";
+  });
+
+  document.getElementById("supplierPaese")
+  .value="Italia";
+}
+
+
+/* PRODOTTI */
 
 function renderProducts(){
 
-  const target =
-    document.getElementById("productList");
+  const target=document.getElementById("productList");
 
+  const search=
+  (document.getElementById("productSearch").value || "")
+  .toLowerCase();
 
-  const search =
-    (
-      document
-        .getElementById("productSearch")
-        .value || ""
-    )
-    .toLowerCase();
-
-
-  const filtered =
-    products.filter(item=>
-      Object.values(item)
-        .join(" ")
-        .toLowerCase()
-        .includes(search)
-    );
-
+  const filtered=
+  products.filter(item=>
+    Object.values(item)
+    .join(" ")
+    .toLowerCase()
+    .includes(search)
+  );
 
   if(!filtered.length){
 
-    target.innerHTML = `
+    target.innerHTML=`
       <div class="empty">
         Nessun prodotto presente.
       </div>
@@ -1601,132 +1563,68 @@ function renderProducts(){
     return;
   }
 
+  target.innerHTML=
+  filtered.map(item=>`
 
-  target.innerHTML =
-    filtered.map(item=>{
+    <article class="item">
 
-      const nome =
-        firstValue(
-          item,
-          [
-            "nome",
-            "prodotto",
-            "product_name"
-          ],
-          "Prodotto XA"
-        );
+      <div class="item-top">
 
+        <div class="item-icon">📦</div>
 
-      const categoria =
-        firstValue(
-          item,
-          [
-            "categoria",
-            "tipologia"
-          ],
-          "Prodotto"
-        );
+        <div>
 
+          <h3>${safe(item.nome || "Prodotto XA")}</h3>
 
-      const prezzo =
-        firstValue(
-          item,
-          [
-            "prezzo_unitario",
-            "prezzo",
-            "costo_unitario",
-            "costo"
-          ],
-          null
-        );
-
-
-      const stock =
-        firstValue(
-          item,
-          [
-            "stock_attuale",
-            "stock",
-            "quantita",
-            "giacenza"
-          ],
-          "—"
-        );
-
-
-      return `
-        <article class="item">
-
-          <div class="item-top">
-
-            <div class="item-icon">
-              📦
-            </div>
-
-            <div>
-
-              <h3>${safe(nome)}</h3>
-
-              <div class="item-sub">
-                ${safe(categoria)}
-              </div>
-
-            </div>
-
+          <div class="item-sub">
+            ${safe(item.categoria || "Prodotto")}
           </div>
 
-          <div class="meta">
+        </div>
 
-            <div class="meta-box">
-              <label>PREZZO</label>
-              <strong>${euro(prezzo)}</strong>
-            </div>
+      </div>
 
-            <div class="meta-box">
-              <label>GIACENZA</label>
-              <strong>${safe(stock)}</strong>
-            </div>
+      <div class="meta">
 
-          </div>
+        <div class="meta-box">
+          <label>PREZZO</label>
+          <strong>${euro(item.prezzo_unitario)}</strong>
+        </div>
 
-        </article>
-      `;
+        <div class="meta-box">
+          <label>GIACENZA</label>
+          <strong>${safe(item.stock_attuale ?? "—")}</strong>
+        </div>
 
-    }).join("");
+      </div>
+
+    </article>
+
+  `).join("");
 }
 
 
-/* ============================================
-   ORDINI
-============================================ */
+/* ORDINI */
 
 function renderOrders(){
 
-  const target =
-    document.getElementById("orderList");
+  const target=document.getElementById("orderList");
 
+  const search=
+  (document.getElementById("orderSearch").value || "")
+  .toLowerCase();
 
-  const search =
-    (
-      document
-        .getElementById("orderSearch")
-        .value || ""
-    )
-    .toLowerCase();
-
-
-  const filtered =
-    orders.filter(item=>
-      Object.values(item)
-        .join(" ")
-        .toLowerCase()
-        .includes(search)
-    );
-
+  const filtered=
+  orders.filter(item=>
+    Object.values(item)
+    .join(" ")
+    .toLowerCase()
+    .includes(search)
+  );
 
   if(!filtered.length){
 
-    target.innerHTML = `
+    target.innerHTML=`
       <div class="empty">
         Nessun ordine presente.
       </div>
@@ -1735,107 +1633,52 @@ function renderOrders(){
     return;
   }
 
+  target.innerHTML=
+  filtered.map(item=>`
 
-  target.innerHTML =
-    filtered.map(item=>{
+    <article class="item">
 
-      const numero =
-        firstValue(
-          item,
-          [
-            "numero_ordine",
-            "codice",
-            "numero",
-            "order_number"
-          ],
-          "Ordine XA"
-        );
+      <div class="item-top">
 
+        <div class="item-icon">🛒</div>
 
-      const stato =
-        firstValue(
-          item,
-          [
-            "stato",
-            "status"
-          ],
-          "BOZZA"
-        );
+        <div>
 
+          <h3>
+            ${safe(
+              item.numero_ordine ||
+              item.codice ||
+              "Ordine XA"
+            )}
+          </h3>
 
-      const totale =
-        firstValue(
-          item,
-          [
-            "totale",
-            "importo_totale",
-            "total"
-          ],
-          null
-        );
-
-
-      const data =
-        firstValue(
-          item,
-          [
-            "data_ordine",
-            "data",
-            "created_at"
-          ],
-          "—"
-        );
-
-
-      return `
-        <article class="item">
-
-          <div class="item-top">
-
-            <div class="item-icon">
-              🛒
-            </div>
-
-            <div>
-
-              <h3>${safe(numero)}</h3>
-
-              <div class="item-sub">
-                ${safe(data)}
-              </div>
-
-              <span class="badge">
-                ${safe(stato)}
-              </span>
-
-            </div>
-
+          <div class="item-sub">
+            ${safe(item.stato || "BOZZA")}
           </div>
 
-          <div class="meta">
+        </div>
 
-            <div class="meta-box">
-              <label>TOTALE</label>
-              <strong>${euro(totale)}</strong>
-            </div>
+      </div>
 
-            <div class="meta-box">
-              <label>STATO</label>
-              <strong>${safe(stato)}</strong>
-            </div>
+      <div class="meta">
 
-          </div>
+        <div class="meta-box">
+          <label>TOTALE</label>
+          <strong>${euro(item.totale)}</strong>
+        </div>
 
-        </article>
-      `;
+        <div class="meta-box">
+          <label>STATO</label>
+          <strong>${safe(item.stato || "BOZZA")}</strong>
+        </div>
 
-    }).join("");
+      </div>
+
+    </article>
+
+  `).join("");
 }
 
-
-/* ============================================
-   AVVIO
-============================================ */
 
 bootXA();
 
