@@ -3,64 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>XA Supply Command</title>
+<meta name="theme-color" content="#571526">
+<title>XA Supply Command V2</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
-  --wine:#641b2e;
-  --wine2:#9b304c;
-  --dark:#321017;
-  --cream:#fff9ed;
-  --line:#d8c5a6;
-  --muted:#776c67;
-  --green:#347457;
-  --red:#a93645;
+  --wine:#65182d;
+  --wine2:#9d304d;
+  --dark:#321016;
+  --cream:#fff8eb;
+  --paper:#fffdf7;
+  --sand:#ead9bc;
+  --gold:#c9a462;
+  --ink:#2b2020;
+  --muted:#796d67;
+  --green:#2f7855;
+  --red:#aa3946;
+  --line:#ddc9aa;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-body{
+html,body{
   margin:0;
-  min-height:100vh;
+  min-height:100%;
   font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at 80% 10%,rgba(153,46,75,.35),transparent 35%),
-    linear-gradient(145deg,#351018,#64182d 62%,#851f3c);
+  background:#f0e3cf;
+  color:var(--ink);
 }
 
-.hidden{display:none!important}
+button,input{
+  font:inherit;
+}
 
-.screen{
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.auth{
   min-height:100vh;
-  padding:24px 18px;
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:24px 18px;
+  background:
+    radial-gradient(circle at 85% 10%,rgba(155,47,76,.32),transparent 34%),
+    linear-gradient(150deg,#351017,#62172b 62%,#841e3a);
 }
 
-.card{
+.auth-card{
   width:min(100%,440px);
   padding:30px 22px;
-  border-radius:30px;
+  border-radius:31px;
   background:var(--cream);
   box-shadow:0 28px 70px rgba(0,0,0,.30);
 }
 
-.logo{
-  width:84px;
-  height:84px;
+.auth-logo{
+  width:86px;
+  height:86px;
   margin:0 auto 22px;
   display:grid;
   place-items:center;
   border:3px solid var(--wine);
-  border-radius:26px;
+  border-radius:27px;
   color:var(--wine);
-  font:900 40px Georgia,serif;
+  font:900 42px Georgia,serif;
 }
 
-h1{
+.auth h1{
   margin:0;
   text-align:center;
   color:var(--dark);
@@ -68,7 +92,7 @@ h1{
 }
 
 .claim{
-  margin:11px 0 28px;
+  margin:12px 0 28px;
   text-align:center;
   color:var(--muted);
   font-size:9px;
@@ -82,7 +106,7 @@ h1{
 
 .field label{
   display:block;
-  margin:0 0 6px 3px;
+  margin:0 0 7px 3px;
   color:var(--dark);
   font-size:9px;
   font-weight:900;
@@ -90,93 +114,464 @@ h1{
 
 .field input{
   width:100%;
-  height:51px;
+  height:52px;
   padding:0 14px;
   border:1px solid var(--line);
   border-radius:15px;
-  background:#fffdf8;
+  background:var(--paper);
   outline:none;
 }
 
-button{
-  width:100%;
-  min-height:49px;
-  border:0;
-  border-radius:15px;
-  font:900 10px Arial,sans-serif;
-  cursor:pointer;
+.field input:focus{
+  border-color:var(--wine);
 }
 
-.primary{
-  color:white;
+.btn{
+  min-height:47px;
+  border:0;
+  border-radius:14px;
+  padding:10px 14px;
+  font-size:10px;
+  font-weight:900;
+}
+
+.btn-primary{
+  color:#fff;
   background:linear-gradient(135deg,var(--wine),var(--wine2));
 }
 
-.forgot{
-  margin-top:9px;
+.btn-gold{
+  color:#3c251d;
+  background:#dec184;
+}
+
+.btn-soft{
   color:var(--wine);
-  background:#efe1c8;
+  background:#efe0c5;
+}
+
+.btn-danger{
+  color:#fff;
+  background:var(--red);
+}
+
+.full{
+  width:100%;
 }
 
 .status{
-  min-height:28px;
-  margin-top:14px;
+  min-height:25px;
+  margin-top:13px;
   text-align:center;
   color:var(--red);
   font-size:10px;
   font-weight:800;
-  line-height:1.45;
 }
 
-.status.ok{color:var(--green)}
+.status.ok{
+  color:var(--green);
+}
 
-#app{
+/* =========================
+   APP
+========================= */
+
+.app{
   min-height:100vh;
-  padding:20px;
-  color:#2c2021;
-  background:#f3e8d7;
+  padding-bottom:86px;
 }
 
-.appbox{
-  max-width:700px;
-  margin:auto;
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  padding:9px;
+  background:rgba(242,229,210,.97);
+  border-bottom:1px solid var(--line);
 }
 
-.appheader{
-  padding:18px;
-  border-radius:22px;
-  color:white;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:11px;
+  border-radius:20px;
+  color:#fff;
   background:linear-gradient(135deg,var(--dark),var(--wine));
+  box-shadow:0 7px 20px rgba(73,19,32,.18);
 }
 
-.appheader h2{
+.brand-logo{
+  width:49px;
+  height:49px;
+  flex:0 0 49px;
+  display:grid;
+  place-items:center;
+  border:2px solid #ead1a2;
+  border-radius:15px;
+  font:900 23px Georgia,serif;
+}
+
+.brand-title{
+  min-width:0;
+}
+
+.brand-title strong{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font:900 15px Georgia,serif;
+}
+
+.brand-title small{
+  display:block;
+  margin-top:4px;
+  color:#ead8ba;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+
+.cloud{
+  margin-left:auto;
+  white-space:nowrap;
+  color:#9de4b6;
+  font-size:7px;
+  font-weight:900;
+}
+
+main{
+  padding:12px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* DASHBOARD */
+
+.hero{
+  padding:22px 18px;
+  border-radius:26px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 90% 0,rgba(223,193,132,.24),transparent 30%),
+    linear-gradient(145deg,#361017,#691b30 62%,#963b51);
+}
+
+.hero-kicker{
+  color:#e7c98f;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.hero h2{
+  margin:8px 0 7px;
+  font:900 29px Georgia,serif;
+}
+
+.hero p{
   margin:0;
-  font:900 28px Georgia,serif;
+  color:#ead9cf;
+  font-size:10px;
+  line-height:1.5;
 }
 
-.panel{
-  margin-top:12px;
-  padding:16px;
+.hero-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:17px;
+}
+
+.hero-actions .btn{
+  width:auto;
+}
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.kpi{
+  padding:14px;
+  border:1px solid var(--line);
   border-radius:18px;
-  background:#fffaf1;
+  background:var(--cream);
 }
 
-.logout{
-  margin-top:15px;
-  background:#a93645;
-  color:white;
+.kpi small{
+  display:block;
+  color:var(--muted);
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.6px;
+}
+
+.kpi strong{
+  display:block;
+  margin-top:7px;
+  color:var(--dark);
+  font:900 24px Georgia,serif;
+}
+
+.card{
+  margin-top:10px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:19px;
+  background:var(--cream);
+}
+
+.card h3{
+  margin:0 0 10px;
+  color:var(--dark);
+  font:900 17px Georgia,serif;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.quick{
+  min-height:76px;
+  padding:12px;
+  border:1px solid #dbc6a5;
+  border-radius:15px;
+  text-align:left;
+  background:#f3e5cb;
+}
+
+.quick b{
+  display:block;
+  color:var(--wine);
+  font-size:10px;
+}
+
+.quick span{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:8px;
+}
+
+/* LIST PAGES */
+
+.page-head{
+  margin:4px 1px 12px;
+}
+
+.page-head h2{
+  margin:0;
+  color:var(--dark);
+  font:900 27px Georgia,serif;
+}
+
+.page-head p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.toolbar{
+  display:flex;
+  gap:7px;
+  margin-bottom:10px;
+}
+
+.search{
+  width:100%;
+  height:45px;
+  padding:0 13px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--paper);
+  outline:none;
+}
+
+.list{
+  display:grid;
+  gap:8px;
+}
+
+.item{
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:var(--cream);
+}
+
+.item-top{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+}
+
+.item-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#edddc1;
+  font-size:18px;
+}
+
+.item h3{
+  margin:1px 0 0;
+  color:var(--dark);
+  font:900 15px Georgia,serif;
+}
+
+.item-sub{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:8px;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:10px;
+}
+
+.meta-box{
+  padding:8px;
+  border-radius:11px;
+  background:#f1e3cb;
+}
+
+.meta-box label{
+  display:block;
+  color:var(--muted);
+  font-size:6px;
+  font-weight:900;
+}
+
+.meta-box strong{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+  overflow-wrap:anywhere;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:8px;
+  padding:6px 8px;
+  border-radius:999px;
+  color:#fff;
+  background:var(--wine);
+  font-size:7px;
+  font-weight:900;
+}
+
+.empty{
+  padding:28px 15px;
+  border:1px dashed #cbb494;
+  border-radius:17px;
+  text-align:center;
+  color:var(--muted);
+  background:rgba(255,249,237,.5);
+  font-size:10px;
+}
+
+.errorbox{
+  padding:12px;
+  border-radius:13px;
+  color:#912f3e;
+  background:#f4d9d8;
+  font-size:9px;
+  font-weight:700;
+}
+
+/* ACCOUNT */
+
+.account-mail{
+  padding:13px;
+  border-radius:13px;
+  background:#efe1c9;
+  color:var(--dark);
+  font-size:11px;
+  overflow-wrap:anywhere;
+}
+
+/* NAV */
+
+.bottom{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:50;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:6px 4px max(7px,env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  background:#fff9ed;
+}
+
+.nav{
+  padding:7px 2px;
+  border:0;
+  border-radius:10px;
+  color:#756965;
+  background:transparent;
+  font-size:6px;
+  font-weight:900;
+}
+
+.nav b{
+  display:block;
+  margin-bottom:2px;
+  font-size:16px;
+}
+
+.nav.active{
+  color:#fff;
+  background:var(--wine);
+}
+
+@media(min-width:700px){
+  main{
+    max-width:900px;
+    margin:auto;
+  }
+
+  .kpis{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
-<section class="screen" id="loginScreen">
-  <div class="card">
+<section class="auth" id="loginScreen">
 
-    <div class="logo">XA</div>
+  <div class="auth-card">
+
+    <div class="auth-logo">XA</div>
 
     <h1>Supply Command</h1>
 
@@ -186,87 +581,360 @@ button{
 
     <div class="field">
       <label>EMAIL</label>
-      <input id="email" type="email" placeholder="Email XA">
+      <input
+        id="email"
+        type="email"
+        autocomplete="username"
+        placeholder="Email XA">
     </div>
 
     <div class="field">
       <label>PASSWORD</label>
-      <input id="password" type="password" placeholder="Password">
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Password">
     </div>
 
-    <button class="primary" onclick="loginXA()">
+    <button
+      class="btn btn-primary full"
+      id="loginBtn">
       ENTRA IN XA
     </button>
 
-    <button class="forgot" onclick="resetXA()">
-      PASSWORD DIMENTICATA?
-    </button>
-
-    <div class="status" id="loginStatus"></div>
+    <div
+      class="status"
+      id="loginStatus">
+    </div>
 
   </div>
+
 </section>
 
 
-<!-- NUOVA PASSWORD -->
+<!-- =========================
+     APP
+========================= -->
 
-<section class="screen hidden" id="resetScreen">
+<div class="app hidden" id="app">
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="brand-logo">XA</div>
+
+    <div class="brand-title">
+      <strong>XA Supply Command</strong>
+      <small>V2 · PROCUREMENT CONTROL</small>
+    </div>
+
+    <div class="cloud" id="cloudStatus">
+      ● ONLINE
+    </div>
+
+  </div>
+
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section class="page active" id="page-home">
+
+  <div class="hero">
+
+    <div class="hero-kicker">
+      XA CLOUD OPERATIONS
+    </div>
+
+    <h2>Supply Command</h2>
+
+    <p>
+      Controllo acquisti, fornitori, prodotti e ordini
+      collegato al database Supabase XA.
+    </p>
+
+    <div class="hero-actions">
+
+      <button
+        class="btn btn-gold"
+        onclick="openPage('suppliers')">
+        FORNITORI
+      </button>
+
+      <button
+        class="btn btn-soft"
+        onclick="openPage('products')">
+        PRODOTTI
+      </button>
+
+      <button
+        class="btn btn-primary"
+        onclick="openPage('orders')">
+        ORDINI
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="kpis">
+
+    <div class="kpi">
+      <small>FORNITORI</small>
+      <strong id="kpiSuppliers">—</strong>
+    </div>
+
+    <div class="kpi">
+      <small>PRODOTTI</small>
+      <strong id="kpiProducts">—</strong>
+    </div>
+
+    <div class="kpi">
+      <small>ORDINI</small>
+      <strong id="kpiOrders">—</strong>
+    </div>
+
+    <div class="kpi">
+      <small>SISTEMA</small>
+      <strong>XA</strong>
+    </div>
+
+  </div>
+
+
   <div class="card">
 
-    <div class="logo">XA</div>
+    <h3>Console rapida</h3>
 
-    <h1>Nuova password</h1>
+    <div class="quick-grid">
 
-    <div class="claim">
-      RECUPERO ACCOUNT XA
+      <button
+        class="quick"
+        onclick="openPage('suppliers')">
+        <b>🏢 FORNITORI</b>
+        <span>Archivio fornitori</span>
+      </button>
+
+      <button
+        class="quick"
+        onclick="openPage('products')">
+        <b>📦 PRODOTTI</b>
+        <span>Catalogo acquisti</span>
+      </button>
+
+      <button
+        class="quick"
+        onclick="openPage('orders')">
+        <b>🛒 ORDINI</b>
+        <span>Ordini fornitori</span>
+      </button>
+
+      <button
+        class="quick"
+        onclick="loadEverything()">
+        <b>↻ SYNC</b>
+        <span>Aggiorna Supabase</span>
+      </button>
+
     </div>
-
-    <div class="field">
-      <label>NUOVA PASSWORD</label>
-      <input id="newPassword" type="password" minlength="8">
-    </div>
-
-    <div class="field">
-      <label>RIPETI PASSWORD</label>
-      <input id="newPassword2" type="password" minlength="8">
-    </div>
-
-    <button class="primary" onclick="saveNewPassword()">
-      SALVA NUOVA PASSWORD
-    </button>
-
-    <div class="status" id="resetStatus"></div>
 
   </div>
+
+
+  <div class="card">
+
+    <h3>Stato database</h3>
+
+    <div id="dbStatus">
+      Connessione in corso...
+    </div>
+
+  </div>
+
 </section>
 
 
-<!-- APP -->
+<!-- FORNITORI -->
 
-<div id="app" class="hidden">
+<section class="page" id="page-suppliers">
 
-  <div class="appbox">
+  <div class="page-head">
+    <h2>Fornitori</h2>
+    <p>Archivio fornitori XA</p>
+  </div>
 
-    <div class="appheader">
-      <h2>XA Supply Command</h2>
-      <p>Supabase Online</p>
-    </div>
+  <div class="toolbar">
+    <input
+      id="supplierSearch"
+      class="search"
+      placeholder="Cerca fornitore..."
+      oninput="renderSuppliers()">
 
-    <div class="panel">
-      <strong>Accesso effettuato</strong>
-      <p id="userEmail"></p>
+    <button
+      class="btn btn-primary"
+      onclick="loadEverything()">
+      ↻
+    </button>
+  </div>
 
-      <button class="logout" onclick="logoutXA()">
-        ESCI DA XA
-      </button>
-    </div>
+  <div
+    class="list"
+    id="supplierList">
+  </div>
+
+</section>
+
+
+<!-- PRODOTTI -->
+
+<section class="page" id="page-products">
+
+  <div class="page-head">
+    <h2>Prodotti</h2>
+    <p>Catalogo prodotti e materie prime XA</p>
+  </div>
+
+  <div class="toolbar">
+
+    <input
+      id="productSearch"
+      class="search"
+      placeholder="Cerca prodotto..."
+      oninput="renderProducts()">
+
+    <button
+      class="btn btn-primary"
+      onclick="loadEverything()">
+      ↻
+    </button>
 
   </div>
+
+  <div
+    class="list"
+    id="productList">
+  </div>
+
+</section>
+
+
+<!-- ORDINI -->
+
+<section class="page" id="page-orders">
+
+  <div class="page-head">
+    <h2>Ordini</h2>
+    <p>Ordini di acquisto XA</p>
+  </div>
+
+  <div class="toolbar">
+
+    <input
+      id="orderSearch"
+      class="search"
+      placeholder="Cerca ordine..."
+      oninput="renderOrders()">
+
+    <button
+      class="btn btn-primary"
+      onclick="loadEverything()">
+      ↻
+    </button>
+
+  </div>
+
+  <div
+    class="list"
+    id="orderList">
+  </div>
+
+</section>
+
+
+<!-- ACCOUNT -->
+
+<section class="page" id="page-account">
+
+  <div class="page-head">
+    <h2>Account XA</h2>
+    <p>Sessione autenticata Supabase</p>
+  </div>
+
+  <div class="card">
+
+    <h3>Utente collegato</h3>
+
+    <div
+      class="account-mail"
+      id="accountEmail">
+    </div>
+
+    <button
+      class="btn btn-danger full"
+      style="margin-top:14px"
+      id="logoutBtn">
+      ESCI DA XA
+    </button>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<nav class="bottom">
+
+  <button
+    class="nav active"
+    data-page="home">
+    <b>⌂</b>
+    HOME
+  </button>
+
+  <button
+    class="nav"
+    data-page="suppliers">
+    <b>🏢</b>
+    FORN.
+  </button>
+
+  <button
+    class="nav"
+    data-page="products">
+    <b>📦</b>
+    PROD.
+  </button>
+
+  <button
+    class="nav"
+    data-page="orders">
+    <b>🛒</b>
+    ORDINI
+  </button>
+
+  <button
+    class="nav"
+    data-page="account">
+    <b>●</b>
+    XA
+  </button>
+
+</nav>
 
 </div>
 
 
 <script>
+
+/* ============================================
+   CONFIG XA
+============================================ */
 
 const SUPABASE_URL =
   "https://dmvdmkfwmvmgggvwqnkz.supabase.co";
@@ -274,90 +942,126 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_yIP9daDD0ICiisUysO74cA_UOhQGNNP";
 
-const APP_URL =
-  "https://essenzadiluna1-oss.github.io/xa-supply-command/";
 
-let sb = null;
-
-
-/* =====================================================
-   AVVIO
-===================================================== */
-
-function initSupabase(){
-
-  const status =
-    document.getElementById("loginStatus");
-
-  try{
-
-    if(
-      !window.supabase ||
-      !window.supabase.createClient
-    ){
-
-      status.textContent =
-        "ERRORE: libreria Supabase non caricata.";
-
-      return false;
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
     }
+  );
 
 
-    sb =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY,
-        {
-          auth:{
-            persistSession:true,
-            autoRefreshToken:true,
-            detectSessionInUrl:true
-          }
-        }
-      );
+let suppliers = [];
+let products  = [];
+let orders    = [];
+
+let tableErrors = {};
 
 
-    return true;
+/* ============================================
+   UTILITY
+============================================ */
 
-  }catch(error){
+function safe(v=""){
 
-    console.error(error);
-
-    status.textContent =
-      "ERRORE AVVIO: " +
-      error.message;
-
-    return false;
-  }
+  return String(v ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
 }
 
 
-/* =====================================================
+function euro(v){
+
+  if(
+    v === null ||
+    v === undefined ||
+    v === ""
+  ){
+    return "—";
+  }
+
+  const n = Number(v);
+
+  if(Number.isNaN(n)){
+    return safe(v);
+  }
+
+  return new Intl.NumberFormat(
+    "it-IT",
+    {
+      style:"currency",
+      currency:"EUR"
+    }
+  ).format(n);
+}
+
+
+function firstValue(obj,names,fallback=""){
+
+  for(const name of names){
+
+    if(
+      obj &&
+      obj[name] !== null &&
+      obj[name] !== undefined &&
+      obj[name] !== ""
+    ){
+      return obj[name];
+    }
+  }
+
+  return fallback;
+}
+
+
+/* ============================================
    LOGIN
-===================================================== */
+============================================ */
+
+document
+  .getElementById("loginBtn")
+  .addEventListener(
+    "click",
+    loginXA
+  );
+
+
+document
+  .getElementById("password")
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(e.key === "Enter"){
+        loginXA();
+      }
+    }
+  );
+
 
 async function loginXA(){
 
   const status =
     document.getElementById("loginStatus");
 
-  status.classList.remove("ok");
-
-
-  if(!sb){
-
-    status.textContent =
-      "Supabase non inizializzato.";
-
-    return;
-  }
-
-
   const email =
-    document.getElementById("email").value.trim();
+    document.getElementById("email")
+    .value
+    .trim();
 
   const password =
-    document.getElementById("password").value;
+    document.getElementById("password")
+    .value;
+
+
+  status.classList.remove("ok");
 
 
   if(!email){
@@ -379,14 +1083,14 @@ async function loginXA(){
 
 
   status.textContent =
-    "Accesso in corso...";
+    "Connessione a XA...";
 
 
   const {
     data,
     error
   } =
-    await sb.auth.signInWithPassword({
+    await db.auth.signInWithPassword({
       email,
       password
     });
@@ -406,283 +1110,87 @@ async function loginXA(){
 
   status.textContent = "";
 
-  showApp(
+  enterXA(
     data.session
   );
+
+  await loadEverything();
 }
 
 
-/* =====================================================
-   PASSWORD DIMENTICATA
-===================================================== */
-
-async function resetXA(){
-
-  const status =
-    document.getElementById("loginStatus");
-
-
-  status.classList.remove("ok");
-
-
-  /*
-    Questo messaggio deve comparire SUBITO.
-    Se non compare significa che il bottone
-    non sta eseguendo JavaScript.
-  */
-
-  status.textContent =
-    "Pulsante attivo. Controllo email...";
-
-
-  if(!sb){
-
-    status.textContent =
-      "ERRORE: Supabase non inizializzato.";
-
-    return;
-  }
-
-
-  const email =
-    document.getElementById("email").value.trim();
-
-
-  if(!email){
-
-    status.textContent =
-      "Inserisci prima l'email.";
-
-    document.getElementById("email").focus();
-
-    return;
-  }
-
-
-  status.textContent =
-    "Invio richiesta a Supabase...";
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await sb.auth.resetPasswordForEmail(
-        email,
-        {
-          redirectTo:APP_URL
-        }
-      );
-
-
-    console.log(
-      "XA RESET DATA:",
-      data
-    );
-
-
-    if(error){
-
-      console.error(
-        "XA RESET ERROR:",
-        error
-      );
-
-
-      status.textContent =
-        "SUPABASE: " +
-        (
-          error.message ||
-          JSON.stringify(error)
-        );
-
-      return;
-    }
-
-
-    status.classList.add("ok");
-
-    status.textContent =
-      "EMAIL INVIATA ✓ Apri soltanto l'ultima email ricevuta.";
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    status.textContent =
-      "ERRORE JAVASCRIPT: " +
-      error.message;
-  }
-}
-
-
-/* =====================================================
-   RECUPERO PASSWORD DAL LINK EMAIL
-===================================================== */
-
-sbAuthRecoveryListener = function(){
-
-  if(!sb){
-    return;
-  }
-
-
-  sb.auth.onAuthStateChange(
-    (event,session)=>{
-
-      console.log(
-        "XA AUTH EVENT:",
-        event
-      );
-
-
-      if(
-        event === "PASSWORD_RECOVERY"
-      ){
-
-        document
-          .getElementById("loginScreen")
-          .classList.add("hidden");
-
-        document
-          .getElementById("app")
-          .classList.add("hidden");
-
-        document
-          .getElementById("resetScreen")
-          .classList.remove("hidden");
-
-        return;
-      }
-
-
-      if(
-        event === "SIGNED_IN" &&
-        session
-      ){
-
-        const hash =
-          new URLSearchParams(
-            location.hash.substring(1)
-          );
-
-
-        if(
-          hash.get("type") === "recovery"
-        ){
-
-          document
-            .getElementById("loginScreen")
-            .classList.add("hidden");
-
-          document
-            .getElementById("app")
-            .classList.add("hidden");
-
-          document
-            .getElementById("resetScreen")
-            .classList.remove("hidden");
-
-          return;
-        }
-      }
-    }
-  );
-};
-
-
-/* =====================================================
-   SALVA NUOVA PASSWORD
-===================================================== */
-
-async function saveNewPassword(){
-
-  const status =
-    document.getElementById("resetStatus");
-
-
-  status.classList.remove("ok");
-
-
-  const p1 =
-    document.getElementById("newPassword").value;
-
-  const p2 =
-    document.getElementById("newPassword2").value;
-
-
-  if(p1.length < 8){
-
-    status.textContent =
-      "La password deve avere almeno 8 caratteri.";
-
-    return;
-  }
-
-
-  if(p1 !== p2){
-
-    status.textContent =
-      "Le password non coincidono.";
-
-    return;
-  }
-
-
-  status.textContent =
-    "Salvataggio...";
-
+/* ============================================
+   SESSIONE
+============================================ */
+
+async function bootXA(){
 
   const {
-    error
+    data:{
+      session
+    }
   } =
-    await sb.auth.updateUser({
-      password:p1
-    });
+    await db.auth.getSession();
 
 
-  if(error){
+  if(session){
 
-    console.error(error);
+    enterXA(session);
 
-    status.textContent =
-      "SUPABASE: " +
-      error.message;
+    await loadEverything();
 
-    return;
+  }else{
+
+    document
+      .getElementById("loginScreen")
+      .classList
+      .remove("hidden");
   }
+}
 
 
-  status.classList.add("ok");
+function enterXA(session){
 
-  status.textContent =
-    "PASSWORD CAMBIATA ✓";
+  document
+    .getElementById("loginScreen")
+    .classList
+    .add("hidden");
 
 
-  setTimeout(
+  document
+    .getElementById("app")
+    .classList
+    .remove("hidden");
+
+
+  document
+    .getElementById("accountEmail")
+    .textContent =
+    session?.user?.email || "Utente XA";
+}
+
+
+/* ============================================
+   LOGOUT
+============================================ */
+
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
     async ()=>{
 
-      await sb.auth.signOut();
-
-      window.history.replaceState(
-        {},
-        document.title,
-        APP_URL
-      );
-
+      await db.auth.signOut();
 
       document
-        .getElementById("resetScreen")
-        .classList.add("hidden");
+        .getElementById("app")
+        .classList
+        .add("hidden");
 
 
       document
         .getElementById("loginScreen")
-        .classList.remove("hidden");
+        .classList
+        .remove("hidden");
 
 
       document
@@ -692,124 +1200,642 @@ async function saveNewPassword(){
 
       document
         .getElementById("loginStatus")
-        .classList.add("ok");
-
-
-      document
-        .getElementById("loginStatus")
-        .textContent =
-        "Nuova password salvata. Ora entra in XA.";
-
-    },
-    1000
-  );
-}
-
-
-/* =====================================================
-   APP
-===================================================== */
-
-function showApp(session){
-
-  document
-    .getElementById("loginScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("resetScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("app")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("userEmail")
-    .textContent =
-    session?.user?.email || "";
-}
-
-
-async function logoutXA(){
-
-  await sb.auth.signOut();
-
-  document
-    .getElementById("app")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginScreen")
-    .classList.remove("hidden");
-}
-
-
-/* =====================================================
-   SESSIONE INIZIALE
-===================================================== */
-
-async function bootXA(){
-
-  if(
-    !initSupabase()
-  ){
-    return;
-  }
-
-
-  sbAuthRecoveryListener();
-
-
-  /*
-    Diamo a Supabase il tempo di leggere
-    eventuali token presenti nell'URL.
-  */
-
-  await new Promise(
-    resolve =>
-      setTimeout(resolve,400)
-  );
-
-
-  const {
-    data:{
-      session
+        .textContent = "";
     }
-  } =
-    await sb.auth.getSession();
+  );
 
 
-  const hash =
-    new URLSearchParams(
-      location.hash.substring(1)
+/* ============================================
+   NAV
+============================================ */
+
+document
+  .querySelectorAll(".nav")
+  .forEach(btn=>{
+
+    btn.addEventListener(
+      "click",
+      ()=>{
+
+        openPage(
+          btn.dataset.page,
+          btn
+        );
+      }
+    );
+
+  });
+
+
+function openPage(name,button=null){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page=>
+      page.classList.remove("active")
     );
 
 
-  if(
-    session &&
-    hash.get("type") === "recovery"
-  ){
+  const target =
+    document.getElementById(
+      "page-" + name
+    );
 
-    document
-      .getElementById("loginScreen")
-      .classList.add("hidden");
 
-    document
-      .getElementById("resetScreen")
-      .classList.remove("hidden");
+  if(target){
+    target.classList.add("active");
+  }
+
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(nav=>
+      nav.classList.remove("active")
+    );
+
+
+  if(button){
+
+    button.classList.add("active");
+
+  }else{
+
+    const nav =
+      document.querySelector(
+        `.nav[data-page="${name}"]`
+      );
+
+    if(nav){
+      nav.classList.add("active");
+    }
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* ============================================
+   DATABASE
+============================================ */
+
+async function readTable(name){
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from(name)
+      .select("*");
+
+
+  if(error){
+
+    console.error(
+      "XA TABLE ERROR:",
+      name,
+      error
+    );
+
+    tableErrors[name] =
+      error.message;
+
+    return [];
+  }
+
+
+  delete tableErrors[name];
+
+  return data || [];
+}
+
+
+async function loadEverything(){
+
+  const cloud =
+    document.getElementById("cloudStatus");
+
+  cloud.textContent =
+    "● SYNC";
+
+
+  const results =
+    await Promise.all([
+      readTable("fornitori"),
+      readTable("prodotti"),
+      readTable("ordini")
+    ]);
+
+
+  suppliers = results[0];
+  products  = results[1];
+  orders    = results[2];
+
+
+  cloud.textContent =
+    "● ONLINE";
+
+
+  renderAll();
+}
+
+
+/* ============================================
+   RENDER DASHBOARD
+============================================ */
+
+function renderAll(){
+
+  document
+    .getElementById("kpiSuppliers")
+    .textContent =
+    suppliers.length;
+
+
+  document
+    .getElementById("kpiProducts")
+    .textContent =
+    products.length;
+
+
+  document
+    .getElementById("kpiOrders")
+    .textContent =
+    orders.length;
+
+
+  renderDatabaseStatus();
+  renderSuppliers();
+  renderProducts();
+  renderOrders();
+}
+
+
+function renderDatabaseStatus(){
+
+  const box =
+    document.getElementById("dbStatus");
+
+
+  const names =
+    Object.keys(tableErrors);
+
+
+  if(names.length === 0){
+
+    box.innerHTML = `
+      <div style="
+        padding:11px;
+        border-radius:12px;
+        background:#dcebdd;
+        color:#276047;
+        font-size:9px;
+        font-weight:900;
+      ">
+        ● SUPABASE ONLINE · DATABASE COLLEGATO
+      </div>
+    `;
 
     return;
   }
 
 
-  if(session){
-
-    showApp(session);
-  }
+  box.innerHTML = `
+    <div class="errorbox">
+      <b>Connessione attiva</b><br><br>
+      Alcune tabelle non sono ancora disponibili:<br>
+      ${safe(names.join(", "))}
+      <br><br>
+      Continuiamo comunque senza bloccare XA.
+    </div>
+  `;
 }
 
+
+/* ============================================
+   FORNITORI
+============================================ */
+
+function renderSuppliers(){
+
+  const target =
+    document.getElementById("supplierList");
+
+
+  const search =
+    (
+      document
+        .getElementById("supplierSearch")
+        .value || ""
+    )
+    .toLowerCase();
+
+
+  const filtered =
+    suppliers.filter(item=>{
+
+      const haystack =
+        Object.values(item)
+          .join(" ")
+          .toLowerCase();
+
+      return haystack.includes(search);
+    });
+
+
+  if(!filtered.length){
+
+    target.innerHTML = `
+      <div class="empty">
+        Nessun fornitore presente.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  target.innerHTML =
+    filtered.map(item=>{
+
+      const nome =
+        firstValue(
+          item,
+          [
+            "nome",
+            "ragione_sociale",
+            "azienda",
+            "supplier_name"
+          ],
+          "Fornitore XA"
+        );
+
+
+      const categoria =
+        firstValue(
+          item,
+          [
+            "categoria",
+            "tipologia",
+            "settore"
+          ],
+          "Fornitore"
+        );
+
+
+      const localita =
+        [
+          firstValue(item,["citta","city"]),
+          firstValue(item,["paese","country"])
+        ]
+        .filter(Boolean)
+        .join(" · ");
+
+
+      const referente =
+        firstValue(
+          item,
+          [
+            "referente",
+            "contatto",
+            "contact_name"
+          ],
+          "—"
+        );
+
+
+      const email =
+        firstValue(
+          item,
+          [
+            "email",
+            "mail"
+          ],
+          "—"
+        );
+
+
+      return `
+        <article class="item">
+
+          <div class="item-top">
+
+            <div class="item-icon">
+              🏢
+            </div>
+
+            <div>
+
+              <h3>${safe(nome)}</h3>
+
+              <div class="item-sub">
+                ${safe(categoria)}
+                ${localita ? " · " + safe(localita) : ""}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="meta">
+
+            <div class="meta-box">
+              <label>REFERENTE</label>
+              <strong>${safe(referente)}</strong>
+            </div>
+
+            <div class="meta-box">
+              <label>EMAIL</label>
+              <strong>${safe(email)}</strong>
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
+}
+
+
+/* ============================================
+   PRODOTTI
+============================================ */
+
+function renderProducts(){
+
+  const target =
+    document.getElementById("productList");
+
+
+  const search =
+    (
+      document
+        .getElementById("productSearch")
+        .value || ""
+    )
+    .toLowerCase();
+
+
+  const filtered =
+    products.filter(item=>
+      Object.values(item)
+        .join(" ")
+        .toLowerCase()
+        .includes(search)
+    );
+
+
+  if(!filtered.length){
+
+    target.innerHTML = `
+      <div class="empty">
+        Nessun prodotto presente.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  target.innerHTML =
+    filtered.map(item=>{
+
+      const nome =
+        firstValue(
+          item,
+          [
+            "nome",
+            "prodotto",
+            "product_name"
+          ],
+          "Prodotto XA"
+        );
+
+
+      const categoria =
+        firstValue(
+          item,
+          [
+            "categoria",
+            "tipologia"
+          ],
+          "Prodotto"
+        );
+
+
+      const prezzo =
+        firstValue(
+          item,
+          [
+            "prezzo_unitario",
+            "prezzo",
+            "costo_unitario",
+            "costo"
+          ],
+          null
+        );
+
+
+      const stock =
+        firstValue(
+          item,
+          [
+            "stock_attuale",
+            "stock",
+            "quantita",
+            "giacenza"
+          ],
+          "—"
+        );
+
+
+      return `
+        <article class="item">
+
+          <div class="item-top">
+
+            <div class="item-icon">
+              📦
+            </div>
+
+            <div>
+
+              <h3>${safe(nome)}</h3>
+
+              <div class="item-sub">
+                ${safe(categoria)}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="meta">
+
+            <div class="meta-box">
+              <label>PREZZO</label>
+              <strong>${euro(prezzo)}</strong>
+            </div>
+
+            <div class="meta-box">
+              <label>GIACENZA</label>
+              <strong>${safe(stock)}</strong>
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
+}
+
+
+/* ============================================
+   ORDINI
+============================================ */
+
+function renderOrders(){
+
+  const target =
+    document.getElementById("orderList");
+
+
+  const search =
+    (
+      document
+        .getElementById("orderSearch")
+        .value || ""
+    )
+    .toLowerCase();
+
+
+  const filtered =
+    orders.filter(item=>
+      Object.values(item)
+        .join(" ")
+        .toLowerCase()
+        .includes(search)
+    );
+
+
+  if(!filtered.length){
+
+    target.innerHTML = `
+      <div class="empty">
+        Nessun ordine presente.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  target.innerHTML =
+    filtered.map(item=>{
+
+      const numero =
+        firstValue(
+          item,
+          [
+            "numero_ordine",
+            "codice",
+            "numero",
+            "order_number"
+          ],
+          "Ordine XA"
+        );
+
+
+      const stato =
+        firstValue(
+          item,
+          [
+            "stato",
+            "status"
+          ],
+          "BOZZA"
+        );
+
+
+      const totale =
+        firstValue(
+          item,
+          [
+            "totale",
+            "importo_totale",
+            "total"
+          ],
+          null
+        );
+
+
+      const data =
+        firstValue(
+          item,
+          [
+            "data_ordine",
+            "data",
+            "created_at"
+          ],
+          "—"
+        );
+
+
+      return `
+        <article class="item">
+
+          <div class="item-top">
+
+            <div class="item-icon">
+              🛒
+            </div>
+
+            <div>
+
+              <h3>${safe(numero)}</h3>
+
+              <div class="item-sub">
+                ${safe(data)}
+              </div>
+
+              <span class="badge">
+                ${safe(stato)}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="meta">
+
+            <div class="meta-box">
+              <label>TOTALE</label>
+              <strong>${euro(totale)}</strong>
+            </div>
+
+            <div class="meta-box">
+              <label>STATO</label>
+              <strong>${safe(stato)}</strong>
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
+}
+
+
+/* ============================================
+   AVVIO
+============================================ */
 
 bootXA();
 
